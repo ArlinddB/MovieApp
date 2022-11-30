@@ -1,6 +1,18 @@
+using Microsoft.EntityFrameworkCore;
+using Redeo.Data;
+using Redeo.Data.Services;
+
 var builder = WebApplication.CreateBuilder(args);
+ConfigurationManager configuration = builder.Configuration;
 
 // Add services to the container.
+
+// DbContext
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnectionString")));
+
+// Services
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
@@ -8,9 +20,13 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
+    //app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
+}
+else
+{
+    app.UseStatusCodePagesWithRedirects("/Error/NotFound");
 }
 
 app.UseHttpsRedirection();
