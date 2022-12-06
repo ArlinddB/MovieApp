@@ -1,0 +1,11 @@
+﻿@if(TempData["success"] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <link rel="stylesheet" href="/css/site.css" />
+    <script type="text/javascript">
+        toastr.options.closeButton = true;
+        toastr.options.progressBar = true;
+        toastr.success('@TempData["success"]');
+	</script>
+}

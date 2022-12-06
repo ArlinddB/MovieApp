@@ -154,3 +154,8 @@ select:focus ~ label {
         -webkit-transform: translateX(-4px);
         transform: translateX(-4px);
     }
+
+/*ToastR*/
+#toast-container > .toast-success {
+    opacity: 100%;
+}

@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Redeo.Data;
 using Redeo.Data.Services;
 using Redeo.Models;
 
@@ -8,9 +10,12 @@ namespace Redeo.Controllers
     {
         private readonly ICategoryService _service;
 
-        public CategoryController(ICategoryService service)
+        private readonly AppDbContext _context;
+
+        public CategoryController(ICategoryService service, AppDbContext context)
         {
-            _service = service; 
+            _service = service;
+            _context = context;
         }
         public async Task<IActionResult> Index()
         {
@@ -31,7 +36,15 @@ namespace Redeo.Controllers
                 return View(category);
             }
 
+            var alreadyExists = await _context.categories.AnyAsync(x => x.CategoryName == category.CategoryName);
+            if (alreadyExists)
+            {
+                ModelState.AddModelError("CategoryName", "Category already exists");
+                return View(category);
+            }
+
             await _service.AddAsync(category);
+            TempData["success"] = "Category added successfully";
             return RedirectToAction("Index", "Category");
         }
 
@@ -62,7 +75,17 @@ namespace Redeo.Controllers
             {
                 return View(category);
             }
+
+            var alreadyExists = await _context.categories.AnyAsync(x => x.CategoryName == category.CategoryName);
+            if (alreadyExists)
+            {
+                ModelState.AddModelError("CategoryName", "Category already exists");
+                return View(category);
+            }
+
             await _service.UpdateAsync(id, category);
+            TempData["success"] = "Category updated successfully";
+
             return RedirectToAction("Index", "Category");
         }
 
@@ -85,7 +108,25 @@ namespace Redeo.Controllers
 
 
             await _service.DeleteAsync(id);
+            TempData["success"] = "Category deleted successfully";
+
             return RedirectToAction("Index", "Category");
+        }
+
+        //Checking if category exists
+        public JsonResult NameAvailability(String name)
+        {
+            System.Threading.Thread.Sleep(450);
+            var data = _context.categories.Where(x => x.CategoryName.Equals(name)).SingleOrDefault();
+
+            if (data != null)
+            {
+                return Json(1);
+            }
+            else
+            {
+                return Json(0);
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Redeo.Data.Base;
+﻿using Microsoft.AspNetCore.Mvc;
+using Redeo.Data.Base;
 using System.ComponentModel.DataAnnotations;
 
 namespace Redeo.Models
@@ -7,7 +8,8 @@ namespace Redeo.Models
     {
         [Key]
         public int Id { get; set; }
-        [Required]
+
+        [Required(ErrorMessage = "Category name is required")]
         [Display(Name = "Category Name")]
         public string CategoryName { get; set; }
     }
