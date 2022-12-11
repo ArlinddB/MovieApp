@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Redeo.Data;
 using Redeo.Data.Services;
 using Redeo.Models;
+using X.PagedList;
 
 namespace Redeo.Controllers
 {
@@ -17,9 +18,17 @@ namespace Redeo.Controllers
             _service = service;
             _context = context;
         }
-        public async Task<IActionResult> Index()
+        //public async Task<IActionResult> Index()
+        //{
+        //    return View(await _service.GetAllAsync());
+        //}
+
+        public async Task<IActionResult> Index(int? page)
         {
-            return View(await _service.GetAllAsync());
+            var pageNumber = page ?? 1;
+            var pageSize = 2;
+            var a = await _context.categories.ToPagedListAsync(pageNumber, pageSize);
+            return View(a);
         }
 
         //GET: Category/Create
