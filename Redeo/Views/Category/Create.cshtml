@@ -20,10 +20,11 @@
                 <span asp-validation-for="CategoryName" id="errStatus" class="text-sm text-red-600"></span>
             </div>
 
-            <button type="submit"
-                    class="w-full px-6 py-3 mt-3 text-md text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-blue-500 hover:bg-blue-600 hover:shadow-lg focus:outline-none">
-                Add Category
-            </button>
+                <button type="submit"
+                        id="submitBtn"
+                        class="px-6 py-3 mt-3 text-md text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-blue-500 hover:bg-blue-600 hover:shadow-lg focus:outline-none">
+                    Add Category
+                </button>
         </form>
     </div>
 </div>
@@ -46,16 +47,18 @@
         function (data) {
             if (data == 0) {
                 error.html('<font color="Green">Available.</font>');
+                $("#submitBtn").prop('disabled', false).addClass("hover:bg-blue-600").removeClass("cursor-not-allowed bg-blue-400");
 
             }
             else if (data == 1) {
                 error.html('<font color="Red">Category already exists!</font>');
+                $("#submitBtn").prop('disabled', true).addClass("cursor-not-allowed	bg-blue-400").removeClass("hover:bg-blue-600");
             }
             if (!categoryName) {
                 error.html("");
             }
         });
-}
+    }
     
 </script>
 
