@@ -14,6 +14,7 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(conf
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IActorService, ActorService>();
 
+builder.Services.AddScoped<IProducersService, ProducersService>();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();

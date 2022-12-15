@@ -8,6 +8,6 @@ namespace Redeo.Data
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         public DbSet<Category> categories { get; set; }
-        public DbSet<Actor> actors { get; set; }
+        public DbSet<Producers> producers { get; set; }
     }
 }
