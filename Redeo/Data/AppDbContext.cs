@@ -9,5 +9,6 @@ namespace Redeo.Data
 
         public DbSet<Category> categories { get; set; }
         public DbSet<Producers> producers { get; set; }
+        public DbSet<Actor> actors { get; set; }
     }
 }
