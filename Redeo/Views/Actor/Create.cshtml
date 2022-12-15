@@ -1,0 +1,103 @@
+﻿@model Actor
+
+@{
+    ViewData["Title"] = "Add a new Actor";
+}
+
+<div class="p-0 sm:p-12">
+    <div class="mx-auto max-w-md px-6 py-12 bg-slate-50 border-0 shadow-lg sm:rounded-3xl">
+        <h1 class="text-2xl font-bold mb-8">Add a new Actor</h1>
+        <form asp-action="Create">
+
+            <div class="relative z-0 w-full mb-5">
+                <input asp-for="ProfilePictureURL"
+                       type="text"
+                       placeholder=" "
+                       class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200" />
+                <label asp-for="ProfilePictureURL" class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500">Submit Actor's picture</label>
+                <span asp-validation-for="ProfilePictureURL" id="errStatus" class="text-sm text-red-600"></span>
+            </div>
+
+
+            <div class="relative z-0 w-full mb-5">
+                <input asp-for="FullName"
+                       type="text"
+                       placeholder=" "
+                       id="fullname"
+                       oninput="nameCheck()"
+                       class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200" />
+                <label asp-for="FullName" class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500">Enter Actor's' name</label>
+                <span asp-validation-for="FullName" id="errStatus" class="text-sm text-red-600"></span>
+            </div>
+
+            <div class="relative z-0 w-full mb-5">
+                <input asp-for="Birthdate"
+                       type="date"
+                       placeholder=" "
+                       id="birthdayId"
+                       oninput="nameCheck()"
+                       class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200" />
+                <label asp-for="Birthdate" class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500">Enter Actor's birthdate</label>
+                <span asp-validation-for="Birthdate" id="errStatus" class="text-sm text-red-600"></span>
+            </div>
+
+            <div class="relative z-0 w-full mb-5">
+
+                <input asp-for="Bio"
+                       type="text"
+                       placeholder=" "
+                       class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200" />
+                <label asp-for="Bio" class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500">Enter Actor's' Biography</label>
+                <span asp-validation-for="Bio" id="errStatus" class="text-sm text-red-600"></span>
+            </div>
+
+            <button type="submit"
+                    id="submitBtn"
+                    class="px-6 py-3 mt-3 text-md text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-blue-500 hover:bg-blue-600 hover:shadow-lg focus:outline-none">
+                Add Actor
+            </button>
+        </form>
+    </div>
+</div>
+
+<script>
+    //Checking if Actor exists
+
+    function nameCheck() {
+    var fullName = $("#fullname").val()
+    var birthday = $("#birthdayId").val()
+    var error = $("#errStatus")
+
+    error.html('<font color="Gray">Checking...</font>');
+
+    $.post("@Url.Action("ActorAvailability","Actor")",
+
+        {
+            name: fullName,
+            date: birthday
+
+        },
+
+        function (data) {
+            if (data == 0) {
+                error.html('<font color="Green">Available.</font>');
+                $("#submitBtn").prop('disabled', false).addClass("hover:bg-blue-600").removeClass("cursor-not-allowed bg-blue-400");
+
+            }
+            else if (data == 1) {
+                error.html('<font color="Red">Actor already exists!</font>');
+                $("#submitBtn").prop('disabled', true).addClass("cursor-not-allowed	bg-blue-400").removeClass("hover:bg-blue-600");
+            }
+            if (!fullName && !birthday) {
+                error.html("");
+            }
+        });
+    }
+
+</script>
+
+@section Scripts{
+    @{
+    <partial name="_ValidationScriptsPartial" />
+    }
+}

@@ -66,7 +66,7 @@ namespace Redeo.Controllers
 
             return View(categoryDetails);
         }
-
+            
         //GET: Category/Edit/id
         public async Task<IActionResult> Edit(int id)
         {
