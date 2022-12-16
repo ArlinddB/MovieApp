@@ -25,5 +25,11 @@ namespace Redeo.Models
         [Display(Name= "Birthdate")]
         [Column(TypeName = "date")]
         public DateTime Birthdate { get; set; }
+
+        public Producers()
+        {
+
+        }
+        
     }
 }

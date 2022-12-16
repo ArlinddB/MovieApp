@@ -80,7 +80,7 @@ namespace Redeo.Controllers
         }
         [HttpPost]
 
-        public async Task<IActionResult> Edit(int id, [Bind("ProducersName", "ProfilePicture", "Biography", "Birthdate")]Producers producers )
+        public async Task<IActionResult> Edit(int id, [Bind("Id","ProducersName", "ProfilePicture", "Biography", "Birthdate")]Producers producers )
         {
             if (!ModelState.IsValid)
             {
@@ -96,7 +96,8 @@ namespace Redeo.Controllers
                 return View(producers);
             }
 
-            await _service.AddAsync(producers);
+            await _service.UpdateAsync(id, producers);
+
             TempData["success"] = "Producer updated succesfully!";
             return RedirectToAction("Index", "Producers");
 
