@@ -10,21 +10,22 @@ namespace Redeo.Models
         [Key]
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Actor's picture is required!")]
-        [Display(Name = "Actor's Picture")]
+        [Required(ErrorMessage = "Picture is required!")]
+        [Display(Name = "Picture")]
         public string ProfilePictureURL { get; set; }
 
-        [Required(ErrorMessage = "Actor's name is required!")]
-        [Display(Name = "Actor's Name")]
+        [Required(ErrorMessage = "Name is required!")]
+        [Display(Name = "Name")]
         public string FullName { get; set; }
 
-        [Required(ErrorMessage = "Actor's birthdate is required!")]
-        [Display(Name = "Actor's birthdate")]
+        [Required(ErrorMessage = "Birthdate is required!")]
+        [Display(Name = "Birthdate")]
+
         [Column(TypeName = "date")]
         public DateTime Birthdate { get; set; }
 
-        [Required(ErrorMessage = "Actor's biography is required!")]
-        [Display(Name = "Actor's biography")]
+        [Required(ErrorMessage = "Biography is required!")]
+        [Display(Name = "Biography")]
         public string Bio { get; set; }
     }
 }

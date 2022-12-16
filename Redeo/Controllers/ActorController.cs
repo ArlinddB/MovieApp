@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Redeo.Data;
 using Redeo.Data.Services;
 using Redeo.Models;
+using X.PagedList;
 
 namespace Redeo.Controllers
 {
@@ -19,6 +20,14 @@ namespace Redeo.Controllers
             _context = context;
         }
 
+
+        //public async Task<IActionResult> Index(int? page)
+        //{
+        //    var pageNumber = page ?? 1;
+        //    var pageSize = 2;
+        //    var a = await _context.categories.ToPagedListAsync(pageNumber, pageSize);
+        //    return View(a);
+        //}
 
         public async Task<IActionResult> Index()
         {
@@ -80,18 +89,20 @@ namespace Redeo.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, [Bind("ProfilePictureURL", "FullName", "Birthdate", "Bio")] Actor actor)
+        public async Task<IActionResult> Edit(int id, [Bind("Id","ProfilePictureURL", "FullName", "Birthdate", "Bio")] Actor actor)
         {
             if(!ModelState.IsValid)
             {
                 return View(actor);
             }
 
-            var alreadyExists = await _context.actors.AnyAsync(x => x.Id == actor.Id);
+            var alreadyExists1 = await _context.actors.AnyAsync(x => x.FullName == actor.FullName);
+            var alreadyExists2 = await _context.actors.AnyAsync(x => x.Birthdate == actor.Birthdate);
 
-            if(alreadyExists)
+
+            if (alreadyExists1 && alreadyExists2)
             {
-                ModelState.AddModelError("FullName", "Already exist");
+                ModelState.AddModelError("FullName", "Actor already exists");
                 return View(actor);
             }
 

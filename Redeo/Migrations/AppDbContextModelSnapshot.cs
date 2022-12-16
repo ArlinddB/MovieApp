@@ -22,34 +22,6 @@ namespace Redeo.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Redeo.Models.Actor", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Bio")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Birthdate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ProfilePictureURL")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("actors");
-                });
-
             modelBuilder.Entity("Redeo.Models.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -64,7 +36,7 @@ namespace Redeo.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("categories");
+                    b.ToTable("categories", (string)null);
                 });
 
             modelBuilder.Entity("Redeo.Models.Producers", b =>
@@ -92,7 +64,7 @@ namespace Redeo.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("producers");
+                    b.ToTable("producers", (string)null);
                 });
 #pragma warning restore 612, 618
         }
