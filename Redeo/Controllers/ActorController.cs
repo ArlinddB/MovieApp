@@ -21,17 +21,12 @@ namespace Redeo.Controllers
         }
 
 
-        //public async Task<IActionResult> Index(int? page)
-        //{
-        //    var pageNumber = page ?? 1;
-        //    var pageSize = 2;
-        //    var a = await _context.categories.ToPagedListAsync(pageNumber, pageSize);
-        //    return View(a);
-        //}
-
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page)
         {
-            return View(await _service.GetAllAsync());
+            var pageNumber = page ?? 1;
+            var pageSize = 10;
+            var a = await _context.actors.ToPagedListAsync(pageNumber, pageSize);
+            return View(a);
         }
 
         //GET: Actor/Create
