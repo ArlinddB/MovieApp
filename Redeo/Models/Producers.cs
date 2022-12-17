@@ -10,7 +10,7 @@ namespace Redeo.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage=" Producers name is Required!")]
-        [Display(Name="Producers Name")]
+        [Display(Name="Name")]
         public string ProducersName { get; set; }
            
         [Required(ErrorMessage="Profile picture is Required!")]

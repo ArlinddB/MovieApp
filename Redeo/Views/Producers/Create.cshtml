@@ -6,7 +6,7 @@
 
 <div class="p-0 sm:p-12">
 	<div class="mx-auto max-w-md px-6 py-12 bg-slate-50 border-0 shadow-lg sm:rounded-3xl">
-		<h1 class="text-2xl font-bold mb-8">Add a new category</h1>
+		<h1 class="text-2xl font-bold mb-8">Add a new producer</h1>
 		<form asp-action="Create">
 
 			<div class="relative z-0 w-full mb-5">
@@ -16,7 +16,7 @@
 					   id="name"
 					   oninput="producerCheck()"
 					   class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200" />
-				<label asp-for="ProducersName" class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500">Enter producer name</label>
+				<label asp-for="ProducersName" class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500">Name</label>
 				<span asp-validation-for="ProducersName" id="errStatus" class="text-sm text-red-600"></span>
 			</div>
 
@@ -45,15 +45,26 @@
 					   type="text"
 					   placeholder=" "
 					   class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200" />
-				<label asp-for="Biography" class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500">Enter biography</label>
+				<label asp-for="Biography" class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500">Biography</label>
 				<span asp-validation-for="Biography" class="text-sm text-red-600"></span>
 			</div>
 
-			<button type="submit"
-					id="submitBtn"
-					class="px-6 py-3 mt-3 text-md text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-blue-500 hover:bg-blue-600 hover:shadow-lg focus:outline-none">
-				Add Producer
-			</button>
+			<div class="flex justify-between">
+          <a
+            asp-action="Index"
+            class="hvr-icon-back px-4 py-2.5 mt-3 text-md text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-gray-500 hover:bg-gray-700 hover:shadow-lg focus:outline-none"
+          >
+          <i class="fa-solid fa-angle-left hvr-icon mr-2"></i>
+            Back to list
+          </a>
+
+          <button
+            type="submit"
+            class=" px-4 py-2.5 mt-3 text-md text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-blue-500 hover:bg-blue-700 hover:shadow-lg focus:outline-none"
+          >
+            Add Producer
+          </button>
+      </div>
 		</form>
 	</div>
 </div>
