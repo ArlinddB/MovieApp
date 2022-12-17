@@ -16,6 +16,11 @@
         background-color: #c4c4c4;
     }
 
+@font-face {
+    font-family: Reospec;
+    src: url("..//fonts/Reospec.otf") format("opentype");
+}
+
 /*Dropdowns*/
 
 @media only screen and (min-width: 768px) {
