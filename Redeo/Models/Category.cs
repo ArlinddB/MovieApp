@@ -12,5 +12,8 @@ namespace Redeo.Models
         [Required(ErrorMessage = "Category name is required")]
         [Display(Name = "Category Name")]
         public string CategoryName { get; set; }
+
+        // Realtionship
+        public List<Movie_Category> Movies_Categories { get; set; }
     }
 }
