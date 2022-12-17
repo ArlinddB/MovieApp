@@ -49,7 +49,8 @@ namespace Redeo.Controllers
             var alreadyExists2 = await _context.producers.AnyAsync(x => x.Birthdate == producers.Birthdate);
             if (alreadyExists && alreadyExists2)
             {
-                ModelState.AddModelError("ProducersName", "Producer alreday exists!");
+                ModelState.AddModelError("ProducersName", "Producer already exists!");
+                ModelState.AddModelError("Birthdate", "Producer already exists!");
                 return View(producers);
             }
             await _service.AddAsync(producers);
@@ -93,6 +94,7 @@ namespace Redeo.Controllers
             if(alreadyExists && alreadyExists2)
             {
                 ModelState.AddModelError("ProducersName", "Producer already exists!");
+                ModelState.AddModelError("Birthdate", "Producer already exists!");
                 return View(producers);
             }
 
@@ -130,12 +132,13 @@ namespace Redeo.Controllers
         }
 
         //Checking if category exists
-        public JsonResult ProducerAvailability(string name, DateTime dob)
+        public JsonResult ProducerAvailability(string? name, DateTime? birthdate)
         {
             System.Threading.Thread.Sleep(450);
-            var alreadyExists = _context.producers.Where(x => x.ProducersName.Equals(name)).SingleOrDefault();
-            var alreadyExists2 = _context.producers.Where(x => x.Birthdate.Equals(dob)).SingleOrDefault();
-            if(alreadyExists != null && alreadyExists2 != null)
+            var data = _context.producers.Where(x => x.ProducersName.Equals(name)).SingleOrDefault();
+            var data1 = _context.producers.Where(x => x.Birthdate.Equals(birthdate)).SingleOrDefault();
+
+            if (data != null && data1 != null)
             {
                 return Json(1);
             }
@@ -143,12 +146,6 @@ namespace Redeo.Controllers
             {
                 return Json(0);
             }
-
-
-
         }
-
-
-
     }
 }

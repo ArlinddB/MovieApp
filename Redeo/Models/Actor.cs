@@ -26,6 +26,7 @@ namespace Redeo.Models
 
         [Required(ErrorMessage = "Biography is required!")]
         [Display(Name = "Biography")]
+        [DataType(DataType.Date)]
         public string Bio { get; set; }
     }
 }

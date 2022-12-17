@@ -24,12 +24,8 @@ namespace Redeo.Models
         [Required(ErrorMessage = "Birthdate is Required!")]
         [Display(Name= "Birthdate")]
         [Column(TypeName = "date")]
+        [DataType(DataType.Date)]
         public DateTime Birthdate { get; set; }
-
-        public Producers()
-        {
-
-        }
         
     }
 }

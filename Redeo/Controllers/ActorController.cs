@@ -51,6 +51,7 @@ namespace Redeo.Controllers
             if (alreadyExists1 && alreadyExists2 )
             {
                 ModelState.AddModelError("FullName", "Actor already exists");
+                ModelState.AddModelError("Birthdate", "Actor already exists");
                 return View(actor);
             }
 
@@ -98,6 +99,7 @@ namespace Redeo.Controllers
             if (alreadyExists1 && alreadyExists2)
             {
                 ModelState.AddModelError("FullName", "Actor already exists");
+                ModelState.AddModelError("Birthdate", "Actor already exists");
                 return View(actor);
             }
 
@@ -139,7 +141,7 @@ namespace Redeo.Controllers
 
 
         //Checking if category exists
-        public JsonResult ActorAvailability(String name, DateTime birthdate)
+        public JsonResult ActorAvailability(string? name, DateTime? birthdate)
         {
             System.Threading.Thread.Sleep(450);
             var data = _context.actors.Where(x => x.FullName.Equals(name)).SingleOrDefault();

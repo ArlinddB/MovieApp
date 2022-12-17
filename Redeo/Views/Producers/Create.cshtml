@@ -13,7 +13,7 @@
 				<input asp-for="ProducersName"
 					   type="text"
 					   placeholder=" "
-					   id="producerName"
+					   id="name"
 					   oninput="producerCheck()"
 					   class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200" />
 				<label asp-for="ProducersName" class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500">Enter producer name</label>
@@ -62,35 +62,35 @@
 	//Checking if category exists
 
 	function producerCheck() {
-	var producerName = $("#producerName").val();
-	var birthdate = $("#dob").val();
-	var error = $("#errStatus")
+    var producerName = $("#name").val()
+    var birthdate = $("#dob").val()
+    var error = $("#errStatus")
 
-	error.html('<font color="Gray">Checking...</font>');
+    error.html('<font color="Gray">Checking...</font>');
 
-	$.post("@Url.Action("ProducerAvailability","Producers")",
+    $.post("@Url.Action("ProducerAvailability","Producers")",
 
-		{
-			name: producerName,
-			bdate: birthdate;
+        {
+            name: producerName,
+            birthdate: birthdate
 
-		},
+        },
 
-		function (data) {
-			if (data == 0) {
-				error.html('<font color="Green">Available.</font>');
-				$("#submitBtn").prop('disabled', false).addClass("hover:bg-blue-600").removeClass("cursor-not-allowed bg-blue-400");
+        function (data) {
+            if (data == 0) {
+                error.html('<font color="Green">Available.</font>');
+                $("#submitBtn").prop('disabled', false).addClass("hover:bg-blue-600").removeClass("cursor-not-allowed bg-blue-400");
 
-			}
-			else if (data == 1) {
-				error.html('<font color="Red">Category already exists!</font>');
-				$("#submitBtn").prop('disabled', true).addClass("cursor-not-allowed	bg-blue-400").removeClass("hover:bg-blue-600");
-			}
-			if (!producerName && !birthdate) {
-				error.html("");
-			}
-		});
-	}
+            }
+            else if (data == 1) {
+                error.html('<font color="Red">Actor already exists!</font>');
+                $("#submitBtn").prop('disabled', true).addClass("cursor-not-allowed	bg-blue-400").removeClass("hover:bg-blue-600");
+            }
+            if (!fullName && !birthdate) {
+                error.html("");
+            }
+        });
+    }
 
 </script>
 

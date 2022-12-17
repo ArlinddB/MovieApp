@@ -15,7 +15,7 @@
                        placeholder=" "
                        class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200" />
                 <label asp-for="ProfilePictureURL" class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500">Picture URL</label>
-                <span asp-validation-for="ProfilePictureURL" id="errStatus" class="text-sm text-red-600"></span>
+                <span asp-validation-for="ProfilePictureURL" class="text-sm text-red-600"></span>
             </div>
 
 
@@ -23,8 +23,8 @@
                 <input asp-for="FullName"
                        type="text"
                        placeholder=" "
-                       id="fullname"
-                       oninput="nameCheck()"
+                       id="name"
+                       oninput="actorCheck()"
                        class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200" />
                 <label asp-for="FullName" class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500">Name</label>
                 <span asp-validation-for="FullName" id="errStatus" class="text-sm text-red-600"></span>
@@ -34,8 +34,8 @@
                 <input asp-for="Birthdate"
                        type="date"
                        placeholder=" "
-                       id="birthdayId"
-                       oninput="nameCheck()"
+                       id="dob"
+                       oninput="actorCheck()"
                        class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200" />
                 <label asp-for="Birthdate" class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500">Birthdate</label>
                 <span asp-validation-for="Birthdate" id="errStatus" class="text-sm text-red-600"></span>
@@ -48,7 +48,7 @@
                        placeholder=" "
                        class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200" />
                 <label asp-for="Bio" class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500">Biography</label>
-                <span asp-validation-for="Bio" id="errStatus" class="text-sm text-red-600"></span>
+                <span asp-validation-for="Bio" class="text-sm text-red-600"></span>
             </div>
 
             <button type="submit"
@@ -63,9 +63,9 @@
 <script>
     //Checking if Actor exists
 
-    function nameCheck() {
-    var fullName = $("#fullname").val()
-    var birthday = $("#birthdayId").val()
+    function actorCheck() {
+    var fullName = $("#name").val()
+    var birthdate = $("#dob").val()
     var error = $("#errStatus")
 
     error.html('<font color="Gray">Checking...</font>');
@@ -74,7 +74,7 @@
 
         {
             name: fullName,
-            date: birthday
+            birthdate: birthdate
 
         },
 
@@ -88,7 +88,7 @@
                 error.html('<font color="Red">Actor already exists!</font>');
                 $("#submitBtn").prop('disabled', true).addClass("cursor-not-allowed	bg-blue-400").removeClass("hover:bg-blue-600");
             }
-            if (!fullName && !birthday) {
+            if (!fullName && !birthdate) {
                 error.html("");
             }
         });
