@@ -5,8 +5,8 @@
 }
 
 <div class="p-0 sm:p-12">
-	<div class="mx-auto max-w-md px-6 py-12 bg-slate-50 border-0 shadow-lg sm:rounded-3xl">
-		<h1 class="text-2xl font-bold mb-8">Add a new producer</h1>
+	<div class="mx-auto max-w-md px-6 py-12 bg-[#1b1b1f] border-0 shadow-lg sm:rounded-3xl">
+		<h1 class="text-2xl font-bold mb-8 text-slate-300">Add a new producer</h1>
 		<form asp-action="Create">
 
 			<div class="relative z-0 w-full mb-5">
@@ -15,8 +15,8 @@
 					   placeholder=" "
 					   id="name"
 					   oninput="producerCheck()"
-					   class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200" />
-				<label asp-for="ProducersName" class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500">Name</label>
+					   class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200 text-slate-300" />
+				<label asp-for="ProducersName" class="absolute duration-300 top-3 -z-1 origin-0 text-slate-300">Name</label>
 				<span asp-validation-for="ProducersName" id="errStatus" class="text-sm text-red-600"></span>
 			</div>
 
@@ -24,8 +24,8 @@
 				<input asp-for="ProfilePicture"
 					   type="text"
 					   placeholder=" "
-					   class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200" />
-				<label asp-for="ProfilePicture" class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500">Profile picture</label>
+					   class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200 text-slate-300" />
+				<label asp-for="ProfilePicture" class="absolute duration-300 top-3 -z-1 origin-0 text-slate-300">Profile picture</label>
 				<span asp-validation-for="ProfilePicture" class="text-sm text-red-600"></span>
 			</div>
 
@@ -35,8 +35,8 @@
 					   placeholder=" "
 					   id="dob"
 					   oninput="producerCheck()"
-					   class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200" />
-				<label asp-for="Birthdate" class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500">Birthdate</label>
+					   class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200 text-slate-300" />
+				<label asp-for="Birthdate" class="absolute duration-300 top-3 -z-1 origin-0 text-slate-300">Birthdate</label>
 				<span asp-validation-for="Birthdate" id="errStatus" class="text-sm text-red-600"></span>
 			</div>
 
@@ -44,8 +44,8 @@
 				<input asp-for="Biography"
 					   type="text"
 					   placeholder=" "
-					   class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200" />
-				<label asp-for="Biography" class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500">Biography</label>
+					   class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200 text-slate-300" />
+				<label asp-for="Biography" class="absolute duration-300 top-3 -z-1 origin-0 text-slate-300">Biography</label>
 				<span asp-validation-for="Biography" class="text-sm text-red-600"></span>
 			</div>
 
