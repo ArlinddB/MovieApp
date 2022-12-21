@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Redeo.Data;
 using Redeo.Data.Services;
 using Redeo.Models;
+using Redeo.ViewModels;
 using X.PagedList;
 
 namespace Redeo.Controllers
@@ -27,31 +29,26 @@ namespace Redeo.Controllers
         }
 
         //Get:Movie/Create
-        public IActionResult Create()
-        { 
+        public async Task<IActionResult> Create()
+        {
+            var movieDropDowns = await _service.GetNewMovieDropdownsValues();
+            ViewBag.Categories = new SelectList(movieDropDowns.Categories, "Id", "CategoryName");
             return View(); 
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("Name", "Description", "DateOfRelease", "Movies_Categories")]Movie movie)
+        public async Task<IActionResult> Create(MovieVM movie)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                return View(movie);
-            }
-            var alreadyExists1 = await _context.moives.AnyAsync(x => x.Name == movie.Name);
-            var alreadyExists2 = await _context.moives.AnyAsync(x => x.Description == movie.Description);
-
-            if(alreadyExists1 && alreadyExists2)
-            {
-                ModelState.AddModelError("Name", "Movie already exists");
-                ModelState.AddModelError("Description", "Movie already exists");
+                var movieDropDowns = await _service.GetNewMovieDropdownsValues();
+                ViewBag.Categories = new SelectList(movieDropDowns.Categories, "Id", "CategoryName");
                 return View(movie);
             }
 
-            await _service.AddAsync(movie);
+            await _service.AddNewMovieAsync(movie);
             TempData["success"] = "Movie added successfully";
-            return RedirectToAction("Index", "Movie");
+            return RedirectToAction(nameof(Index));
         }
 
         //GET:Movie/Details/id
@@ -67,33 +64,38 @@ namespace Redeo.Controllers
         // GET: Actor/Edit/id
         public async Task<IActionResult> Edit(int id)
         {
-            var movieDatails = await _service.GetByIdAsync(id);
+            var movieDatails = await _service.GetMovieByIdAsync(id);
             if (movieDatails == null)
                 return RedirectToAction("NotFound", "Error");
 
-            return View(movieDatails);
+            var response = new MovieVM()
+            {
+                Id = movieDatails.Id,
+                Name = movieDatails.Name,
+                Description = movieDatails.Description,
+                DateOfRelease = movieDatails.DateOfRelease,
+                CategoryIds = movieDatails.Movies_Categories.Select(x => x.CategoryId).ToList(),
+            };
+
+            var movieDropDowns = await _service.GetNewMovieDropdownsValues();
+            ViewBag.Categories = new SelectList(movieDropDowns.Categories, "Id", "CategoryName");
+            return View(response);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, [Bind("Id", "Name", "Description", "DateOfRelease", "Movies_Categories")] Movie movie)
+        public async Task<IActionResult> Edit(int id, MovieVM movie)
         {
+            if (id != movie.Id)
+                return RedirectToAction("NotFound", "Error");
+
             if (!ModelState.IsValid)
             {
+                var movieDropDowns = await _service.GetNewMovieDropdownsValues();
+                ViewBag.Categories = new SelectList(movieDropDowns.Categories, "Id", "CategoryName");
                 return View(movie);
             }
 
-            var alreadyExists1 = await _context.moives.AnyAsync(x => x.Name == movie.Name);
-            var alreadyExists2 = await _context.moives.AnyAsync(x => x.Description == movie.Description);
-
-
-            if (alreadyExists1 && alreadyExists2)
-            {
-                ModelState.AddModelError("Name", "Movie already exists");
-                ModelState.AddModelError("Description", "Movie already exists");
-                return View(movie);
-            }
-
-            await _service.UpdateAsync(id, movie);
+            await _service.UpdateMovieAsync(movie);
             TempData["success"] = "Movie updated successfully";
 
             return RedirectToAction("Index", "Movie");
@@ -103,8 +105,8 @@ namespace Redeo.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var movieDetails = await _service.GetByIdAsync(id);
-            if (movieDetails == null) return RedirectToAction("NotFound", "Error");
-
+            if (movieDetails == null) 
+                return RedirectToAction("NotFound", "Error");
 
             return View(movieDetails);
         }
