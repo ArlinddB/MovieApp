@@ -1,5 +1,4 @@
 ﻿using Redeo.Data.Base;
-using Redeo.Migrations;
 using Redeo.Models;
 using Redeo.ViewModels;
 
