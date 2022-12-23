@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<Actor>
+    @*@model PaginatedList<Redeo.Models.Actor>*@
 
 @{
     ViewData["Title"] = "Actors";
@@ -6,21 +7,30 @@
 
 <div class="container max-w-6xl mx-auto px-4 sm:px-8">
     <div class="py-8 -mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-        <div class="pt-2 pb-6">
+        <div class="pt-2 pb-6 flex justify-between">
             <a class="inline-block px-4 py-2.5 bg-purple-600 text-white font-medium text-sm leading-tight rounded shadow-md hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out" asp-action="Create">Add new Actor</a>
+        <form asp-action="Index" method="get">
+            <div class="form-actions no-color">
+                <p>
+                    <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+                    <input type="submit" value="" class="btn" /> 
+                    <a asp-action="Index" class="text-slate-300">Clear</a>
+                </p>
+            </div>
+        </form>
         </div>
         <div class="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
             <table class="min-w-full leading-normal">
                 <thead>
                     <tr>
                         <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                            @Html.DisplayNameFor(model => model.ProfilePictureURL)
+                             @Html.DisplayNameFor(model => model.ProfilePictureURL)
                         </th>
                         <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                            @Html.DisplayNameFor(model => model.FullName)
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParam"]">  @Html.DisplayNameFor(model => model.FullName)</a>
                         </th>
                         <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                            @Html.DisplayNameFor(model => model.Birthdate)
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParam"]"> @Html.DisplayNameFor(model => model.Birthdate)</a>
                         </th>
                         <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                             @Html.DisplayNameFor(model => model.Bio)
@@ -57,5 +67,27 @@
             </table>
         </div>
     </div>
-    <partial name="_Pagination" />
+    @* <partial name="_Pagination" />*@
 </div>
+
+
+@*@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+ 
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn @prevDisabled">
+    Previous
+</a>
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>
+*@

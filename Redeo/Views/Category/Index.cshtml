@@ -7,8 +7,18 @@
 <div class="container max-w-2xl mx-auto px-4 sm:px-8">
     <div class="py-8 -mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
         <div class="pt-2 pb-6">
-            <a class="inline-block px-4 py-2.5 bg-[#006db0] text-white font-medium text-sm leading-tight rounded shadow-md hover:bg-[#0067a5] hover:shadow-lg focus:bg-[#0067a5] focus:shadow-lg focus:outline-none focus:ring-0 active:bg-[#0067a5] active:shadow-lg transition duration-150 ease-in-out" asp-action="Create">Add new category</a>
-        </div>
+            
+           <a class="inline-block px-4 py-2.5 bg-[#006db0] text-white font-medium text-sm leading-tight rounded shadow-md hover:bg-[#0067a5] hover:shadow-lg focus:bg-[#0067a5] focus:shadow-lg focus:outline-none focus:ring-0 active:bg-[#0067a5] active:shadow-lg transition duration-150 ease-in-out" asp-action="Create">Add new category</a>
+        <form asp-action="Index" method="get">
+            <div class="form-actions no-color">
+                <p>
+                    <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+                    <input type="submit" value="" class="btn" /> 
+                    <a asp-action="Index" class="text-slate-300">Clear</a>
+                </p>
+            </div>
+        </form>
+       </div>
         <div class="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
             <table class="min-w-full leading-normal">
                 <thead>
@@ -46,5 +56,5 @@
         </div>
     </div>
     @*@Html.Partial("_Pagination")*@
-    <partial name="_Pagination" />
+   @* <partial name="_Pagination" />*@
 </div>
