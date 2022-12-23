@@ -20,12 +20,22 @@ namespace Redeo.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index(int? page)
+        public async Task<IActionResult> Index(string searchString)
         {
-            var pageNumber = page ?? 1;
-            var pageSize = 10;
-            var a = await _context.moives.ToPagedListAsync(pageNumber, pageSize);
-            return View(a);
+            ViewData["CurrentFilter"] = searchString;
+
+            var movies = from m in _context.moives
+                         select m;
+            
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                movies = movies.Where(m => m.Name.Contains(searchString));
+            }
+            return View(await movies.AsNoTracking().ToListAsync());
+            //var pageNumber = page ?? 1;
+            //var pageSize = 10;
+            //var a = await _context.moives.ToPagedListAsync(pageNumber, pageSize);
+            //return View(a);
         }
 
         //Get:Movie/Create

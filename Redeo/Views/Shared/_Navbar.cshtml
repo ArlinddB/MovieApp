@@ -52,12 +52,18 @@
 
 
 		<div class="flex px-4 py-2">
-			<button>
-				<span class="w-auto flex justify-end px-2 items-center focus:ring-0 transition duration-300 border-b-2 border-b-[#006db0]">
+
+			<form asp-action="Index" method="get">
+            <div class="form-actions w-auto flex justify-end px-2 items-center focus:ring-0 transition duration-300 border-b-2 border-b-[#006db0]">
+                
 					<i class="fa-solid fa-magnifying-glass" style="color:#006db0;"></i>
-					<input class="w-44 mr-4 bg-transparent border-none focus:ring-0" type="text" placeholder="Search..." />
-				</span>
-			</button>
+                     <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" class="w-44 mr-4 bg-transparent border-none focus:ring-0" autocomplete="off" />
+                    <input type="submit" value="" />
+                    <a asp-action="Index">Back</a>
+                
+            </div>
+        </form>
+		
 		</div>
 	</div>
 </nav>

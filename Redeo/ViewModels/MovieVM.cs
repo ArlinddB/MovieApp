@@ -26,5 +26,3 @@ namespace Redeo.ViewModels
         public List<int> CategoryIds { get; set; }
     }
 }
-
-}

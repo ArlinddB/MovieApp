@@ -18,13 +18,14 @@
     </header>
 
     <div class="container-fluid">
-        <main role="main" class="pb-4 pt-4" style="height:90vh;">
+
+        <main role="main" class="pb-4 pt-4" >
             <partial name="_Notification"/>
             @RenderBody()
         </main>
     </div>
 
-   <footer class="text-center lg:text-left bg-[#1c1f26] text-gray-600">
+   <footer class="text-center lg:text-left bg-[#1c1f26] text-gray-600 mt-auto">
         @Html.Partial("_Footer")
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
