@@ -1,4 +1,4 @@
-﻿@model Actor
+﻿@model Movie
 
 @{
     ViewData["Title"] = "Delete";
@@ -6,43 +6,33 @@
 
 <div class="p-0 sm:p-12">
     <div class="mx-auto max-w-md px-6 py-12 bg-[#1b1b1f] border-0 shadow-lg sm:rounded-3xl">
-        <h1 class="text-2xl font-bold mb-8 text-slate-300 ">Delete confirmation for Actor "@Model.FullName"</h1>
+        <h1 class="text-2xl font-bold mb-8 text-slate-300 ">Delete confirmation for movie "@Model.Name"</h1>
 
         <div class="relative z-0 w-full mb-5">
-            <input asp-for="ProfilePictureURL"
+            <input asp-for="Name"
                    disabled
                    type="text"
                    class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200 text-slate-300" />
-            <label asp-for="ProfilePictureURL" class="absolute duration-300 top-3 -z-1 origin-0 text-slate-300">Picture URL</label>
+            <label asp-for="Name" class="absolute duration-300 top-3 -z-1 origin-0 text-slate-300">Name</label>
         </div>
 
         <div class="relative z-0 w-full mb-5">
-            <input asp-for="FullName"
+            <input asp-for="Description"
                    disabled
                    type="text"
                    class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200 text-slate-300" />
-            <label asp-for="FullName" class="absolute duration-300 top-3 -z-1 origin-0 text-slate-300">Name</label>
+            <label asp-for="Description" class="absolute duration-300 top-3 -z-1 origin-0 text-slate-300">Description</label>
         </div>
 
 
 
         <div class="relative z-0 w-full mb-5">
-            <input asp-for="Birthdate"
+            <input asp-for="DateOfRelease"
                    disabled
                    type="text"
                    class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200 text-slate-300" />
-            <label asp-for="Birthdate" class="absolute duration-300 top-3 -z-1 origin-0 text-slate-300">Birthdate</label>
+            <label asp-for="DateOfRelease" class="absolute duration-300 top-3 -z-1 origin-0 text-slate-300">Date of release</label>
         </div>
-
-
-        <div class="relative z-0 w-full mb-5">
-            <input asp-for="Bio"
-                   disabled
-                   type="text"
-                   class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200 text-slate-300" />
-            <label asp-for="Bio" class="absolute duration-300 top-3 -z-1 origin-0 text-slate-300">Biography</label>
-        </div>
-
 
         <div class="flex justify-between">
             <a asp-action="Index"
@@ -55,7 +45,7 @@
                 <input asp-for="Id" hidden />
                 <button type="submit"
                         class=" px-4 py-2.5 mt-3 text-md text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-red-500 hover:bg-red-700 hover:shadow-lg focus:outline-none">
-                    Delete Actor
+                    Delete Movie
                 </button>
             </form>
         </div>
