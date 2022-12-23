@@ -338,4 +338,5 @@ select:focus ~ label {
 /*ToastR*/
 #toast-container > .toast-success {
     opacity: 100%;
+    box-shadow: none;
 }
