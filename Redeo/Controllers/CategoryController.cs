@@ -18,17 +18,25 @@ namespace Redeo.Controllers
             _service = service;
             _context = context;
         }
-        //public async Task<IActionResult> Index()
-        //{
-        //    return View(await _service.GetAllAsync());
-        //}
+        
 
-        public async Task<IActionResult> Index(int? page)
+        public async Task<IActionResult> Index(string searchString, int? page)
         {
             var pageNumber = page ?? 1;
             var pageSize = 2;
-            var a = await _context.categories.ToPagedListAsync(pageNumber, pageSize);
-            return View(a);
+
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var categories = from a in _context.categories
+                         select a;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                categories = categories.Where(a => a.CategoryName.Contains(searchString));
+            }
+
+            return View(await categories.AsNoTracking().ToPagedListAsync(pageNumber, pageSize));
         }
 
         //GET: Category/Create

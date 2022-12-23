@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Redeo.Data;
 using Redeo.Data.Services;
 using Redeo.Models;
+using System.Linq.Dynamic.Core;
 using X.PagedList;
 
 namespace Redeo.Controllers
@@ -21,13 +22,44 @@ namespace Redeo.Controllers
         }
 
 
-        public async Task<IActionResult> Index(int? page)
+        public async Task<IActionResult> Index(string sortOrder, string searchString, int? page)
         {
+
             var pageNumber = page ?? 1;
             var pageSize = 10;
-            var a = await _context.actors.ToPagedListAsync(pageNumber, pageSize);
-            return View(a);
+            
+
+            ViewData["NameSortParam"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DateSortParam"] = sortOrder == "Date" ? "date_desc" : "Date";
+            ViewData["CurrentFilter"] = searchString;
+
+            var actors = from a in _context.actors
+                         select a;
+
+            if(!String.IsNullOrEmpty(searchString))
+            {
+                actors = actors.Where(a => a.FullName.Contains(searchString));
+            }
+
+            switch(sortOrder)
+            {
+                case "name_desc":
+                    actors = actors.OrderByDescending(a => a.FullName);
+                    break;
+                case "Date":
+                    actors = actors.OrderBy(a => a.Birthdate);
+                    break;
+                case "date_desc":
+                    actors = actors.OrderByDescending(a => a.Birthdate);
+                    break;
+                    default:
+                    actors = actors.OrderBy(a => a.FullName);
+                    break;
+            }
+            return View(await actors.AsNoTracking().ToPagedListAsync(pageNumber, pageSize));
         }
+
+
 
         //GET: Actor/Create
         public IActionResult Create()

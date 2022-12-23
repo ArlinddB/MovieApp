@@ -23,12 +23,39 @@ namespace Redeo.Controllers
 
         }
 
-        public async Task<IActionResult> Index(int? page)
+        public async Task<IActionResult> Index(string sortOrder, string searchString, int? page)
         {
             var pageNumber = page ?? 1;
             var pageSize = 10;
-            var a = await _context.producers.ToPagedListAsync(pageNumber, pageSize);
-            return View(a);
+
+            ViewData["NameSortParam"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DateSortParam"] = sortOrder == "Date" ? "date_desc" : "Date";
+            ViewData["CurrentFilter"] = searchString;
+
+            var producers = from a in _context.producers
+                         select a;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                producers = producers.Where(a => a.ProducersName.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    producers = producers.OrderByDescending(a => a.ProducersName);
+                    break;
+                case "Date":
+                    producers = producers.OrderBy(a => a.Birthdate);
+                    break;
+                case "date_desc":
+                    producers = producers.OrderByDescending(a => a.Birthdate);
+                    break;
+                default:
+                    producers = producers.OrderBy(a => a.ProducersName);
+                    break;
+            }
+            return View(await producers.AsNoTracking().ToPagedListAsync(pageNumber, pageSize));
         }
 
         //GET: Category/Create
