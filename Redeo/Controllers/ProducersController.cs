@@ -23,13 +23,10 @@ namespace Redeo.Controllers
 
         }
 
-        public async Task<IActionResult> Index(string sortOrder, string searchString/*int? page*/)
+        public async Task<IActionResult> Index(string sortOrder, string searchString, int? page)
         {
-            //var pageNumber = page ?? 1;
-            //var pageSize = 10;
-            //var a = await _context.producers.ToPagedListAsync(pageNumber, pageSize);
-            //return View(a);
-
+            var pageNumber = page ?? 1;
+            var pageSize = 10;
 
             ViewData["NameSortParam"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["DateSortParam"] = sortOrder == "Date" ? "date_desc" : "Date";
@@ -58,7 +55,7 @@ namespace Redeo.Controllers
                     producers = producers.OrderBy(a => a.ProducersName);
                     break;
             }
-            return View(await producers.AsNoTracking().ToListAsync());
+            return View(await producers.AsNoTracking().ToPagedListAsync(pageNumber, pageSize));
         }
 
         //GET: Category/Create
