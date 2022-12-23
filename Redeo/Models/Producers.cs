@@ -22,10 +22,10 @@ namespace Redeo.Models
         public string Biography { get; set; }
 
         [Required(ErrorMessage = "Birthdate is Required!")]
-        [Display(Name= "Birthdate")]
+        [Display(Name = "Birthdate")]
         [Column(TypeName = "date")]
         [DataType(DataType.Date)]
         public DateTime Birthdate { get; set; }
-        
+
     }
 }

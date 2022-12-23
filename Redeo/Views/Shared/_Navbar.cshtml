@@ -1,69 +1,70 @@
 ﻿<nav class="navbarC">
 
-	<button onclick="toggleMenu()" class="burger"></button>
+    <button onclick="toggleMenu()" class="burger"></button>
 
-	<div class="dropdowns justify-between">
-		<div class="px-4 py-2">
-			<a class="text-3xl font-bold leading-none" style="color:#006db0; font-family: Reospec; margin-top: 5px;" href="#">
-				REDEO
-			</a>
-		</div>
-		<div class="res_dropdowns">
-			<div class="dropdown">
-				<button class="button">
-					Movies
-					
-				</button>
-				
-			</div>
-			<div class="dropdown">
-				<button class="button">
-					TV Shows 
-					
-
-
-				</button>
-				
-			</div>
-			<div class="dropdown">
-				<button class="button">
-					Genre
-					<img src="~/icons/chevron.svg" />
-
-				</button>
-				<div class="dropdown-menu">
-					
-				</div>
-			</div>
-
-			<div class="dropdown">
-				<button class="button">
-					Management
-					<img src="~/icons/chevron.svg" />
-
-				</button>
-				<div class="dropdown-menu">
-					<button>Live Chat</button>
-					<button>Send Email</button>
-					<button>Request Help</button>
-				</div>
-			</div>
-		</div>
-
-
-		<div class="flex px-4 py-2">
-
-			<form asp-action="Index" method="get">
-            <div class="form-actions w-auto flex justify-end px-2 items-center focus:ring-0 transition duration-300 border-b-2 border-b-[#006db0]">
-                
-					<i class="fa-solid fa-magnifying-glass" style="color:#006db0;"></i>
-                     <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" class="w-44 mr-4 bg-transparent border-none focus:ring-0" autocomplete="off" />
-                    <input type="submit" value="" />
-                    <a asp-action="Index">Back</a>
-                
+    <div class="dropdowns justify-between">
+        <div class="px-4 py-2">
+            <a class="text-3xl font-bold leading-none" style="color:#006db0; font-family: Reospec; margin-top: 5px;" href="#">
+                REDEO
+            </a>
+        </div>
+        <div class="res_dropdowns">
+            <div class="dropdown">
+                <a asp-controller="Movie" asp-action="Index">
+                    <button class="button">
+                        Movies
+                    </button>
+                </a>
             </div>
-        </form>
-		
-		</div>
-	</div>
+            <div class="dropdown">
+                <button class="button">
+                    TV Shows
+                </button>
+
+            </div>
+            <div class="dropdown">
+                <button class="button">
+                    Genre
+                    <img src="~/icons/chevron.svg" />
+
+                </button>
+                <div class="dropdown-menu">
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="button">
+                    Management
+                    <img src="~/icons/chevron.svg" />
+
+                </button>
+                <div class="dropdown-menu">
+                    <a asp-controller="Category" asp-action="Index" class="mt-2">
+                        <button>Categories</button>
+                    </a>
+                    <a asp-controller="Actor" asp-action="Index" class="mt-2">
+                        <button>Actors</button>
+                    </a>
+                    <a asp-controller="Producers" asp-action="Index" class="mt-2">
+                        <button>Producers</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="flex px-4 py-2">
+
+            <form asp-controller="Movie" asp-action="Index" method="get">
+                <div class="form-actions w-auto flex justify-end px-2 items-center focus:ring-0 transition duration-300 border-b-2 border-b-[#006db0]">
+
+                    <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" class="w-44 mr-4 bg-transparent border-none focus:ring-0" autocomplete="off" />
+                    <i class="fa-solid fa-magnifying-glass" style="color:#006db0;"></i>
+                    <input type="submit" value="" />
+
+                </div>
+            </form>
+
+        </div>
+    </div>
 </nav>

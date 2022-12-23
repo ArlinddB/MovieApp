@@ -22,7 +22,7 @@ namespace Redeo.Data.Services
                 DateOfRelease = data.DateOfRelease
             };
 
-            await _context.moives.AddAsync(newMovie);
+            await _context.movies.AddAsync(newMovie);
             await _context.SaveChangesAsync();
 
             //Add Movie Actors
@@ -40,7 +40,7 @@ namespace Redeo.Data.Services
 
         public async Task<Movie> GetMovieByIdAsync(int id)
         {
-            var movieDetails = await _context.moives
+            var movieDetails = await _context.movies
                 .Include(am => am.Movies_Categories).ThenInclude(a => a.Category)
                 .FirstOrDefaultAsync(n => n.Id == id);
 
@@ -58,7 +58,7 @@ namespace Redeo.Data.Services
 
         public async Task UpdateMovieAsync(MovieVM data)
         {
-            var dbMovie = await _context.moives.FirstOrDefaultAsync(n => n.Id == data.Id);
+            var dbMovie = await _context.movies.FirstOrDefaultAsync(n => n.Id == data.Id);
 
             if (dbMovie != null)
             {

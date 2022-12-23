@@ -28,5 +28,9 @@ namespace Redeo.Models
         [Required(ErrorMessage = "Biography is required!")]
         [Display(Name = "Biography")]
         public string Bio { get; set; }
+
+        // Relationships
+        public List<Movie_Actor> Movies_Actors { get; set; }
+
     }
 }

@@ -42,7 +42,7 @@ button {
     font-size: 20px;
 }
 
-@media (width >= 500px) {
+@media (width >= 830px) {
     button {
         font-size: 16px;
     }
@@ -81,7 +81,7 @@ body.open .burger {
     background-image: url("..//icons/close.svg");
 }
 
-@media (width >= 500px) {
+@media (width >= 830px) {
     .burger {
         display: none;
     }
@@ -101,7 +101,7 @@ body.open .burger {
     }
 
 
-@media (width >= 500px) {
+@media (width >= 830px) {
     .button {
         padding: 0 10px 0 24px;
     }
@@ -111,7 +111,7 @@ body.open .burger {
         }
 }
 
-@media (width >= 500px) {
+@media (width >= 830px) {
     .dropdown:hover .button {
         opacity: 1;
     }
@@ -132,7 +132,7 @@ body.open .burger {
     transition-duration: 0.3s;
 }
 
-@media (width < 500px) {
+@media (width < 830px) {
     body.open .dropdowns {
         opacity: 1;
         visibility: visible;
@@ -151,7 +151,7 @@ body.open .burger {
     display:flex;
 }
 
-@media (width >= 500px) {
+@media (width >= 830px) {
     .dropdowns {
         position: static;
         justify-content: flex-start;
@@ -173,7 +173,7 @@ body.open .burger {
     margin-bottom: 28px;
 }
 
-@media (width >= 500px) {
+@media (width >= 830px) {
     .dropdown {
         height: 100%;
         flex-direction: row;
@@ -181,8 +181,8 @@ body.open .burger {
 
     .dropdown-menu {
         position: absolute;
-        top: 30px;
-        left: 0;
+        top: 29px;
+        left: 1px;
         width: 180px;
         padding: 6px 24px 10px;
         margin-bottom: 0;
@@ -207,7 +207,7 @@ body.open .burger {
     height: 40px;
 }
 
-@media (width >= 500px) {
+@media (width >= 830px) {
     .dropdown-menu > button {
         opacity: 0.6;
     }

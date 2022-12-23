@@ -24,7 +24,7 @@ namespace Redeo.Controllers
         {
             ViewData["CurrentFilter"] = searchString;
 
-            var movies = from m in _context.moives
+            var movies = from m in _context.movies
                          select m;
             
             if (!String.IsNullOrEmpty(searchString))
@@ -34,7 +34,7 @@ namespace Redeo.Controllers
             return View(await movies.AsNoTracking().ToListAsync());
             //var pageNumber = page ?? 1;
             //var pageSize = 10;
-            //var a = await _context.moives.ToPagedListAsync(pageNumber, pageSize);
+            //var a = await _context.movies.ToPagedListAsync(pageNumber, pageSize);
             //return View(a);
         }
 
@@ -137,8 +137,8 @@ namespace Redeo.Controllers
         public JsonResult MovieAvailability(string? name, String? description)
         {
             System.Threading.Thread.Sleep(450);
-            var data = _context.moives.Where(x => x.Name.Equals(name)).SingleOrDefault();
-            var data1 = _context.moives.Where(x => x.Description.Equals(description)).SingleOrDefault();
+            var data = _context.movies.Where(x => x.Name.Equals(name)).SingleOrDefault();
+            var data1 = _context.movies.Where(x => x.Description.Equals(description)).SingleOrDefault();
 
             if (data != null && data1 != null)
             {

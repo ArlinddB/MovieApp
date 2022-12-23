@@ -20,8 +20,14 @@ namespace Redeo.Models
         [DataType(DataType.Date)]
         public DateTime DateOfRelease { get; set; }
 
+        [Required(ErrorMessage = "Quality type is required")]
+        [MaxLength(10,ErrorMessage = "Max length is 10 characters")]
+        public string Quality { get; set; }
+
         // Relationship
         public List<Movie_Category> Movies_Categories { get; set; }
+
+        public List<Movie_Actor> Movies_Actors { get; set; }
 
     }
 }
