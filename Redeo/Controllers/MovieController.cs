@@ -42,7 +42,11 @@ namespace Redeo.Controllers
         public async Task<IActionResult> Create()
         {
             var movieDropDowns = await _service.GetNewMovieDropdownsValues();
+
             ViewBag.Categories = new SelectList(movieDropDowns.Categories, "Id", "CategoryName");
+            ViewBag.Producers = new SelectList(movieDropDowns.Producers, "Id", "ProducersName");
+            ViewBag.Actors = new SelectList(movieDropDowns.Actors, "Id", "FullName");
+
             return View(); 
         }
 
@@ -52,7 +56,11 @@ namespace Redeo.Controllers
             if (!ModelState.IsValid)
             {
                 var movieDropDowns = await _service.GetNewMovieDropdownsValues();
+
                 ViewBag.Categories = new SelectList(movieDropDowns.Categories, "Id", "CategoryName");
+                ViewBag.Producers = new SelectList(movieDropDowns.Producers, "Id", "ProducersName");
+                ViewBag.Actors = new SelectList(movieDropDowns.Actors, "Id", "FullName");
+
                 return View(movie);
             }
 
@@ -64,7 +72,7 @@ namespace Redeo.Controllers
         //GET:Movie/Details/id
         public async Task<IActionResult> Details(int id)
         {
-            var movieDatails = await _service.GetByIdAsync(id);
+            var movieDatails = await _service.GetMovieByIdAsync(id);
             if (movieDatails == null)
                 return RedirectToAction("NotFound", "Error");
 
@@ -85,10 +93,17 @@ namespace Redeo.Controllers
                 Description = movieDatails.Description,
                 DateOfRelease = movieDatails.DateOfRelease,
                 CategoryIds = movieDatails.Movies_Categories.Select(x => x.CategoryId).ToList(),
+                Quality = movieDatails.Quality,
+                ProducerId = movieDatails.ProducerId,
+                ActorIds = movieDatails.Movies_Actors.Select(c => c.ActorId).ToList()
             };
 
             var movieDropDowns = await _service.GetNewMovieDropdownsValues();
+
             ViewBag.Categories = new SelectList(movieDropDowns.Categories, "Id", "CategoryName");
+            ViewBag.Producers = new SelectList(movieDropDowns.Producers, "Id", "ProducersName");
+            ViewBag.Actors = new SelectList(movieDropDowns.Actors, "Id", "FullName");
+
             return View(response);
         }
 
@@ -101,7 +116,11 @@ namespace Redeo.Controllers
             if (!ModelState.IsValid)
             {
                 var movieDropDowns = await _service.GetNewMovieDropdownsValues();
+
                 ViewBag.Categories = new SelectList(movieDropDowns.Categories, "Id", "CategoryName");
+                ViewBag.Producers = new SelectList(movieDropDowns.Producers, "Id", "ProducersName");
+                ViewBag.Actors = new SelectList(movieDropDowns.Actors, "Id", "FullName");
+
                 return View(movie);
             }
 

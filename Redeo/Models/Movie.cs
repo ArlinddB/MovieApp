@@ -27,6 +27,9 @@ namespace Redeo.Models
         // Relationship
         public List<Movie_Category> Movies_Categories { get; set; }
 
+        public int ProducerId { get; set; }
+        [ForeignKey("ProducerId")]
+        public Producers Producers { get; set; }
         public List<Movie_Actor> Movies_Actors { get; set; }
 
     }

@@ -40,10 +40,38 @@
             </div>
 
             <div class="relative z-0 w-full mb-5">
-                <label asp-for="CategoryIds" class="absolute duration-300 top-3 -z-1 origin-0 text-slate-300"> Category</label>
-                <select asp-for="CategoryIds" class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200 text-slate-300" asp-items="ViewBag.Categories" multiple></select>
+                <input asp-for="Quality"
+                       type="text"
+                       placeholder=" "
+                       class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200 text-slate-300" />
+                <label asp-for="Quality" class="absolute duration-300 top-3 -z-1 origin-0 text-slate-300">Quality</label>
+                <span asp-validation-for="Quality" class="text-sm text-red-600"></span>
+            </div>
+
+            <div class="relative z-0 w-full mb-5">
+                <select asp-for="CategoryIds" class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200 text-slate-300" asp-items="ViewBag.Categories" multiple>
+                    <option value="" disabled>Select Categories</option>
+                </select>
 
                 <span asp-validation-for="CategoryIds" class="text-sm text-red-600"></span>
+
+            </div>
+
+            <div class="relative z-0 w-full mb-5">
+                <select asp-for="ProducerId" class="pt-3 pb-2 block w-full px-0 mt-0 one-select bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:bg-transparent active:bg-transparent border-gray-200 text-slate-300" asp-items="ViewBag.Producers">
+                    <option value="" disabled selected>Select a Producer</option>
+                </select>
+
+                <span asp-validation-for="ProducerId" class="text-sm text-red-600"></span>
+
+            </div>
+
+            <div class="relative z-0 w-full mb-5">
+                <select asp-for="ActorIds" class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200 text-slate-300" asp-items="ViewBag.Actors" multiple>
+                    <option value="" disabled>Select Actors</option>
+                </select>
+
+                <span asp-validation-for="ActorIds" class="text-sm text-red-600"></span>
 
             </div>
 

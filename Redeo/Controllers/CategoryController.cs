@@ -48,6 +48,7 @@ namespace Redeo.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([Bind("CategoryName")]Category category)
         {
+            ModelState.Remove("Movies_Categories");
             if (!ModelState.IsValid)
             {
                 return View(category);
@@ -88,6 +89,7 @@ namespace Redeo.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(int id, [Bind("Id, CategoryName")]Category category)
         {
+            ModelState.Remove("Movies_Categories");
             if (!ModelState.IsValid)
             {
                 return View(category);

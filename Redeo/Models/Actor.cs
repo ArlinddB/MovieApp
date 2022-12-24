@@ -29,8 +29,7 @@ namespace Redeo.Models
         [Display(Name = "Biography")]
         public string Bio { get; set; }
 
-        // Relationships
+        //Relationships
         public List<Movie_Actor> Movies_Actors { get; set; }
-
     }
 }

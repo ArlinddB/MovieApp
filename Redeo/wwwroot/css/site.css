@@ -29,6 +29,9 @@ body {
     background: #1e2129;
 }
 
+.one-select option {
+    background-color: #1b1b1f;
+}
 
 
 /*Navbar*/

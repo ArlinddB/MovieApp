@@ -19,10 +19,22 @@ namespace Redeo.ViewModels
         [DataType(DataType.Date)]
         public DateTime DateOfRelease { get; set; }
 
+        [Required(ErrorMessage = "Quality type is required")]
+        [MaxLength(10, ErrorMessage = "Max length is 10 characters")]
+        public string Quality { get; set; }
+
         // Relationships
 
         [Display(Name = "Select categories")]
         [Required(ErrorMessage = "Movie categories are required")]
         public List<int> CategoryIds { get; set; }
+
+        [Display(Name = "Select a producer")]
+        [Required(ErrorMessage = "Movie producer is required")]
+        public int ProducerId { get; set; }
+
+        [Display(Name = "Select actors")]
+        [Required(ErrorMessage = "Movie actors are required")]
+        public List<int> ActorIds { get; set; }
     }
 }

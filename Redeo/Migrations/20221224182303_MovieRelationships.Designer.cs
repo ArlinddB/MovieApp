@@ -12,8 +12,8 @@ using Redeo.Data;
 namespace Redeo.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20221223224058_OtherMovieRelationships")]
-    partial class OtherMovieRelationships
+    [Migration("20221224182303_MovieRelationships")]
+    partial class MovieRelationships
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -89,12 +89,17 @@ namespace Redeo.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("ProducerId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Quality")
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProducerId");
 
                     b.ToTable("movies");
                 });
@@ -111,7 +116,7 @@ namespace Redeo.Migrations
 
                     b.HasIndex("ActorId");
 
-                    b.ToTable("movie_actors");
+                    b.ToTable("movies_actors");
                 });
 
             modelBuilder.Entity("Redeo.Models.Movie_Category", b =>
@@ -155,6 +160,17 @@ namespace Redeo.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("producers");
+                });
+
+            modelBuilder.Entity("Redeo.Models.Movie", b =>
+                {
+                    b.HasOne("Redeo.Models.Producers", "Producers")
+                        .WithMany()
+                        .HasForeignKey("ProducerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Producers");
                 });
 
             modelBuilder.Entity("Redeo.Models.Movie_Actor", b =>

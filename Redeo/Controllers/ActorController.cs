@@ -68,9 +68,9 @@ namespace Redeo.Controllers
         }
 
         [HttpPost]
-
-        public async Task<IActionResult> Create([Bind("ProfilePictureURL", "FullName","Birthdate","Bio")]Actor actor)
+        public async Task<IActionResult> Create([Bind("ProfilePictureURL", "FullName", "Birthdate", "Bio")] Actor actor)
         {
+            ModelState.Remove("Movies_Actors");
             if (!ModelState.IsValid)
             {
                 return View(actor);
@@ -78,9 +78,9 @@ namespace Redeo.Controllers
 
             var alreadyExists1 = await _context.actors.AnyAsync(x => x.FullName == actor.FullName);
             var alreadyExists2 = await _context.actors.AnyAsync(x => x.Birthdate == actor.Birthdate);
-            
 
-            if (alreadyExists1 && alreadyExists2 )
+
+            if (alreadyExists1 && alreadyExists2)
             {
                 ModelState.AddModelError("FullName", "Actor already exists");
                 ModelState.AddModelError("Birthdate", "Actor already exists");
@@ -91,8 +91,6 @@ namespace Redeo.Controllers
             TempData["success"] = "Actor added successfully";
             return RedirectToAction("Index", "Actor");
         }
-
-
 
         //GET: Actor/Details/id
         public async Task<IActionResult> Details(int id)
@@ -119,7 +117,8 @@ namespace Redeo.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(int id, [Bind("Id","ProfilePictureURL", "FullName", "Birthdate", "Bio")] Actor actor)
         {
-            if(!ModelState.IsValid)
+            ModelState.Remove("Movies_Actors");
+            if (!ModelState.IsValid)
             {
                 return View(actor);
             }
