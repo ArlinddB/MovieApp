@@ -19,9 +19,15 @@ namespace Redeo.ViewModels
         [DataType(DataType.Date)]
         public DateTime DateOfRelease { get; set; }
 
+        [Required(ErrorMessage = "Duration is required")]
+        public int Duration { get; set; }
+
         [Required(ErrorMessage = "Quality type is required")]
         [MaxLength(10, ErrorMessage = "Max length is 10 characters")]
         public string Quality { get; set; }
+
+        [Required(ErrorMessage = "Movie url is required")]
+        public string MovieUrl { get; set; }
 
         // Relationships
 

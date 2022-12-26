@@ -20,7 +20,9 @@ namespace Redeo.Data.Services
                 Name = data.Name,
                 Description = data.Description,
                 DateOfRelease = data.DateOfRelease,
+                Duration = data.Duration,
                 Quality = data.Quality,
+                MovieUrl = data.MovieUrl,
                 ProducerId = data.ProducerId
             };
 
@@ -85,7 +87,9 @@ namespace Redeo.Data.Services
                 dbMovie.Name = data.Name;
                 dbMovie.Description = data.Description;
                 dbMovie.DateOfRelease = data.DateOfRelease;
+                dbMovie.Duration = data.Duration;
                 dbMovie.Quality = data.Quality;
+                dbMovie.MovieUrl = data.MovieUrl;
                 dbMovie.ProducerId = data.ProducerId;
 
                 await _context.SaveChangesAsync();

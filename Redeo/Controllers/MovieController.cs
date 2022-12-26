@@ -20,22 +20,23 @@ namespace Redeo.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index(string searchString)
+        public async Task<IActionResult> Index(string searchString, int? page)
         {
             ViewData["CurrentFilter"] = searchString;
 
             var movies = from m in _context.movies
                          select m;
-            
+
+            var pageNumber = page ?? 1;
+            var pageSize = 10;
+
             if (!String.IsNullOrEmpty(searchString))
             {
                 movies = movies.Where(m => m.Name.Contains(searchString));
             }
-            return View(await movies.AsNoTracking().ToListAsync());
-            //var pageNumber = page ?? 1;
-            //var pageSize = 10;
-            //var a = await _context.movies.ToPagedListAsync(pageNumber, pageSize);
-            //return View(a);
+
+            return View(await movies.AsNoTracking().ToPagedListAsync(pageNumber, pageSize));
+            
         }
 
         //Get:Movie/Create
@@ -74,7 +75,7 @@ namespace Redeo.Controllers
         {
             var movieDatails = await _service.GetMovieByIdAsync(id);
             if (movieDatails == null)
-                return RedirectToAction("NotFound", "Error");
+                return BadRequest("NotFound");
 
             return View(movieDatails);
         }
@@ -92,8 +93,10 @@ namespace Redeo.Controllers
                 Name = movieDatails.Name,
                 Description = movieDatails.Description,
                 DateOfRelease = movieDatails.DateOfRelease,
-                CategoryIds = movieDatails.Movies_Categories.Select(x => x.CategoryId).ToList(),
+                Duration = movieDatails.Duration,
                 Quality = movieDatails.Quality,
+                MovieUrl = movieDatails.MovieUrl,
+                CategoryIds = movieDatails.Movies_Categories.Select(x => x.CategoryId).ToList(),
                 ProducerId = movieDatails.ProducerId,
                 ActorIds = movieDatails.Movies_Actors.Select(c => c.ActorId).ToList()
             };
