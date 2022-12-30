@@ -18,6 +18,7 @@ namespace Redeo.Data.Services
             var newMovie = new Movie()
             {
                 Name = data.Name,
+                MoviePicture = data.MoviePicture,
                 Description = data.Description,
                 DateOfRelease = data.DateOfRelease,
                 Duration = data.Duration,
@@ -85,6 +86,7 @@ namespace Redeo.Data.Services
             if (dbMovie != null)
             {
                 dbMovie.Name = data.Name;
+                dbMovie.MoviePicture = data.MoviePicture;
                 dbMovie.Description = data.Description;
                 dbMovie.DateOfRelease = data.DateOfRelease;
                 dbMovie.Duration = data.Duration;
@@ -102,7 +104,6 @@ namespace Redeo.Data.Services
             var existingActorsDb = _context.movies_actors.Where(n => n.MovieId == data.Id).ToList();
             _context.movies_actors.RemoveRange(existingActorsDb);
 
-            await _context.SaveChangesAsync();
 
             //Add Movie Categories
             foreach(var categoryId in data.CategoryIds)
@@ -116,7 +117,7 @@ namespace Redeo.Data.Services
                 await _context.movies_categories.AddAsync(newCategoryMovie);
             }
             // Add movie actors
-            foreach (var actorId in data.CategoryIds)
+            foreach (var actorId in data.ActorIds)
             {
                 var newActorMovie = new Movie_Actor()
                 {

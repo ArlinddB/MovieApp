@@ -91,6 +91,7 @@ namespace Redeo.Controllers
             {
                 Id = movieDatails.Id,
                 Name = movieDatails.Name,
+                MoviePicture = movieDatails.MoviePicture,
                 Description = movieDatails.Description,
                 DateOfRelease = movieDatails.DateOfRelease,
                 Duration = movieDatails.Duration,

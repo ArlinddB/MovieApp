@@ -9,6 +9,9 @@ namespace Redeo.Models
         [Key]
         public int Id { get; set; }
 
+        [Required(ErrorMessage = "Picture is required")]
+        public string MoviePicture{ get; set; }
+
         [Required(ErrorMessage = "Name is required")]
         public string Name { get; set; }
 
