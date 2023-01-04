@@ -15,12 +15,12 @@
                 </div>
                 <div class="mb-1">
 
-                    <a class="cursor-pointer" asp-action="Details" asp-route-id="@item.Id">
+                    <a class="cursor-pointer hover:scale-100 jt" asp-action="Details" asp-route-id="@item.Id" rel="/Movie/ClueTip?id=@item.Id">
                         <div class="relative w-full rounded-none transition-all">
                             <span class="play">
 
                             </span>
-                            <div class="absolute uppercase top-2 right-1.5 px-0 py-4 text-white font-semibold z-4 text-sm">
+                            <div class="absolute uppercase top-2 right-1.5 px-0 py-4 text-white font-semibold z-4 text-sm" id="quality">
                                 @item.Quality
                             </div>
                             @*<div class="absolute top-6 right-0.5 z-4 px-1 py-4 text-white font-semibold text-sm">
@@ -38,7 +38,6 @@
                             <a class="text-slate-300" asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-play mr-3"></i>Play</a>
                         </div>
                     </div>
-
                 </div>
             </div>
         }

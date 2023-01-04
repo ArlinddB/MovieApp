@@ -1,7 +1,13 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿const toggleMenu = () => document.body.classList.toggle("open");
 
-// Write your JavaScript code.
-
-
-const toggleMenu = () => document.body.classList.toggle("open");
+$('a.jt').cluetip({
+    showTitle: false,
+    dropShadow: false,
+    cluetipClass: 'custom',
+    positionBy: 'fixed',
+    leftOffset: -13,
+    hoverIntent: false,
+    sticky: true,
+    mouseOutClose: true,
+    closePosition: '',
+});

@@ -1,0 +1,24 @@
+﻿@model Movie;
+@{
+    Layout = null;
+}
+
+<div class="bg-[#17191f] text-zinc-300">
+    <div class="p-3">
+        <span class="text-base mr-2">@Model.Name</span>
+    </div>
+    <div class="bg-[#4b5563] grid grid-cols-4 py-1 px-3">
+        <span class="text-[12px]">@Model.DateOfRelease.ToString("yyyy")</span>
+        <span class="text-[12px]">@Model.Quality.ToUpper()</span>
+        <span class="text-[12px]">@Model.Duration min</span>
+    </div>
+    <div class="p-3">
+        <span class="text-[13px]">@Model.Description</span>
+    </div>
+    <div class="px-3 pb-4">
+        <a  class="inline-block text-center px-4 py-[8px] border border-[#006db0] text-[#006db0] font-medium text-sm leading-tight rounded hover:bg-[#006db0] hover:text-zinc-300 focus:outline-none focus:ring-0 transition duration-150 ease-in-out" asp-controller="Movie" asp-action="Details" asp-route-id="@Model.Id">
+            <i class="fa-solid fa-play mr-1"></i>
+            Play
+        </a>
+    </div>
+</div>

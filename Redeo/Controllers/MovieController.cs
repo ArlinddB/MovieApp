@@ -172,5 +172,10 @@ namespace Redeo.Controllers
                 return Json(0);
             }
         }
+
+        public async Task<IActionResult> ClueTip(int id)
+        {
+            return View(await _context.movies.Where(x => x.Id == id).SingleOrDefaultAsync());
+        }
     }
 }
