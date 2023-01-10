@@ -58,7 +58,7 @@
             <form asp-controller="Movie" asp-action="Index" method="get">
                 <div class="form-actions w-auto flex justify-end px-2 items-center focus:ring-0 transition duration-300 border-b-2 border-b-[#006db0]">
 
-                    <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" class="w-44 mr-4 bg-transparent border-none focus:ring-0" autocomplete="off" />
+                    <input type="text"  placeholder="Search" name="SearchString" value="@ViewData["CurrentFilter"]" class="w-44 mr-4 bg-transparent border-none focus:ring-0" autocomplete="off" />
                     <i class="fa-solid fa-magnifying-glass" style="color:#006db0;"></i>
                     <input type="submit" value="" />
 

@@ -1,48 +1,107 @@
 ﻿@model IEnumerable<Movie>;
 
 @{
-    ViewData["Title"] = "Movies";
+	ViewData["Title"] = "Movies";
 }
+
+<style type="text/css">
+	.swiper{
+		margin-top: -88px;
+	}
+	.swiper-pagination{
+		position: absolute;
+		top: 35rem;
+		z-index: 1;
+	}
+	.swiper-pagination-bullet{
+		width: 20px;
+		height: 20px;
+	}
+
+	@@media (width < 830px) {
+		.dropdowns{
+			z-index: 10;
+		}
+		.burger{
+			z-index: 20;
+		}
+		.swiper{
+			z-index: -10;
+		}
+	}
+
+	@@media (width > 830px) {
+		.navbarC {
+			background-color: rgba(25, 25, 28, 0.7);
+			backdrop-filter: blur(2px);
+		}
+
+	}
+</style>
+
 <div>
-    <div class="grid grid-cols-3 gap-x-3 gap-y-5 sm:px-8 px-2 py-3 sm:grid-cols-5 md:grid-cols-6">
-        @foreach (var item in Model)
-        {
+	<div>
+		<div class="swiper mySwiper">
+			<div class="swiper-wrapper">
+				<div class="swiper-slide">
+					<img class="object-cover h-[38rem] w-full"
+						 src="https://images.pexels.com/photos/167699/pexels-photo-167699.jpeg"
+						 alt="image" />
+				</div>
+				<div class="swiper-slide">
+					<img class="object-cover h-[38rem] w-full"
+						 src="https://images.pexels.com/photos/2662116/pexels-photo-2662116.jpeg"
+						 alt="image" />
+				</div>
+				<div class="swiper-slide">
+					<img class="object-cover h-[38rem] w-full"
+						 src="https://images.pexels.com/photos/235621/pexels-photo-235621.jpeg"
+						 alt="image" />
+				</div>
+			</div>
+		</div>
+		<div class="swiper-pagination"></div>
+	</div>
 
-            <div>
-                <div class="mb-2">
-                    <a class="px-1.5 py-1.5 bg-blue-600 text-white font-medium text-xs leading-tight rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out mr-2" asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pen"></i></a>
-                    <a class="px-1.5 py-1.5 bg-red-600 text-white font-medium text-xs leading-tight rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out" asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash"></i></a>
-                </div>
-                <div class="mb-1">
+	<div class="grid grid-cols-3 gap-x-3 gap-y-5 sm:px-8 px-2 py-3 sm:grid-cols-5 md:grid-cols-6">
+		@foreach (var item in Model)
+		{
 
-                    <a class="cursor-pointer hover:scale-100 jt" asp-action="Details" asp-route-id="@item.Id" rel="/Movie/ClueTip?id=@item.Id">
-                        <div class="relative w-full rounded-none transition-all">
-                            <span class="play">
+			<div>
+				<div class="mb-2">
+					<a class="px-1.5 py-1.5 bg-blue-600 text-white font-medium text-xs leading-tight rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out mr-2" asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pen"></i></a>
+					<a class="px-1.5 py-1.5 bg-red-600 text-white font-medium text-xs leading-tight rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out" asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash"></i></a>
+				</div>
+				<div class="mb-1">
 
-                            </span>
-                            <div class="absolute uppercase top-2 right-1.5 px-0 py-4 text-white font-semibold z-4 text-sm" id="quality">
-                                @item.Quality
-                            </div>
-                            @*<div class="absolute top-6 right-0.5 z-4 px-1 py-4 text-white font-semibold text-sm">
-                                7.8
-                                </div>*@
-                            <img class="bg-cover w-full inline-block" src="@item.MoviePicture" />
-                        </div>
-                    </a>
-                    <div class="bg-[#1c1f26] p-2">
-                        <a asp-action="Details" asp-route-id="@item.Id" class="text-slate-300" title="@item.Name">
-                            <h4 class="truncate text-sm mt-3">@Html.DisplayFor(modelItem => item.Name)</h4>
-                        </a>
-                        <p class="text-blue-200 text-xs">@item.DateOfRelease.ToString("dd MMMM yyyy")</p>
-                        <div class="px-4 py-1 bg-[#21242b] text-center mt-3 rounded">
-                            <a class="text-slate-300" asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-play mr-3"></i>Play</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        }
-    </div>
-    <partial name="_Pagination" />
+					<a class="cursor-pointer hover:scale-100 jt" asp-action="Details" asp-route-id="@item.Id" rel="/Movie/ClueTip?id=@item.Id">
+						<div class="relative w-full rounded-none transition-all">
+							<span class="play">
+
+							</span>
+							<div class="absolute uppercase top-2 right-1.5 px-0 py-4 text-white font-semibold z-4 text-sm" id="quality">
+								@item.Quality
+							</div>
+							@*<div class="absolute top-6 right-0.5 z-4 px-1 py-4 text-white font-semibold text-sm">
+								7.8
+								</div>*@
+							<img class="bg-cover w-full inline-block" src="@item.MoviePicture" />
+						</div>
+					</a>
+					<div class="bg-[#1c1f26] p-2">
+						<a asp-action="Details" asp-route-id="@item.Id" class="text-slate-300" title="@item.Name">
+							<h4 class="truncate text-sm mt-3">@Html.DisplayFor(modelItem => item.Name)</h4>
+						</a>
+						<p class="text-blue-200 text-xs">@item.DateOfRelease.ToString("dd MMMM yyyy")</p>
+						<div class="px-4 py-1 bg-[#21242b] text-center mt-3 rounded">
+							<a class="text-slate-300" asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-play mr-3"></i>Play</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		}
+	</div>
+	<partial name="_Pagination" />
 </div>
 
 <a title="Add" asp-action="Create"
