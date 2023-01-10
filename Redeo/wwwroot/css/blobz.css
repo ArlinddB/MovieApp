@@ -1,0 +1,40 @@
+.tk-blob {
+  animation: blob-turn var(--time, 30s) linear infinite;
+  fill: var(--fill, #7600f8);
+  position: relative;
+  transform-origin: center;
+  z-index: -1;
+}
+
+.tk-blob svg path {
+  animation: blob-scale calc( var(--time, 30s) * 0.5 ) ease-in-out 0s infinite;
+  transform-origin: center;
+}
+
+@keyframes blob-turn {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
+@keyframes blob-scale {
+  0% {
+    transform: scaleX(.9) scaleY(1);
+  }
+  25% {
+    transform: scaleX(.9) scaleY(.9);
+  }
+  50% {
+    transform: scaleX(1) scaleY(.9);
+  }
+  75% {
+    transform: scaleX(.9) scaleY(.9);
+  }
+  100% {
+    transform: scaleX(.9) scaleY(1);
+  }
+}
