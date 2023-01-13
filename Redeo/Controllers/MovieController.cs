@@ -20,22 +20,15 @@ namespace Redeo.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index(string searchString, int? page)
+        public async Task<IActionResult> Index(int? page)
         {
-            ViewData["CurrentFilter"] = searchString;
-
-            var movies = from m in _context.movies
-                         select m;
+           
 
             var pageNumber = page ?? 1;
             var pageSize = 10;
 
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                movies = movies.Where(m => m.Name.Contains(searchString));
-            }
-
-            return View(await movies.AsNoTracking().ToPagedListAsync(pageNumber, pageSize));
+           
+            return View(await _context.movies.ToPagedListAsync(pageNumber, pageSize));
             
         }
 
