@@ -21,6 +21,7 @@ namespace Redeo.Controllers
             _context = context;
         }
 
+        public async Task<IActionResult> Index(int? page)
         public List<Category> GetCategory()
         {
             return _context.categories.ToList();
@@ -28,22 +29,15 @@ namespace Redeo.Controllers
 
         public async Task<IActionResult> Index(string searchString, int? page)
         {
-            ViewData["CurrentFilter"] = searchString;
-
-            var movies = from m in _context.movies
-                         select m;
+           
 
             ViewBag.Category = GetCategory();
 
             var pageNumber = page ?? 1;
             var pageSize = 10;
 
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                movies = movies.Where(m => m.Name.Contains(searchString));
-            }
-
-            return View(await movies.AsNoTracking().ToPagedListAsync(pageNumber, pageSize));
+           
+            return View(await _context.movies.ToPagedListAsync(pageNumber, pageSize));
             
         }
 
