@@ -20,8 +20,6 @@ namespace Redeo.Controllers
             _service = service;
             _context = context;
         }
-
-        public async Task<IActionResult> Index(int? page)
         public List<Category> GetCategory()
         {
             return _context.categories.ToList();
