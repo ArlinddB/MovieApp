@@ -21,7 +21,10 @@ namespace Redeo.Controllers
             _context = context;
         }
 
-
+        public List<Category> GetCategory()
+        {
+            return _context.categories.ToList();
+        }
         public async Task<IActionResult> Index(string sortOrder, string searchString, int? page)
         {
 
@@ -35,6 +38,8 @@ namespace Redeo.Controllers
 
             var actors = from a in _context.actors
                          select a;
+
+            ViewBag.Category = GetCategory();
 
             if(!String.IsNullOrEmpty(searchString))
             {
@@ -64,6 +69,8 @@ namespace Redeo.Controllers
         //GET: Actor/Create
         public IActionResult Create()
         {
+            ViewBag.Category = GetCategory();
+
             return View();
         }
 
@@ -95,6 +102,8 @@ namespace Redeo.Controllers
         //GET: Actor/Details/id
         public async Task<IActionResult> Details(int id)
         {
+            ViewBag.Category = GetCategory();
+
             var actorDetails = await _service.GetByIdAsync(id);
             if (actorDetails == null)
                 return RedirectToAction("NotFound", "Error");
@@ -106,6 +115,8 @@ namespace Redeo.Controllers
         // GET: Actor/Edit/id
         public async Task<IActionResult> Edit(int id)
         {
+            ViewBag.Category = GetCategory();
+
             var actorDetails = await _service.GetByIdAsync(id);
             if (actorDetails == null)
                 return RedirectToAction("NotFound", "Error");
@@ -147,6 +158,8 @@ namespace Redeo.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
+            ViewBag.Category = GetCategory();
+
             var actorDetails = await _service.GetByIdAsync(id);
             if (actorDetails == null) return RedirectToAction("NotFound", "Error");
 

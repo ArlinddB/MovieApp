@@ -32,6 +32,7 @@ namespace Redeo.Models
 
         [Required(ErrorMessage = "Movie url is required")]
         public string MovieUrl { get; set; }
+        public int Clicks { get; set; }
 
         // Relationship
         public List<Movie_Category> Movies_Categories { get; set; }
@@ -40,6 +41,5 @@ namespace Redeo.Models
         [ForeignKey("ProducerId")]
         public Producers Producers { get; set; }
         public List<Movie_Actor> Movies_Actors { get; set; }
-
     }
 }

@@ -31,5 +31,6 @@ namespace Redeo.Models
 
         //Relationships
         public List<Movie_Actor> Movies_Actors { get; set; }
+        public List<TvShow_Actor> TvShows_Actors { get; set; }
     }
 }

@@ -15,5 +15,6 @@ namespace Redeo.Models
 
         // Realtionship
         public List<Movie_Category> Movies_Categories { get; set; }
+        public List<TvShow_Category> TvShows_Categories { get; set; }
     }
 }

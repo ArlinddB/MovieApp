@@ -24,7 +24,8 @@ namespace Redeo.Data.Services
                 Duration = data.Duration,
                 Quality = data.Quality,
                 MovieUrl = data.MovieUrl,
-                ProducerId = data.ProducerId
+                ProducerId = data.ProducerId,
+                Clicks = 0
             };
 
             await _context.movies.AddAsync(newMovie);

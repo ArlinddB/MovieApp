@@ -23,9 +23,15 @@ namespace Redeo.Controllers
             _roleManager = roleManager;
             _context = context;
         }
-        
+
+        public List<Category> GetCategory()
+        {
+            return _context.categories.ToList();
+        }
         public IActionResult Login()
         {
+            ViewBag.Category = GetCategory();
+
             return View(new LoginVM());
         }
         [HttpPost]
@@ -52,6 +58,8 @@ namespace Redeo.Controllers
 
         public IActionResult Register()
         {
+            ViewBag.Category = GetCategory();
+
             return View(new RegisterVM());
         }
 
@@ -87,6 +95,8 @@ namespace Redeo.Controllers
 
         public IActionResult RegisterAdmin()
         {
+            ViewBag.Category = GetCategory();
+
             return View(new RegisterVM());
         }
 

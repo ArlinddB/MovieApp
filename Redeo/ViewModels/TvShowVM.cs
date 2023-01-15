@@ -3,13 +3,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Redeo.ViewModels
 {
-    public class MovieVM
+    public class TvShowVM
     {
         [Key]
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Picture is required")]
-        public string MoviePicture { get; set; }
+        public string TvShowPicture { get; set; }
 
         [Required(ErrorMessage = "Name is required")]
         public string Name { get; set; }
@@ -17,8 +17,8 @@ namespace Redeo.ViewModels
         [Required(ErrorMessage = "Description is required")]
         public string Description { get; set; }
 
-        [Column(TypeName = "date")]
         [Required(ErrorMessage = "Release date is required")]
+        [Column(TypeName = "date")]
         [DataType(DataType.Date)]
         public DateTime DateOfRelease { get; set; }
 
@@ -29,22 +29,20 @@ namespace Redeo.ViewModels
         [MaxLength(10, ErrorMessage = "Max length is 10 characters")]
         public string Quality { get; set; }
 
-        [Required(ErrorMessage = "Movie url is required")]
-        public string MovieUrl { get; set; }
+        [Required(ErrorMessage = "TvShow url is required")]
+        public string TvShowUrl { get; set; }
         public int Clicks { get; set; }
 
-        // Relationships
-
-        [Display(Name = "Select categories")]
-        [Required(ErrorMessage = "Movie categories are required")]
-        public List<int> CategoryIds { get; set; }
-
+        //Relationship
         [Display(Name = "Select a producer")]
-        [Required(ErrorMessage = "Movie producer is required")]
+        [Required(ErrorMessage = "Producer is required")]
         public int ProducerId { get; set; }
 
+        [Display(Name = "Select categories")]
+        [Required(ErrorMessage = "Categories are required")]
+        public List<int> CategoryIds { get; set; }
         [Display(Name = "Select actors")]
-        [Required(ErrorMessage = "Movie actors are required")]
+        [Required(ErrorMessage = "Actors are required")]
         public List<int> ActorIds { get; set; }
     }
 }

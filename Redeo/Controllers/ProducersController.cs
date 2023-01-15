@@ -22,9 +22,14 @@ namespace Redeo.Controllers
             _context = context; 
 
         }
-
+        public List<Category> GetCategory()
+        {
+            return _context.categories.ToList();
+        }
         public async Task<IActionResult> Index(string sortOrder, string searchString, int? page)
         {
+            ViewBag.Category = GetCategory();
+
             var pageNumber = page ?? 1;
             var pageSize = 10;
 
@@ -61,6 +66,8 @@ namespace Redeo.Controllers
         //GET: Category/Create
         public IActionResult Create()
         {
+            ViewBag.Category = GetCategory();
+
             return View();
         }
 
@@ -90,6 +97,8 @@ namespace Redeo.Controllers
         //GET: Category/Details/id
         public async Task<IActionResult> Details(int id)
         {
+            ViewBag.Category = GetCategory();
+
             var producersDetails = await _service.GetByIdAsync(id);
             if (producersDetails == null)
                 return RedirectToAction("NotFound", "Error");
@@ -100,14 +109,16 @@ namespace Redeo.Controllers
         //GET: Category/Edit/id
         public async Task<IActionResult> Edit(int id)
         {
+            ViewBag.Category = GetCategory();
+
             var producersDetails = await _service.GetByIdAsync(id);
             if (producersDetails == null)
                 return RedirectToAction("NotFound", "Error");
 
             return View(producersDetails);
         }
-        [HttpPost]
 
+        [HttpPost]
         public async Task<IActionResult> Edit(int id, [Bind("Id","ProducersName", "ProfilePicture", "Biography", "Birthdate")]Producers producers )
         {
             if (!ModelState.IsValid)
@@ -136,7 +147,9 @@ namespace Redeo.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            var producersDetails= await _service.GetByIdAsync(id);
+            ViewBag.Category = GetCategory();
+
+            var producersDetails = await _service.GetByIdAsync(id);
             if(producersDetails == null)
             
                 return RedirectToAction("NotFound", "Error");

@@ -1,0 +1,124 @@
+﻿@model TvShowVM
+@using Redeo.ViewModels;
+
+@{
+    ViewData["Title"] = "Add Tv Show";
+}
+<div class="p-0 sm:p-12">
+    <div class="mx-auto max-w-md px-6 py-12 bg-[#1b1b1f] border-0 shadow-lg sm:rounded-3xl">
+        <h1 class="text-2xl font-bold mb-8 text-slate-300">Add Tv Show</h1>
+        <form asp-action="Create" method="post">
+
+            <div class="relative z-0 w-full mb-5">
+                <input asp-for="TvShowPicture"
+                       type="text"
+                       placeholder=" "
+                       class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200 text-slate-300" />
+                <label asp-for="TvShowPicture" class="absolute duration-300 top-3 -z-1 origin-0 text-slate-300">Movie Picture</label>
+                <span asp-validation-for="TvShowPicture" class="text-sm text-red-600"></span>
+            </div>
+
+            <div class="relative z-0 w-full mb-5">
+                <input asp-for="Name"
+                       type="text"
+                       placeholder=" "
+                       class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200 text-slate-300" />
+                <label asp-for="Name" class="absolute duration-300 top-3 -z-1 origin-0 text-slate-300">Name</label>
+                <span asp-validation-for="Name" class="text-sm text-red-600"></span>
+            </div>
+
+
+            <div class="relative z-0 w-full mb-5">
+                <input asp-for="Description"
+                       type="text"
+                       placeholder=" "
+                       class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200 text-slate-300" />
+                <label asp-for="Description" class="absolute duration-300 top-3 -z-1 origin-0 text-slate-300">Description</label>
+                <span asp-validation-for="Description" class="text-sm text-red-600"></span>
+            </div>
+
+
+            <div class="relative z-0 w-full mb-5">
+                <input asp-for="DateOfRelease"
+                       type="date"
+                       placeholder=" "
+                       class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200 text-slate-300" />
+                <label asp-for="DateOfRelease" class="absolute duration-300 top-3 -z-1 origin-0 text-slate-300"> Date of release</label>
+                <span asp-validation-for="DateOfRelease" class="text-sm text-red-600"></span>
+            </div>
+
+            <div class="relative z-0 w-full mb-5">
+                <input asp-for="Duration"
+                       type="text"
+                       placeholder=" "
+                       class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200 text-slate-300" />
+                <label asp-for="Duration" class="absolute duration-300 top-3 -z-1 origin-0 text-slate-300">Duration</label>
+                <span asp-validation-for="Duration" class="text-sm text-red-600"></span>
+            </div>
+
+            <div class="relative z-0 w-full mb-5">
+                <input asp-for="Quality"
+                       type="text"
+                       placeholder=" "
+                       class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200 text-slate-300" />
+                <label asp-for="Quality" class="absolute duration-300 top-3 -z-1 origin-0 text-slate-300">Quality</label>
+                <span asp-validation-for="Quality" class="text-sm text-red-600"></span>
+            </div>
+
+            <div class="relative z-0 w-full mb-5">
+                <input asp-for="TvShowUrl"
+                       type="text"
+                       placeholder=" "
+                       class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200 text-slate-300" />
+                <label asp-for="TvShowUrl" class="absolute duration-300 top-3 -z-1 origin-0 text-slate-300">Tv show Url</label>
+                <span asp-validation-for="TvShowUrl" class="text-sm text-red-600"></span>
+            </div>
+
+            <div class="relative z-0 w-full mb-5">
+                <select asp-for="CategoryIds" class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200 text-slate-300" asp-items="ViewBag.Categories" multiple>
+                    <option value="" disabled>Select Categories</option>
+                </select>
+
+                <span asp-validation-for="CategoryIds" class="text-sm text-red-600"></span>
+
+            </div>
+
+            <div class="relative z-0 w-full mb-5">
+                <select asp-for="ProducerId" class="pt-3 pb-2 block w-full px-0 mt-0 one-select bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:bg-transparent active:bg-transparent border-gray-200 text-slate-300" asp-items="ViewBag.Producers">
+                    <option value="" disabled selected>Select a Producer</option>
+                </select>
+
+                <span asp-validation-for="ProducerId" class="text-sm text-red-600"></span>
+
+            </div>
+
+            <div class="relative z-0 w-full mb-5">
+                <select asp-for="ActorIds" class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200 text-slate-300" asp-items="ViewBag.Actors" multiple>
+                    <option value="" disabled>Select Actors</option>
+                </select>
+
+                <span asp-validation-for="ActorIds" class="text-sm text-red-600"></span>
+
+            </div>
+
+            <div class="flex justify-between">
+                <a asp-action="Index"
+                   class="hvr-icon-back px-4 py-2.5 mt-3 text-md text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-gray-500 hover:bg-gray-700 hover:shadow-lg focus:outline-none">
+                    <i class="fa-solid fa-angle-left hvr-icon mr-2"></i>
+                    Back to list
+                </a>
+
+                <button type="submit"
+                        class=" px-4 py-2.5 mt-3 text-md text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-blue-500 hover:bg-blue-700 hover:shadow-lg focus:outline-none">
+                    Add
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
