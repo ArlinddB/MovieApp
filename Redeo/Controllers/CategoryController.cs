@@ -1,12 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Redeo.Data;
+using Redeo.Data.Roles;
 using Redeo.Data.Services;
 using Redeo.Models;
 using X.PagedList;
 
 namespace Redeo.Controllers
 {
+    [Authorize(Roles = UserRoles.Admin + "," + UserRoles.Editor)]
     public class CategoryController : Controller
     {
         private readonly ICategoryService _service;
@@ -67,6 +70,7 @@ namespace Redeo.Controllers
         }
 
         //GET: Category/Details/id
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int id)
         {
             var categoryDetails = await _service.GetByIdAsync(id);

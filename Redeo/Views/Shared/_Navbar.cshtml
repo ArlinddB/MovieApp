@@ -1,4 +1,7 @@
-﻿<nav class="navbarC">
+﻿@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager;
+
+<nav class="navbarC">
 
     <button onclick="toggleMenu()" class="burger"></button>
 
@@ -31,25 +34,27 @@
                 <div class="dropdown-menu">
                 </div>
             </div>
+            @if (User.Identity.IsAuthenticated && (User.IsInRole("Editor") || User.IsInRole("Admin")))
+            {
+                <div class="dropdown">
+                    <button class="button">
+                        Management
+                        <img src="~/icons/chevron.svg" />
 
-            <div class="dropdown">
-                <button class="button">
-                    Management
-                    <img src="~/icons/chevron.svg" />
-
-                </button>
-                <div class="dropdown-menu">
-                    <a asp-controller="Category" asp-action="Index" class="mt-2">
-                        <button>Categories</button>
-                    </a>
-                    <a asp-controller="Actor" asp-action="Index" class="mt-2">
-                        <button>Actors</button>
-                    </a>
-                    <a asp-controller="Producers" asp-action="Index" class="mt-2">
-                        <button>Producers</button>
-                    </a>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a asp-controller="Category" asp-action="Index" class="mt-2">
+                            <button>Categories</button>
+                        </a>
+                        <a asp-controller="Actor" asp-action="Index" class="mt-2">
+                            <button>Actors</button>
+                        </a>
+                        <a asp-controller="Producers" asp-action="Index" class="mt-2">
+                            <button>Producers</button>
+                        </a>
+                    </div>
                 </div>
-            </div>
+            }
         </div>
 
 
@@ -58,13 +63,43 @@
             <form asp-controller="Filter" asp-action="Index" method="get">
                 <div class="form-actions w-auto flex justify-end px-2 items-center focus:ring-0 transition duration-300 border-b-2 border-b-[#006db0]">
 
-                    <input type="text"  placeholder="Search" name="s" class="w-44 mr-4 bg-transparent border-none focus:ring-0" autocomplete="off" />
+                    <input type="text" placeholder="Search" name="s" class="w-44 mr-4 bg-transparent border-none focus:ring-0" autocomplete="off" />
                     <i class="fa-solid fa-magnifying-glass" style="color:#006db0;"></i>
                     <input type="submit" value="" />
 
                 </div>
             </form>
+            @if (!User.Identity.IsAuthenticated)
+            {
+                <a asp-controller="Account" asp-action="Login" class="relative inline-flex ml-8 items-center justify-center px-6 py-2 overflow-hidden font-medium text-indigo-600 transition duration-300 ease-out rounded-full shadow-xl group hover:ring-1 hover:ring-0">
+                    <span class="absolute inset-0 w-full h-full bg-gradient-to-br from-purple-500 via-purple-600 to-[#006db0]"></span>
+                    <span class="absolute bottom-0 right-0 block w-64 h-64 mb-32 mr-4 transition duration-500 origin-bottom-left transform rotate-45 translate-x-24 bg-[#006db0] rounded-full opacity-30 group-hover:rotate-90 ease"></span>
+                    <span class="relative text-zinc-300">Login</span>
+                </a>
+            }
+            else
+            {
+                <div class="dropdown mt-2.5">
+                    <button class="button">
+                        Hello, @UserManager.GetUserName(User)
+                        <img src="~/icons/chevron.svg" />
+                    </button>
+                    <div class="dropdown-menu">
+                        <a href="" class="mt-1 mb-1">Profile</a>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a href="">
+                                Admin Area
+                            </a>
+                        }
+                        <form asp-controller="Account" asp-action="Logout" class="mt-1 mb-1">
+                            <button type="submit"><i class="fa-solid fa-power-off"></i> Log out</button>
+                        </form>
+                    </div>
+                </div>
+            }
 
         </div>
+
     </div>
 </nav>

@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Redeo.Data;
+using Redeo.Data.Roles;
 using Redeo.Data.Services;
 using Redeo.Models;
 using Redeo.ViewModels;
@@ -9,6 +11,7 @@ using X.PagedList;
 
 namespace Redeo.Controllers
 {
+    [Authorize(Roles = UserRoles.Admin + "," + UserRoles.Editor)]
     public class MovieController : Controller
     {
         private readonly IMovieService _service;
@@ -20,6 +23,7 @@ namespace Redeo.Controllers
             _context = context;
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Index(int? page)
         {
            
@@ -64,6 +68,7 @@ namespace Redeo.Controllers
         }
 
         //GET:Movie/Details/id
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int id)
         {
             var movieDatails = await _service.GetMovieByIdAsync(id);
@@ -165,7 +170,7 @@ namespace Redeo.Controllers
                 return Json(0);
             }
         }
-
+        [AllowAnonymous]
         public async Task<IActionResult> ClueTip(int id)
         {
             return View(await _context.movies.Where(x => x.Id == id).SingleOrDefaultAsync());

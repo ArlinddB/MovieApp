@@ -1,6 +1,8 @@
-﻿    using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Redeo.Data;
+using Redeo.Data.Roles;
 using Redeo.Data.Services;
 using Redeo.Models;
 using System.Linq.Dynamic.Core;
@@ -8,6 +10,7 @@ using X.PagedList;
 
 namespace Redeo.Controllers
 {
+    [Authorize(Roles = UserRoles.Admin + "," + UserRoles.Editor)]
     public class ActorController : Controller
     {
         private readonly IActorService _service;
@@ -92,6 +95,7 @@ namespace Redeo.Controllers
             return RedirectToAction("Index", "Actor");
         }
 
+        [AllowAnonymous]
         //GET: Actor/Details/id
         public async Task<IActionResult> Details(int id)
         {
