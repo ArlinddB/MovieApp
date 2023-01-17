@@ -7,6 +7,7 @@ using Redeo.Data.Roles;
 using Redeo.Data.Services;
 using Redeo.Models;
 using Redeo.ViewModels;
+using System.Collections.Generic;
 using X.PagedList;
 
 namespace Redeo.Controllers
@@ -22,11 +23,17 @@ namespace Redeo.Controllers
             _service = service;
             _context = context;
         }
+        public List<Category> GetCategory()
+        {
+            return _context.categories.ToList();
+        }
 
         [AllowAnonymous]
         public async Task<IActionResult> Index(int? page)
         {
            
+
+            ViewBag.Category = GetCategory();
 
             var pageNumber = page ?? 1;
             var pageSize = 10;
@@ -40,6 +47,8 @@ namespace Redeo.Controllers
         public async Task<IActionResult> Create()
         {
             var movieDropDowns = await _service.GetNewMovieDropdownsValues();
+
+            ViewBag.Category = GetCategory();
 
             ViewBag.Categories = new SelectList(movieDropDowns.Categories, "Id", "CategoryName");
             ViewBag.Producers = new SelectList(movieDropDowns.Producers, "Id", "ProducersName");
@@ -71,7 +80,14 @@ namespace Redeo.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Details(int id)
         {
+            ViewBag.Category = GetCategory();
+
             var movieDatails = await _service.GetMovieByIdAsync(id);
+
+            movieDatails.Clicks += 1;
+
+            await _service.UpdateAsync(id, movieDatails);
+
             if (movieDatails == null)
                 return BadRequest("NotFound");
 
@@ -84,6 +100,8 @@ namespace Redeo.Controllers
             var movieDatails = await _service.GetMovieByIdAsync(id);
             if (movieDatails == null)
                 return RedirectToAction("NotFound", "Error");
+
+            ViewBag.Category = GetCategory();
 
             var response = new MovieVM()
             {
@@ -135,6 +153,8 @@ namespace Redeo.Controllers
         //GET: Actor/Delete/id
         public async Task<IActionResult> Delete(int id)
         {
+            ViewBag.Category = GetCategory();
+
             var movieDetails = await _service.GetByIdAsync(id);
             if (movieDetails == null) 
                 return RedirectToAction("NotFound", "Error");

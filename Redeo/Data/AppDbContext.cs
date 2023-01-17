@@ -14,8 +14,11 @@ namespace Redeo.Data
         public DbSet<Movie> movies { get; set; }
         public DbSet<Movie_Category> movies_categories { get; set; }
         public DbSet<Movie_Actor> movies_actors { get; set; }
-
-
+        public DbSet<TvShow> tvShows { get; set; }
+        public DbSet<TSeason> seasons { get; set; }
+        public DbSet<TEpisodes> episodes { get; set; }
+        public DbSet<TvShow_Category> tvShows_categories { get; set; }
+        public DbSet<TvShow_Actor> tvShows_actors { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -39,6 +42,27 @@ namespace Redeo.Data
 
             modelBuilder.Entity<Movie_Actor>().HasOne(m => m.Movie).WithMany(mc => mc.Movies_Actors).HasForeignKey(m => m.MovieId);
             modelBuilder.Entity<Movie_Actor>().HasOne(m => m.Actor).WithMany(mc => mc.Movies_Actors).HasForeignKey(m => m.ActorId);
+
+            //TvShow with Categories
+            modelBuilder.Entity<TvShow_Category>().HasKey(t => new
+            {
+                t.TvShowId,
+                t.CategoryId
+            });
+
+            modelBuilder.Entity<TvShow_Category>().HasOne(a => a.TvShow).WithMany(mc => mc.TvShows_Categories).HasForeignKey(m => m.TvShowId);
+            modelBuilder.Entity<TvShow_Category>().HasOne(b => b.Category).WithMany(mc => mc.TvShows_Categories).HasForeignKey(m => m.CategoryId);
+
+            //TvShow with Actor
+            modelBuilder.Entity<TvShow_Actor>().HasKey(mc => new
+            {
+                mc.TvShowId,
+                mc.ActorId
+            });
+
+            modelBuilder.Entity<TvShow_Actor>().HasOne(a => a.TvShow).WithMany(mc => mc.TvShows_Actors).HasForeignKey(m => m.TvShowId);
+            modelBuilder.Entity<TvShow_Actor>().HasOne(b => b.Actor).WithMany(mc => mc.TvShows_Actors).HasForeignKey(m => m.ActorId);
+
 
             base.OnModelCreating(modelBuilder);
         }

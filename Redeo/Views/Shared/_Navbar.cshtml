@@ -32,6 +32,14 @@
 
                 </button>
                 <div class="dropdown-menu">
+                    <div class="flex flex-col">
+                        @foreach (var item in ViewBag.Category)
+                        {
+                            <a href="">
+                                @item.CategoryName
+                            </a>
+                        }
+                    </div>
                 </div>
             </div>
             @if (User.Identity.IsAuthenticated && (User.IsInRole("Editor") || User.IsInRole("Admin")))

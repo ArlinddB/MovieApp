@@ -18,6 +18,8 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IActorService, ActorService>();
 builder.Services.AddScoped<IProducersService, ProducersService>();
 builder.Services.AddScoped<IMovieService, MovieService>();
+builder.Services.AddScoped<ITvShowService, TvShowService>();
+builder.Services.AddScoped<ISeasonService, SeasonService>();
 
 
 //Authentication and Authorization

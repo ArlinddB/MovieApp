@@ -10,7 +10,7 @@ namespace Redeo.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Picture is required")]
-        public string TvSHowPicture { get; set; }
+        public string TvShowPicture { get; set; }
 
         [Required(ErrorMessage = "Name is required")]
         public string Name { get; set; }
@@ -18,8 +18,8 @@ namespace Redeo.Models
         [Required(ErrorMessage = "Description is required")]
         public string Description { get; set; }
 
-        [Column(TypeName = "date")]
         [Required(ErrorMessage = "Release date is required")]
+        [Column(TypeName = "date")]
         [DataType(DataType.Date)]
         public DateTime DateOfRelease { get; set; }
 
@@ -32,14 +32,14 @@ namespace Redeo.Models
 
         [Required(ErrorMessage = "TvShow url is required")]
         public string TvShowUrl { get; set; }
+        public int Clicks { get; set; }
 
         //Relationship
-
-        public List<TSeason> Seasons { get; set; }
-
         public int ProducerId { get; set; }
         [ForeignKey("ProducerId")]
         public Producers Producers { get; set; }
-
+        public List<TSeason> Seasons { get; set; }
+        public List<TvShow_Category> TvShows_Categories { get; set; }
+        public List<TvShow_Actor> TvShows_Actors { get; set; }
     }
 }

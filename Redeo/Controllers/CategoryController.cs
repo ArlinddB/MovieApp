@@ -21,10 +21,14 @@ namespace Redeo.Controllers
             _service = service;
             _context = context;
         }
-        
-
+        public List<Category> GetCategory()
+        {
+            return _context.categories.ToList();
+        }
         public async Task<IActionResult> Index(string searchString, int? page)
         {
+            ViewBag.Category = GetCategory();
+
             var pageNumber = page ?? 1;
             var pageSize = 2;
 
@@ -45,6 +49,8 @@ namespace Redeo.Controllers
         //GET: Category/Create
         public IActionResult Create()
         {
+            ViewBag.Category = GetCategory();
+
             return View();
         }
 
@@ -73,6 +79,8 @@ namespace Redeo.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Details(int id)
         {
+            ViewBag.Category = GetCategory();
+
             var categoryDetails = await _service.GetByIdAsync(id);
             if (categoryDetails == null)
                 return RedirectToAction("NotFound", "Error");
@@ -83,6 +91,8 @@ namespace Redeo.Controllers
         //GET: Category/Edit/id
         public async Task<IActionResult> Edit(int id)
         {
+            ViewBag.Category = GetCategory();
+
             var categoryDetails = await _service.GetByIdAsync(id);
             if (categoryDetails == null)
                 return RedirectToAction("NotFound", "Error");
@@ -116,6 +126,8 @@ namespace Redeo.Controllers
         //GET: Category/Delete/id
         public async Task<IActionResult> Delete(int id)
         {
+            ViewBag.Category = GetCategory();
+
             var categoryDetails = await _service.GetByIdAsync(id);
             if (categoryDetails == null)
                 return RedirectToAction("NotFound", "Error");
