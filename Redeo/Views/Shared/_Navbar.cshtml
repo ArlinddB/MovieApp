@@ -35,7 +35,7 @@
                     <div class="flex flex-col">
                         @foreach (var item in ViewBag.Category)
                         {
-                            <a class="mt-2">
+                            <a asp-controller="Movie" asp-action="Index" asp-route-genre="@item.CategoryName" class="mt-2">
                                 @item.CategoryName
                             </a>
                         }
