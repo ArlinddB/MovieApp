@@ -81,6 +81,7 @@ namespace Redeo.Controllers
         public async Task<IActionResult> Create([Bind("ProfilePictureURL", "FullName", "Birthdate", "Bio")] Actor actor)
         {
             ModelState.Remove("Movies_Actors");
+            ModelState.Remove("TvShows_Actors");
             if (!ModelState.IsValid)
             {
                 return View(actor);

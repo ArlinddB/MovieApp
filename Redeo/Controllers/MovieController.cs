@@ -29,7 +29,7 @@ namespace Redeo.Controllers
         }
 
         [AllowAnonymous]
-        public async Task<IActionResult> Index(int? page)
+        public async Task<IActionResult> Index(string? genre, int? page)
         {
            
 
@@ -38,6 +38,12 @@ namespace Redeo.Controllers
             var pageNumber = page ?? 1;
             var pageSize = 10;
 
+            if (!String.IsNullOrEmpty(genre))
+            {
+                var a = _context.movies.Where(n => n.Movies_Categories.Any(c => c.Category.CategoryName == genre));
+
+                return View("Index", a.ToPagedList(pageNumber, pageSize));
+            }
            
             return View(await _context.movies.ToPagedListAsync(pageNumber, pageSize));
             
