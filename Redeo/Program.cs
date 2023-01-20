@@ -64,4 +64,6 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Movie}/{action=Index}/{id?}");
 
+AppDbInitializer.SeedUsers(app);
+
 app.Run();

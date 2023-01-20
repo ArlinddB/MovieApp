@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Redeo.Data;
 using Redeo.Data.Roles;
@@ -15,7 +16,7 @@ namespace Redeo.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly AppDbContext _context;
 
-        public AccountController(UserManager<ApplicationUser> userManager, 
+        public AccountController(UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager, AppDbContext context)
         {
             _userManager = userManager;
@@ -28,6 +29,7 @@ namespace Redeo.Controllers
         {
             return _context.categories.ToList();
         }
+
         public IActionResult Login()
         {
             ViewBag.Category = GetCategory();
@@ -41,7 +43,7 @@ namespace Redeo.Controllers
 
             var user = await _userManager.FindByNameAsync(login.UserName);
 
-            if(user != null)
+            if (user != null)
             {
                 var passwordCheck = await _userManager.CheckPasswordAsync(user, login.Password);
                 if (passwordCheck)
@@ -66,10 +68,10 @@ namespace Redeo.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterVM register)
         {
-            if(!ModelState.IsValid) return View(register);
+            if (!ModelState.IsValid) return View(register);
 
             var user = await _userManager.FindByNameAsync(register.UserName);
-            if(user != null)
+            if (user != null)
             {
                 return View(register);
             }
@@ -93,16 +95,20 @@ namespace Redeo.Controllers
             return RedirectToAction("Login", "Account");
         }
 
-        public IActionResult RegisterAdmin()
+        [Authorize(Roles = UserRoles.Admin)]
+        public IActionResult CreateEditor()
         {
             ViewBag.Category = GetCategory();
 
             return View(new RegisterVM());
         }
 
+
         [HttpPost]
-        public async Task<IActionResult> RegisterAdmin(RegisterVM register)
+        [Authorize(Roles = UserRoles.Admin)]
+        public async Task<IActionResult> CreateEditor(RegisterVM register)
         {
+            ModelState.Remove("ConfirmPassword");
             if (!ModelState.IsValid) return View(register);
 
             var user = await _userManager.FindByNameAsync(register.UserName);
@@ -121,13 +127,20 @@ namespace Redeo.Controllers
 
             var newUserResponse = await _userManager.CreateAsync(newUser, register.Password);
 
-            if (!await _roleManager.RoleExistsAsync(UserRoles.Admin))
-                await _roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
+            if (!await _roleManager.RoleExistsAsync(UserRoles.Editor))
+                await _roleManager.CreateAsync(new IdentityRole(UserRoles.Editor));
 
-            if (newUserResponse.Succeeded && await _roleManager.RoleExistsAsync(UserRoles.Admin))
-                await _userManager.AddToRoleAsync(newUser, UserRoles.Admin);
+            if (newUserResponse.Succeeded && await _roleManager.RoleExistsAsync(UserRoles.Editor))
+                await _userManager.AddToRoleAsync(newUser, UserRoles.Editor);
 
             return RedirectToAction("Login", "Account");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Movie");
         }
     }
 }
