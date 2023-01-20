@@ -108,12 +108,6 @@
                     </div>
                 }
                 <div class="mb-1">
-            <div>
-                <div class="mb-2">
-                    <a class="px-1.5 py-1.5 bg-blue-600 text-white font-medium text-xs leading-tight rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out mr-2" asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pen"></i></a>
-                    <a class="px-1.5 py-1.5 bg-red-600 text-white font-medium text-xs leading-tight rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out" asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash"></i></a>
-                </div>
-                <div class="mb-1">
 
                     <a class="cursor-pointer hover:scale-100 jt" asp-action="Details" asp-route-id="@item.Id" rel="/Movie/ClueTip?id=@item.Id">
                         <div class="relative w-full rounded-none transition-all">
@@ -122,7 +116,10 @@
                             </span>
                             <div class="absolute uppercase top-2 right-1.5 px-0 py-4 text-white font-semibold z-4 text-sm" id="quality">
                                 @item.Quality
-                            </div>                            
+                            </div>
+                            @*<div class="absolute top-6 right-0.5 z-4 px-1 py-4 text-white font-semibold text-sm">
+                                7.8
+                                </div>*@
                             <img class="bg-cover w-full inline-block" src="@item.MoviePicture" />
                         </div>
                     </a>
@@ -139,11 +136,11 @@
             </div>
         }
     </div>
-    
     <partial name="_Pagination" />
 </div>
 @if (User.Identity.IsAuthenticated && (User.IsInRole("Editor") || User.IsInRole("Admin")))
 {
+
     <a title="Add" asp-action="Create"
    class="fixed z-90 bottom-10 left-8 px-4 py-2.5 bg-blue-600 rounded-full text-white hover:bg-blue-700 duration-300"><i class="fa-solid fa-plus text-sm"></i></a>
 }
