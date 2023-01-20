@@ -19,7 +19,7 @@ namespace Redeo.Data
         public DbSet<TEpisodes> episodes { get; set; }
         public DbSet<TvShow_Category> tvShows_categories { get; set; }
         public DbSet<TvShow_Actor> tvShows_actors { get; set; }
-
+        public DbSet<SliderContent> SliderContents { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

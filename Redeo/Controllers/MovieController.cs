@@ -6,6 +6,7 @@ using Redeo.Data.Services;
 using Redeo.Models;
 using Redeo.ViewModels;
 using System.Collections.Generic;
+using System.Linq.Dynamic.Core;
 using X.PagedList;
 
 namespace Redeo.Controllers
@@ -25,19 +26,21 @@ namespace Redeo.Controllers
             return _context.categories.ToList();
         }
 
-        public async Task<IActionResult> Index(string searchString, int? page)
+        public List<SliderContent> GetContent()
         {
-           
+            return _context.SliderContents.ToList();
+        }
 
+        public async Task<IActionResult> Index(int? page)
+        {
             ViewBag.Category = GetCategory();
+            ViewBag.SliderContent = GetContent();
 
             var pageNumber = page ?? 1;
             var pageSize = 10;
 
-           
-            return View(await _context.movies.ToPagedListAsync(pageNumber, pageSize));
-            
-        }
+            return View(await _context.movies.OrderByDescending(n => n.Id).ToPagedListAsync(pageNumber, pageSize));
+        } 
 
         //Get:Movie/Create
         public async Task<IActionResult> Create()
@@ -50,7 +53,7 @@ namespace Redeo.Controllers
             ViewBag.Producers = new SelectList(movieDropDowns.Producers, "Id", "ProducersName");
             ViewBag.Actors = new SelectList(movieDropDowns.Actors, "Id", "FullName");
 
-            return View(); 
+            return View();
         }
 
         [HttpPost]
@@ -151,7 +154,7 @@ namespace Redeo.Controllers
             ViewBag.Category = GetCategory();
 
             var movieDetails = await _service.GetByIdAsync(id);
-            if (movieDetails == null) 
+            if (movieDetails == null)
                 return RedirectToAction("NotFound", "Error");
 
             return View(movieDetails);
