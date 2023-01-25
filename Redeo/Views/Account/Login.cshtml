@@ -19,12 +19,16 @@
             <div class="textbox">
                 <input asp-for="UserName" type="text" placeholder="Username" class="focus:ring-0 input-field" required />
                 <span class="material-symbols-outlined"> account_circle </span>
+                <span asp-validation-for="UserName" id="errStatus" class="text-sm text-red-600"></span>
+
             </div>
 
             <div class="textbox">
                 <input asp-for="Password" type="password" id="password" placeholder="Password" class="focus:ring-0 input-field" required />
                 <span class="material-symbols-outlined"> key </span>
                 <i class="fa-sharp fa-solid fa-eye-slash text-zinc-300 cursor-pointer absolute right-0 bottom-4" id="togglePassword"></i>
+                <span asp-validation-for="Password" id="errStatus" class="text-sm text-red-600"></span>
+
             </div>
             <p>
                 Don't have an account?
@@ -35,6 +39,10 @@
                 Login
                 <span class="material-symbols-outlined"> arrow_forward </span>
             </button>
+            <br />
+            <a asp-action="ForgotPassword" style="color: #216ce7;">
+                Forgot Password?
+            </a>
         </form>
 
     </div>
@@ -50,3 +58,9 @@
         </svg>
     </div>
 </div>
+
+@section Scripts{
+    @{
+    <partial name="_ValidationScriptsPartial" />
+    }
+}

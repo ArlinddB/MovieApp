@@ -359,6 +359,10 @@ select:focus ~ label {
     opacity: 100%;
     box-shadow: none;
 }
+#toast-container > .toast-error {
+    opacity: 100%;
+    box-shadow: none;
+}
 
 /*Login and sign up*/
 .test {
@@ -399,7 +403,7 @@ select:focus ~ label {
     margin-bottom: 16px;
 }
 
-    .textbox span {
+    .textbox .icon {
         position: absolute;
         top: 50%;
         transform: translate(0, -50%);
