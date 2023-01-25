@@ -18,14 +18,14 @@
         <form class="form1" asp-controller="Account" asp-action="Login">
             <div class="textbox">
                 <input asp-for="UserName" type="text" placeholder="Username" class="focus:ring-0 input-field" required />
-                <span class="material-symbols-outlined"> account_circle </span>
+                <span class="material-symbols-outlined icon"> account_circle </span>
                 <span asp-validation-for="UserName" id="errStatus" class="text-sm text-red-600"></span>
 
             </div>
 
             <div class="textbox">
                 <input asp-for="Password" type="password" id="password" placeholder="Password" class="focus:ring-0 input-field" required />
-                <span class="material-symbols-outlined"> key </span>
+                <span class="material-symbols-outlined icon"> key </span>
                 <i class="fa-sharp fa-solid fa-eye-slash text-zinc-300 cursor-pointer absolute right-0 bottom-4" id="togglePassword"></i>
                 <span asp-validation-for="Password" id="errStatus" class="text-sm text-red-600"></span>
 
