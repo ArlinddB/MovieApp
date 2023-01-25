@@ -14,7 +14,7 @@ $('a.jt').cluetip({
 
 var swiper = new Swiper('.mySwiper', {
     autoplay: {
-        delay: 2500,
+        delay: 10000,
         disableOnInteraction: false,
     },
     pagination: {
