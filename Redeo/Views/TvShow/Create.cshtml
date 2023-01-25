@@ -66,15 +66,6 @@
             </div>
 
             <div class="relative z-0 w-full mb-5">
-                <input asp-for="TvShowUrl"
-                       type="text"
-                       placeholder=" "
-                       class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200 text-slate-300" />
-                <label asp-for="TvShowUrl" class="absolute duration-300 top-3 -z-1 origin-0 text-slate-300">Tv show Url</label>
-                <span asp-validation-for="TvShowUrl" class="text-sm text-red-600"></span>
-            </div>
-
-            <div class="relative z-0 w-full mb-5">
                 <select asp-for="CategoryIds" class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200 text-slate-300" asp-items="ViewBag.Categories" multiple>
                     <option value="" disabled>Select Categories</option>
                 </select>

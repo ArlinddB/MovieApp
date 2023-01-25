@@ -23,7 +23,6 @@ namespace Redeo.Data.Services
                 DateOfRelease = data.DateOfRelease,
                 Duration = data.Duration,
                 Quality = data.Quality,
-                TvShowUrl = data.TvShowUrl,
                 ProducerId = data.ProducerId,
                 Clicks = 0
             };
@@ -75,6 +74,8 @@ namespace Redeo.Data.Services
                  .ThenInclude(ab => ab.Actor)
                  .Include(am => am.TvShows_Categories)
                  .ThenInclude(a => a.Category)
+                 .Include(v => v.Seasons.OrderByDescending(g => g.Id))
+                 .ThenInclude(z => z.Episodes.OrderByDescending(g => g.Id))
                  .FirstOrDefaultAsync(n => n.Id == id);
 
             return tvShowDetails;
@@ -92,7 +93,6 @@ namespace Redeo.Data.Services
                 tvShow.DateOfRelease = data.DateOfRelease;
                 tvShow.Duration = data.Duration;
                 tvShow.Quality = data.Quality;
-                tvShow.TvShowUrl = data.TvShowUrl;
                 tvShow.ProducerId = data.ProducerId;
 
                 await _context.SaveChangesAsync();

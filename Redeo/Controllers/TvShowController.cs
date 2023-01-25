@@ -36,6 +36,26 @@ namespace Redeo.Controllers
             return View(await _context.tvShows.ToPagedListAsync(pageNumber, pageSize));
         }
 
+        public async Task<IActionResult> List(string searchString, int? page)
+        {
+            ViewBag.Category = GetCategory();
+
+            var pageNumber = page ?? 1;
+            var pageSize = 10;
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var tvShows = from a in _context.tvShows
+                          select a;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                tvShows = tvShows.Where(a => a.Name.Contains(searchString));
+            }
+
+            return View(await tvShows.AsNoTracking().Include(n => n.Seasons).ToPagedListAsync(pageNumber, pageSize));
+        }
+
         //Get:TvShow/Create
         public async Task<IActionResult> Create()
         {
@@ -104,7 +124,6 @@ namespace Redeo.Controllers
                 DateOfRelease = tvShowDetails.DateOfRelease,
                 Duration = tvShowDetails.Duration,
                 Quality = tvShowDetails.Quality,
-                TvShowUrl = tvShowDetails.TvShowUrl,
                 CategoryIds = tvShowDetails.TvShows_Categories.Select(x => x.CategoryId).ToList(),
                 ProducerId = tvShowDetails.ProducerId,
                 ActorIds = tvShowDetails.TvShows_Actors.Select(c => c.ActorId).ToList()

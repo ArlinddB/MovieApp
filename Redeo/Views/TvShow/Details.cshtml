@@ -4,51 +4,36 @@
     ViewData["Title"] = @Model.Name;
 }
 
-<div class="grid grid-rows-2 gap-6 mt-6">
-    <div class="mx-auto">
-        <iframe style="width:85vw; height:75vh;" src="@Model.TvShowUrl" 
-        title="YouTube video player" 
-        frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-        allowfullscreen></iframe>
-    </div>
-    <div class="grid grid-cols-2 gap-6 p-6">
-        <div class="w-1/3 ml-auto">
-            <img class="shadow-md shadow-slate-900" src="@Model.TvShowPicture" />
-        </div>
-        <div class="p-4 w-3/4" >
-            <h1 class="text-slate-300 text-3xl">@Model.Name</h1>
-            <div class="mt-4 mb-4 grid grid-cols-2 gap-6 w-20" >
-                <p class="text-slate-300 text-xs w-20 uppercase">@Model.Quality</p>
-                <p class="text-slate-300 text-xs w-20">@Model.Duration min</p>
-            </div>
-            <div>
-                <p class="text-xs text-slate-300">Description: </p>
-                <p class="text-sm text-slate-300" id="description">@Model.Description </p>
-            </div>
-            <div class="grid grid-cols-2 mt-4">
-                <div class="">
-                    <p class="text-slate-300 text-sm"><strong>Released: </strong>@Model.DateOfRelease.ToString("dd MMMM yyyy")</p>            
-                </div>
+<div>
+    <div class="grid grid-cols-3 gap-x-3 gap-y-5 sm:px-8 px-2 py-3 sm:grid-cols-5 md:grid-cols-6">
+        @foreach (var item in Model.Seasons)
+        {
+            @foreach (var i in item.Episodes)
+            {
                 <div>
-                    <p class="text-slate-300 text-sm"><strong>Producer: </strong>
-                        <a asp-controller="Producers" asp-action="Details" asp-route-id="@Model.ProducerId">@Model.Producers.ProducersName</a>
-                    </p>                        
+                    <div class="mb-2">
+                        <a class="px-1.5 py-1.5 bg-blue-600 text-white font-medium text-xs leading-tight rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out mr-2" asp-controller="Episode" asp-action="Edit" asp-route-id="@i.Id"><i class="fa-solid fa-pen"></i></a>
+                        <a class="px-1.5 py-1.5 bg-red-600 text-white font-medium text-xs leading-tight rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out" asp-controller="Episode" asp-action="Delete" asp-route-id="@i.Id"><i class="fa-solid fa-trash"></i></a>
+                    </div>
+                    <div class="mb-1">
+
+                        <a class="cursor-pointer hover:scale-100 jt" asp-controller="Episode" asp-action="Details" asp-route-id="@i.Id">
+                            <div class="relative w-full rounded-none transition-all">
+                                <img class="bg-cover w-full inline-block" src="@item.SeasonPoster" />
+                            </div>
+                        </a>
+                        <div class="bg-[#1c1f26] p-2">
+                            <a asp-controller="Episode" asp-action="Details" asp-route-id="@item.Id" class="text-slate-300" title="@item.Season">
+                                <h4 class="truncate text-sm mt-2.5">@Model.Name</h4>
+                                <h4 class="truncate text-sm mt-1">@item.Season - @i.Episode</h4>
+                            </a>
+                            <div class="px-4 py-1 bg-[#21242b] text-center mt-3 rounded">
+                                <a class="text-slate-300" asp-controller="Episode" asp-action="Details" asp-route-id="@i.Id"><i class="fa-solid fa-play mr-3"></i>Play</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="text-slate-300 text-sm">
-                    <p><strong>Genre: </strong></p>
-                    @foreach (var c in Model.TvShows_Categories)
-                    {
-                        <a asp-controller="Category" asp-action="Details" asp-route-id="@c.CategoryId">@c.Category.CategoryName </a>                       
-                    }
-                </div>
-                <div class="text-slate-300 text-sm">
-                    <p><strong>Actors: </strong></p
-                    @foreach (var a in Model.TvShows_Actors)
-                    {
-                        <a asp-controller="Actor" asp-action="Details" asp-route-id="@a.ActorId">@a.Actor.FullName </a>
-                    }
-                </div>
-            </div>
-        </div>
+            }
+        }
     </div>
 </div>

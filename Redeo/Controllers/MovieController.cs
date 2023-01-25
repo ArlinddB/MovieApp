@@ -56,6 +56,26 @@ namespace Redeo.Controllers
 
         }
 
+        public async Task<IActionResult> List(string searchString, int? page)
+        {
+            ViewBag.Category = GetCategory();
+
+            var pageNumber = page ?? 1;
+            var pageSize = 10;
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var movies = from a in _context.movies
+                         select a;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                movies = movies.Where(a => a.Name.Contains(searchString));
+            }
+
+            return View(await movies.AsNoTracking().ToPagedListAsync(pageNumber, pageSize));
+        }
+
         //Get:Movie/Create
         public async Task<IActionResult> Create()
         {

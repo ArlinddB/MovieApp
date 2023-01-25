@@ -1,0 +1,51 @@
+﻿@model TEpisodes;
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<div class="p-0 sm:p-12">
+    <div class="mx-auto max-w-md px-6 py-12 bg-[#1b1b1f] border-0 shadow-lg sm:rounded-3xl">
+        <h1 class="text-2xl font-bold mb-8 text-slate-300">Delete confirmation for "@Model.Season"</h1>
+
+        <div class="relative z-0 w-full mb-5">
+            <input asp-for="Episode"
+                   disabled
+                   type="text"
+                   class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200 text-slate-300" />
+            <label asp-for="Episode" class="absolute duration-300 top-3 -z-1 origin-0 text-slate-300">Episode Name</label>
+        </div>
+
+        <div class="relative z-0 w-full mb-5">
+            <input asp-for="EpisodeUrl"
+                   disabled
+                   type="text"
+                   class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200 text-slate-300" />
+            <label asp-for="EpisodeUrl" class="absolute duration-300 top-3 -z-1 origin-0 text-slate-300">Episode Url</label>
+        </div>
+
+        <div class="relative z-0 w-full mb-5">
+            <input asp-for="EpisodeDescription"
+                   disabled
+                   type="text"
+                   class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200 text-slate-300" />
+            <label asp-for="EpisodeDescription" class="absolute duration-300 top-3 -z-1 origin-0 text-slate-300">Episode Description</label>
+        </div>
+
+        <div class="flex justify-between">
+            <a asp-action="Index"
+               class="hvr-icon-back px-4 py-2.5 mt-3 text-md text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-gray-500 hover:bg-gray-700 hover:shadow-lg focus:outline-none">
+                <i class="fa-solid fa-angle-left hvr-icon mr-2"></i>
+                Back to list
+            </a>
+
+            <form asp-action="DeleteConfirmed">
+                <input asp-for="Id" hidden />
+                <button type="submit"
+                        class=" px-4 py-2.5 mt-3 text-md text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-red-500 hover:bg-red-700 hover:shadow-lg focus:outline-none">
+                    Delete
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

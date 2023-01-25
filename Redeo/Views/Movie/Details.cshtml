@@ -31,10 +31,10 @@
                 </div>
                 <div>
                     <p class="text-slate-300 text-sm"><strong>Producer: </strong>
-                        <a asp-controller="Producers" asp-action="Details" asp-route-id="@Model.ProducerId">@Model.Producers.ProducersName</a>
+                        <a asp-controller="Producers" asp-action="Details" asp-route-id="@Model.Producers.Id">@Model.Producers.ProducersName</a>
                     </p>                        
                 </div>
-                <div class="text-slate-300 text-sm"
+                <div class="text-slate-300 text-sm">
                     <p><strong>Genre: </strong></p>
                     @foreach (var c in Model.Movies_Categories)
                     {
@@ -45,7 +45,7 @@
                     <p><strong>Actors: </strong></p
                     @foreach (var a in Model.Movies_Actors)
                     {
-                        <a asp-controller="Actor" asp-action="Details" asp-route-id="@a.ActorId">@a.Actor.FullName </a>
+                        <a asp-controller="Actor" asp-action="Details" asp-route-id="@a.ActorId">@a.Actor?.FullName </a>
                     }
                 </div>
             </div>

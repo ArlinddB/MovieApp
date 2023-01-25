@@ -100,6 +100,7 @@ namespace Redeo.Controllers
             var response = new SeasonVM()
             {
                 Season = seasonDetails.Season,
+                SeasonPoster = seasonDetails.SeasonPoster,
                 TvShowId = seasonDetails.TvShowId
             };
 

@@ -17,6 +17,7 @@ namespace Redeo.Data.Services
             var newSeason = new TSeason()
             {
                 Season = data.Season,
+                SeasonPoster = data.SeasonPoster,
                 TvShowId = data.TvShowId
             };
 
@@ -49,6 +50,7 @@ namespace Redeo.Data.Services
             if(season != null)
             {
                 season.Season = data.Season;
+                season.SeasonPoster = data.SeasonPoster;
                 season.TvShowId = data.TvShowId;
 
                 await _context.SaveChangesAsync();

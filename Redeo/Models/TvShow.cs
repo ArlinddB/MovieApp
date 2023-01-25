@@ -29,9 +29,6 @@ namespace Redeo.Models
         [Required(ErrorMessage = "Quality type is required")]
         [MaxLength(10, ErrorMessage = "Max length is 10 characters")]
         public string Quality { get; set; }
-
-        [Required(ErrorMessage = "TvShow url is required")]
-        public string TvShowUrl { get; set; }
         public int Clicks { get; set; }
 
         //Relationship

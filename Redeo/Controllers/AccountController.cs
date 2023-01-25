@@ -14,14 +14,16 @@ namespace Redeo.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private IPasswordHasher<ApplicationUser> _passwordHasher;
         private readonly AppDbContext _context;
 
         public AccountController(UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager, AppDbContext context)
+            SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager, IPasswordHasher<ApplicationUser> passwordHasher, AppDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
+            _passwordHasher = passwordHasher;
             _context = context;
         }
 
@@ -30,15 +32,25 @@ namespace Redeo.Controllers
             return _context.categories.ToList();
         }
 
+        [Route("Login")]
         public IActionResult Login()
         {
             ViewBag.Category = GetCategory();
 
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Movie");
+            }
+
             return View(new LoginVM());
         }
+
+        [Route("Login")]
         [HttpPost]
         public async Task<IActionResult> Login(LoginVM login)
         {
+            ViewBag.Category = GetCategory();
+
             if (!ModelState.IsValid) return View(login);
 
             var user = await _userManager.FindByNameAsync(login.UserName);
@@ -58,13 +70,20 @@ namespace Redeo.Controllers
             return View(login);
         }
 
+        [Route("Register")]
         public IActionResult Register()
         {
             ViewBag.Category = GetCategory();
 
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Movie");
+            }
+
             return View(new RegisterVM());
         }
 
+        [Route("Register")]
         [HttpPost]
         public async Task<IActionResult> Register(RegisterVM register)
         {
@@ -141,6 +160,53 @@ namespace Redeo.Controllers
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Movie");
+        }
+
+        [Route("Profile/{name}")]
+        public async Task<IActionResult> Profile(string? name)
+        {
+            ViewBag.Category = GetCategory();
+
+            var a = await _userManager.FindByNameAsync(name);
+
+            var res = new UserVM
+            {
+                FullName = a.FullName,
+                UserName = a.UserName,
+                Email = a.Email,
+                Birthdate = a.Birthdate,
+                Password = null,
+                ConfirmPassword = null
+
+            };
+            return View(res);
+        }
+
+        [Route("Profile/{name}")]
+        [HttpPost]
+        public async Task<IActionResult> ProfileEdit(UserVM user)
+        {
+            ViewBag.Category = GetCategory();
+
+            var userEdit = await _userManager.FindByNameAsync(user.UserName);
+
+            if (userEdit != null)
+            {
+                userEdit.FullName = user.FullName;
+                userEdit.UserName = user.UserName;
+                userEdit.Email = userEdit.Email;
+                userEdit.Birthdate = user.Birthdate;
+                if (user.Password != null)
+                {
+                    userEdit.PasswordHash = _passwordHasher.HashPassword(userEdit, user.Password);
+                }
+            }
+
+            await _userManager.UpdateAsync(userEdit);
+
+            TempData["success"] = "Updated successfully";
+
+            return Redirect("/Profile/" + user.UserName);
         }
     }
 }

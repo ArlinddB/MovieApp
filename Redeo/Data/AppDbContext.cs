@@ -63,6 +63,11 @@ namespace Redeo.Data
             modelBuilder.Entity<TvShow_Actor>().HasOne(a => a.TvShow).WithMany(mc => mc.TvShows_Actors).HasForeignKey(m => m.TvShowId);
             modelBuilder.Entity<TvShow_Actor>().HasOne(b => b.Actor).WithMany(mc => mc.TvShows_Actors).HasForeignKey(m => m.ActorId);
 
+            modelBuilder.Entity<TEpisodes>()
+            .HasOne(e => e.TvShow)
+            .WithMany()
+            .OnDelete(DeleteBehavior.Restrict);
+
 
             base.OnModelCreating(modelBuilder);
         }

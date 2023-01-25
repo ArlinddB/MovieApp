@@ -30,7 +30,7 @@ namespace Redeo.Controllers
             ViewBag.Category = GetCategory();
 
             var pageNumber = page ?? 1;
-            var pageSize = 2;
+            var pageSize = 10;
 
 
             ViewData["CurrentFilter"] = searchString;
@@ -57,7 +57,9 @@ namespace Redeo.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([Bind("CategoryName")]Category category)
         {
+
             ModelState.Remove("Movies_Categories");
+            ModelState.Remove("TvShows_Categories");
             if (!ModelState.IsValid)
             {
                 return View(category);
@@ -103,7 +105,9 @@ namespace Redeo.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(int id, [Bind("Id, CategoryName")]Category category)
         {
+
             ModelState.Remove("Movies_Categories");
+            ModelState.Remove("TvShows_Categories");
             if (!ModelState.IsValid)
             {
                 return View(category);
@@ -138,6 +142,7 @@ namespace Redeo.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+
             var categoryDetails = await _service.GetByIdAsync(id);
             if (categoryDetails == null) return RedirectToAction("NotFound", "Error");
 
