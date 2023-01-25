@@ -14,32 +14,44 @@
         <form class="form1" asp-controller="Account" asp-action="Register">
             <div class="textbox">
                 <input asp-for="FullName" type="text" placeholder="Full Name" class="focus:ring-0 input-field" required />
-                <span class="material-symbols-outlined"> account_circle </span>
+                <span class="material-symbols-outlined icon"> account_circle </span>
+                <span asp-validation-for="FullName" id="errStatus" class="text-sm text-red-600"></span>
+
             </div>
             
             <div class="textbox">
                 <input asp-for="Birthdate" type="date" placeholder="Birthdate" class="focus:ring-0 input-field" required />
-                <span class="material-symbols-outlined"> account_circle </span>
+                <span class="material-symbols-outlined icon"> account_circle </span>
+                <span asp-validation-for="Birthdate" id="errStatus" class="text-sm text-red-600"></span>
+
             </div>
 
             <div class="textbox">
                 <input asp-for="UserName" type="text" placeholder="User Name" class="focus:ring-0 input-field" required />
-                <span class="material-symbols-outlined"> account_circle </span>
+                <span class="material-symbols-outlined icon"> account_circle </span>
+                <span asp-validation-for="UserName" id="errStatus" class="text-sm text-red-600"></span>
+
             </div>
 
             <div class="textbox">
                 <input asp-for="Email" type="email" placeholder="Email" class="focus:ring-0 input-field" required />
                 <span class="material-symbols-outlined"> account_circle </span>
+                <span asp-validation-for="Email" id="errStatus" class="text-sm text-red-600"></span>
+
             </div>
 
             <div class="textbox">
                 <input asp-for="Password" type="password" placeholder="Password" class="focus:ring-0 input-field" required />
-                <span class="material-symbols-outlined"> key </span>
+                <span class="material-symbols-outlined icon"> key </span>
+                <span asp-validation-for="Password" id="errStatus" class="text-sm text-red-600"></span>
+
             </div>
 
             <div class="textbox">
                 <input asp-for="ConfirmPassword" type="password" placeholder="Confirm Password" class="focus:ring-0 input-field" required />
-                <span class="material-symbols-outlined"> key </span>
+                <span class="material-symbols-outlined icon"> key </span>
+                <span asp-validation-for="ConfirmPassword" id="errStatus" class="text-sm text-red-600"></span>
+
             </div>
             <p>
                 Already have an account?
@@ -65,3 +77,9 @@
         </svg>
     </div>
 </div>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

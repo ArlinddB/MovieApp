@@ -24,7 +24,8 @@ builder.Services.AddScoped<ISeasonService, SeasonService>();
 
 //Authentication and Authorization
 
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
+builder.Services.Configure<DataProtectionTokenProviderOptions>(opts => opts.TokenLifespan = TimeSpan.FromHours(10));
 builder.Services.AddMemoryCache();
 builder.Services.AddSession();
 builder.Services.AddAuthentication(options =>
