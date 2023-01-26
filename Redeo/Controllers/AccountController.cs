@@ -192,6 +192,7 @@ namespace Redeo.Controllers
         }
 
         [Route("Profile/{name}")]
+        [Authorize]
         public async Task<IActionResult> Profile(string? name)
         {
             ViewBag.Category = GetCategory();
@@ -213,6 +214,7 @@ namespace Redeo.Controllers
 
         [Route("Profile/{name}")]
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> ProfileEdit(UserVM user)
         {
             ViewBag.Category = GetCategory();
@@ -238,7 +240,6 @@ namespace Redeo.Controllers
             return Redirect("/Profile/" + user.UserName);
         }
 
-        [AllowAnonymous]
         public IActionResult ForgotPassword()
         {
             ViewBag.Category = GetCategory();
@@ -247,7 +248,6 @@ namespace Redeo.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
         public async Task<IActionResult> ForgotPassword([Required] string email)
         {
             ViewBag.Category = GetCategory();
@@ -277,7 +277,6 @@ namespace Redeo.Controllers
             return View("ForgotPasswordConfirmation");
         }
 
-        [AllowAnonymous]
         public IActionResult ForgotPasswordConfirmation()
         {
             ViewBag.Category = GetCategory();
@@ -285,7 +284,6 @@ namespace Redeo.Controllers
             return View();
         }
 
-        [AllowAnonymous]
         public IActionResult ResetPassword(string token, string email)
         {
             ViewBag.Category = GetCategory();
@@ -295,7 +293,6 @@ namespace Redeo.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
         public async Task<IActionResult> ResetPassword(ResetPasswordVM resetPassword)
         {
             if (!ModelState.IsValid)

@@ -33,12 +33,24 @@ namespace Redeo.Controllers
         {
             return _context.SliderContents.ToList();
         }
+
+        public List<Movie> MostWatchedMovies()
+        {
+            var avgViews = _context.movies.Average(n => n.Clicks);
+
+            var topMovies = _context.movies.Where(m => m.Clicks > avgViews).OrderByDescending(v => v.Clicks).Take(6).ToList();
+
+            return topMovies;
+        }
+
         [AllowAnonymous]
         public async Task<IActionResult> Index(string? genre, int? page)
         {
             ViewBag.Category = GetCategory();
 
             ViewBag.SliderContent = GetContent();
+
+            ViewBag.MostWatchedMovies = MostWatchedMovies();
 
             var pageNumber = page ?? 1;
             var pageSize = 10;
