@@ -41,5 +41,7 @@ namespace Redeo.Models
         [ForeignKey("ProducerId")]
         public Producers Producers { get; set; }
         public List<Movie_Actor> Movies_Actors { get; set; }
+
+        public List<FavoriteMovie> FavoriteMovies { get; set; }
     }
 }

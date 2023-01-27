@@ -87,3 +87,16 @@ $(document).ready(function () {
         $("#div_" + $(this).val()).show();
     });
 });
+
+//var movieId = $(".abc").data("movie-id");
+
+//$("#items").on("load", function () {
+//    $.get("/FavoriteMovies/CheckFavorite/" + movieId, function (data) {
+//        console.log(data)
+//        if (data.isFavorite) {
+//            $("#heart-icon-" + movieId).addClass("fa-solid");
+//        } else {
+//            $("#heart-icon-" + movieId).removeClass("fa-solid");
+//        }
+//    });
+//});
