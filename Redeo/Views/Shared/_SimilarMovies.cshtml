@@ -1,0 +1,29 @@
+﻿<div class="mx-auto w-[85vw] py-8">
+    <h2 class=" sm:px-8 px-2 py-3 text-zinc-300 text-2xl underline underline-offset-8">Similar Movies</h2>
+    <div class="grid grid-cols-3 gap-x-3 gap-y-5 sm:px-8 px-2 py-3 sm:grid-cols-5 md:grid-cols-6">
+        @foreach (var item in ViewBag.SimilarMovies)
+        {
+            <div>
+                <div class="mb-1">
+                    <a class="cursor-pointer hover:scale-100 jt" asp-action="Details" asp-route-id="@item.Id" rel="/Movie/ClueTip?id=@item.Id">
+                        <div class="relative w-full rounded-none transition-all">
+                            <div class="absolute uppercase top-2 right-1.5 px-0 py-4 text-white font-semibold z-4 text-sm" id="quality">
+                                @item.Quality
+                            </div>
+                            <img class="bg-cover w-full inline-block" src="@item.MoviePicture" />
+                        </div>
+                    </a>
+                    <div class="bg-[#1c1f26] p-2">
+                        <a asp-action="Details" asp-route-id="@item.Id" class="text-slate-300" title="@item.Name">
+                            <h4 class="truncate text-sm mt-3">@item.Name</h4>
+                        </a>
+                        <p class="text-blue-200 text-xs">@item.DateOfRelease.ToString("dd MMMM yyyy")</p>
+                        <div class="px-4 py-1 bg-[#21242b] text-center mt-3 rounded">
+                            <a class="text-slate-300" asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-play mr-3"></i>Play</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

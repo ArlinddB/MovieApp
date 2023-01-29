@@ -57,7 +57,7 @@
                     <p><strong>Genre: </strong></p>
                     @foreach (var c in Model.Movies_Categories)
                     {
-                        <a asp-controller="Movie" asp-action="Index" asp-route-genre="@c.Category.CategoryName">@c.Category.CategoryName </a>                       
+                        <a asp-controller="Movie" asp-action="Index" asp-route-genre="@c.Category.CategoryName">@c.Category.CategoryName</a>                       
                     }
                 </div>
                 <div class="text-slate-300 text-sm">
@@ -71,7 +71,7 @@
         </div>
     </div>
 </div>
-
+<partial name="_SimilarMovies" />
 <script>
 
 var movie = @Model.Id;

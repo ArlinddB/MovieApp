@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Redeo.Data;
 using Redeo.Migrations;
 using Redeo.Models;
+using X.PagedList;
 
 namespace Redeo.Controllers
 {
@@ -27,14 +28,18 @@ namespace Redeo.Controllers
         }
 
         // GET: FavoriteMovies
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page)
         {
             ViewBag.Category = GetCategory();
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var appDbContext = _context.FavoriteMovies.Include(f => f.Movie).Include(f => f.User).Where(n => n.UserId == userId);
-            return View(await appDbContext.ToListAsync());
+            var favMovies = _context.FavoriteMovies.Include(f => f.Movie).Include(f => f.User).Where(n => n.UserId == userId);
+
+            var pageNumber = page ?? 1;
+            var pageSize = 10;
+
+            return View(await favMovies.ToPagedListAsync(pageNumber, pageSize));
         }
         public JsonResult Add(int movieId)
         {

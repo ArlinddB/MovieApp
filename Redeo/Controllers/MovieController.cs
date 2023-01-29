@@ -127,9 +127,18 @@ namespace Redeo.Controllers
         {
             ViewBag.Category = GetCategory();
 
+            //ViewBag.SimilarMovies = GetSimilarMovies();
+
             var movieDatails = await _service.GetMovieByIdAsync(id);
 
             movieDatails.Clicks += 1;
+
+            var genreIds = movieDatails.Movies_Categories.Select(mg => mg.CategoryId).ToList();
+            var similarMovies = _context.movies
+                .Where(m => m.Movies_Categories.Any(mg => genreIds.Contains(mg.CategoryId)) && m.Id != id)
+                .ToList().Take(6);
+
+            ViewBag.SimilarMovies = similarMovies;
 
             await _service.UpdateAsync(id, movieDatails);
 

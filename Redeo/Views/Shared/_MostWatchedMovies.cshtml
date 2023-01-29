@@ -1,24 +1,15 @@
-﻿    <h2 class=" sm:px-8 px-2 py-3 text-zinc-300 text-2xl">Most Watched Movies</h2>
+﻿<h2 class=" sm:px-8 px-2 py-3 text-zinc-300 text-2xl underline underline-offset-8">Most Watched Movies</h2>
 
-<div class="grid grid-cols-3 gap-x-3 gap-y-5 sm:px-8 px-2 py-3 sm:grid-cols-5 md:grid-cols-6">
+<div class="grid grid-cols-3 gap-x-3 gap-y-5 sm:px-8 px-2 py-6 sm:grid-cols-5 md:grid-cols-6">
     @foreach (var item in ViewBag.MostWatchedMovies)
     {
-
         <div>
-            @if (User.Identity.IsAuthenticated && (User.IsInRole("Editor") || User.IsInRole("Admin")))
-            {
-                <div class="mb-2">
-                    <a class="px-1.5 py-1.5 bg-blue-600 text-white font-medium text-xs leading-tight rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out mr-2" asp-controller="Movie" asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pen"></i></a>
-                    <a class="px-1.5 py-1.5 bg-red-600 text-white font-medium text-xs leading-tight rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out" asp-controller="Movie" asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash"></i></a>
-                </div>
-            }
             <div class="mb-1">
-
                 <a class="cursor-pointer hover:scale-100 jt" asp-controller="Movie" asp-action="Details" asp-route-id="@item.Id" rel="/Movie/ClueTip?id=@item.Id">
                     <div class="relative w-full rounded-none transition-all">
                         <div class="absolute uppercase top-2 right-1.5 px-0 py-4 text-white font-semibold z-4 text-sm" id="quality">
                             @item.Quality
-                        </div>                     
+                        </div>
                         <img class="bg-cover w-full inline-block" src="@item.MoviePicture" />
                     </div>
                 </a>
