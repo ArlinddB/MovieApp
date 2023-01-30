@@ -38,7 +38,10 @@
                 <select id="mySelect" class="bg-transparent border-0 border-b-2 cursor-pointer text-zinc-300 text-base focus:ring-0">
                     @foreach (var item in ViewBag.Seasons)
                     {
-                        <option class="bg-[#17191f] border-0 border-b-2 mb-1" value="@item.Id">@item.Season</option>
+                        if (item.TvShowId == @Model.TvShowId)
+                        {
+                            <option class="bg-[#17191f] border-0 border-b-2 mb-1" value="@item.Id">@item.Season</option>
+                        }
                     }
                 </select>
             </div>
@@ -46,15 +49,18 @@
             <div class="tab-content-wrapper">
                 @foreach (var item in ViewBag.Seasons)
                 {
-                    <div id="div_@item.Id" class="myDiv" style="display:none">
-                        @foreach (var i in item.Episodes)
-                        {
-                            <a asp-controller="Episode" asp-action="Details" asp-route-id="@i.Id" id="a_@item.Id" class="myA">
-                                <i class="fa-solid fa-play mr-1"></i>
-                                @i.Episode
-                            </a>
-                        }
-                    </div>
+                    if (item.TvShowId == @Model.TvShowId)
+                    {
+                        <div id="div_@item.Id" class="myDiv" style="display:none">
+                            @foreach (var i in item.Episodes)
+                            {
+                                <a asp-controller="Episode" asp-action="Details" asp-route-id="@i.Id" id="a_@item.Id" class="myA">
+                                    <i class="fa-solid fa-play mr-1"></i>
+                                    @i.Episode
+                                </a>
+                            }
+                        </div>
+                    }
                 }
             </div>
 
