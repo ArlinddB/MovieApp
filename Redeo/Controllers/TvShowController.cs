@@ -111,6 +111,15 @@ namespace Redeo.Controllers
 
             tvShowDetails.Clicks += 1;
 
+            //Similar Tv Shows
+
+            var genreId = tvShowDetails.TvShows_Categories.Select(tsh => tsh.CategoryId).ToList();
+            var similarTvShows = _context.tvShows
+                .Where(t => t.TvShows_Categories.Any(tsh => genreId.Contains(tsh.CategoryId)) && t.Id != id)
+                .ToList().Take(6);
+
+            ViewBag.SimilarTvShows = similarTvShows;
+
             await _service.UpdateAsync(id, tvShowDetails);
 
             if (tvShowDetails == null)
