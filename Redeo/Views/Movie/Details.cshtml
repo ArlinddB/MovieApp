@@ -83,7 +83,7 @@ window.onload = function() {
 function checkIfFavorite(movie) {
     $.ajax({
         type: 'GET',
-        url: "@Url.Action("CheckFavorite", "FavoriteMovies")",
+        url: "@Url.Action("CheckFavoriteMovie", "Favorites")",
         data: { movieId: movie },
         success: function(data) {
             if (data.isFavorite) {
@@ -101,12 +101,17 @@ function checkIfFavorite(movie) {
 function toggleFavorite(movieId) {
     var isFavorite = $('#heart-icon-' + movieId).data('is-favorite');
     console.log(isFavorite)
-    var url = isFavorite ? "@Url.Action("Remove","FavoriteMovies")" : "@Url.Action("Add","FavoriteMovies")";
+    var url = isFavorite ? "@Url.Action("RemoveFavoriteMovie","Favorites")" : "@Url.Action("AddFavoriteMovie","Favorites")";
 
     $.ajax({
         type: "POST",
         url: url,
         data: { movieId: movieId },
+        statusCode:{
+            401: function(){
+                window.location.href = '/Login';
+            }
+        },
         success: function (response) {
             if (response.isAdded) {
                 // update the UI to show the filled heart

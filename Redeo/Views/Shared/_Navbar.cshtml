@@ -44,6 +44,18 @@
                     </div>
                 </div>
             </div>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="dropdown">
+                    <button class="button">
+                        <a class="nav-link" asp-controller="Favorites" asp-action="Index">
+                            Favorites
+                        </a>
+                    </button>
+
+                </div>
+            }
+
             @if (User.Identity.IsAuthenticated && (User.IsInRole("Editor") || User.IsInRole("Admin")))
             {
                 <div class="dropdown">
@@ -66,6 +78,11 @@
                         <button>
                             <a asp-controller="Producers" asp-action="Index" class="mt-2">
                                 Producers
+                            </a>
+                        </button>
+                        <button>
+                            <a asp-controller="SliderContent" asp-action="Index" class="mt-2">
+                                Slider Content
                             </a>
                         </button>
                         <button>
@@ -124,7 +141,7 @@
                         <a asp-controller="Account" asp-action="Profile" asp-route-name="@User.Identity.Name" class="mt-2">Profile</a>
                         @if (User.IsInRole("Admin"))
                         {
-                            <a href="" class="mt-2">
+                            <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" class="mt-2">
                                 Admin Area
                             </a>
                         }

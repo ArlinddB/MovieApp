@@ -11,10 +11,14 @@
             @foreach (var i in item.Episodes)
             {
                 <div>
-                    <div class="mb-2">
-                        <a class="px-1.5 py-1.5 bg-blue-600 text-white font-medium text-xs leading-tight rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out mr-2" asp-controller="Episode" asp-action="Edit" asp-route-id="@i.Id"><i class="fa-solid fa-pen"></i></a>
-                        <a class="px-1.5 py-1.5 bg-red-600 text-white font-medium text-xs leading-tight rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out" asp-controller="Episode" asp-action="Delete" asp-route-id="@i.Id"><i class="fa-solid fa-trash"></i></a>
-                    </div>
+                    @if (User.Identity.IsAuthenticated && (User.IsInRole("Admin") || User.IsInRole("Editor")))
+                    {
+                        <div class="mb-2">
+                            <a class="px-1.5 py-1.5 bg-blue-600 text-white font-medium text-xs leading-tight rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out mr-2" asp-controller="Episode" asp-action="Edit" asp-route-id="@i.Id"><i class="fa-solid fa-pen"></i></a>
+                            <a class="px-1.5 py-1.5 bg-red-600 text-white font-medium text-xs leading-tight rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out" asp-controller="Episode" asp-action="Delete" asp-route-id="@i.Id"><i class="fa-solid fa-trash"></i></a>
+                        </div>
+                    }
+                    
                     <div class="mb-1">
 
                         <a class="cursor-pointer hover:scale-100 jt" asp-controller="Episode" asp-action="Details" asp-route-id="@i.Id">

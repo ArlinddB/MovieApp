@@ -1,0 +1,36 @@
+﻿@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+
+
+<style>
+.pageI.active .pageL {
+    z-index: 1;
+    color: #fff;
+    background-color: #2481ee;
+}
+
+.pageL {
+    position: relative;
+    display: block;
+    color: #2481ee;
+    text-decoration: none;
+    background-color: #fff;
+    transition: .2s ease-in-out all;
+}
+
+.pageL:hover {
+    z-index: 2;
+    color: #0d6efd;
+    background-color: rgb(224 231 255);
+    cursor: pointer;
+}
+</style>
+
+
+@Html.PagedListPager((IPagedList) Model, page => Url.Action("Index", new {page = page}),
+new X.PagedList.Web.Common.PagedListRenderOptions {
+    ContainerDivClasses = new string[] {"flex justify-center py-8"},
+    UlElementClasses = new string[] {"flex space-x-2"},
+    LiElementClasses = new string[] {"pageI"},
+    PageClasses = new string[] { "pageL px-3.5 py-1.5 rounded-full" }
+})

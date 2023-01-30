@@ -38,5 +38,6 @@ namespace Redeo.Models
         public List<TSeason> Seasons { get; set; }
         public List<TvShow_Category> TvShows_Categories { get; set; }
         public List<TvShow_Actor> TvShows_Actors { get; set; }
+        public List<FavoriteTvShow> FavoriteTvShows { get; set; }
     }
 }

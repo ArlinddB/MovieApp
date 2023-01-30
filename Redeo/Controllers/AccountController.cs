@@ -149,40 +149,7 @@ namespace Redeo.Controllers
             ViewBag.Category = GetCategory();
 
             return View(new RegisterVM());
-        }
-
-
-        [HttpPost]
-        [Authorize(Roles = UserRoles.Admin)]
-        public async Task<IActionResult> CreateEditor(RegisterVM register)
-        {
-            ModelState.Remove("ConfirmPassword");
-            if (!ModelState.IsValid) return View(register);
-
-            var user = await _userManager.FindByNameAsync(register.UserName);
-            if (user != null)
-            {
-                return View(register);
-            }
-
-            var newUser = new ApplicationUser()
-            {
-                FullName = register.FullName,
-                UserName = register.UserName,
-                Birthdate = register.Birthdate,
-                Email = register.Email,
-            };
-
-            var newUserResponse = await _userManager.CreateAsync(newUser, register.Password);
-
-            if (!await _roleManager.RoleExistsAsync(UserRoles.Editor))
-                await _roleManager.CreateAsync(new IdentityRole(UserRoles.Editor));
-
-            if (newUserResponse.Succeeded && await _roleManager.RoleExistsAsync(UserRoles.Editor))
-                await _userManager.AddToRoleAsync(newUser, UserRoles.Editor);
-
-            return RedirectToAction("Login", "Account");
-        }
+        }        
 
         [HttpPost]
         public async Task<IActionResult> Logout()

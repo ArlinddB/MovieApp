@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Redeo.Data;
+using Redeo.Data.Roles;
 using Redeo.Data.Services;
 using Redeo.Models;
 using Redeo.ViewModels;
@@ -9,6 +11,7 @@ using X.PagedList;
 
 namespace Redeo.Controllers
 {
+    [Authorize(Roles = UserRoles.Admin + "," + UserRoles.Editor)]
     public class TvShowController : Controller
     {
         private readonly ITvShowService _service;
@@ -24,11 +27,20 @@ namespace Redeo.Controllers
         {
             return _context.categories.ToList();
         }
+        public List<TvShow> MostWatchedTvShows()
+        {
+            var avgViews = _context.tvShows.Average(n => n.Clicks);
 
+            var topTvShows = _context.tvShows.Where(m => m.Clicks > avgViews).OrderByDescending(v => v.Clicks).Take(6).ToList();
+
+            return topTvShows;
+        }
+        [AllowAnonymous]
         public async Task<IActionResult> Index(int? page)
         {
-
             ViewBag.Category = GetCategory();
+
+            ViewBag.MostWatchedTvShows = MostWatchedTvShows();
 
             var pageNumber = page ?? 1;
             var pageSize = 10;
@@ -90,6 +102,7 @@ namespace Redeo.Controllers
         }
 
         //GET:TvShow/Details/id
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int id)
         {
             ViewBag.Category = GetCategory();
@@ -183,6 +196,12 @@ namespace Redeo.Controllers
             TempData["success"] = "Tv show deleted successfully";
 
             return RedirectToAction("Index", "Movie");
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> ClueTip(int id)
+        {
+            return View(await _context.tvShows.Where(x => x.Id == id).SingleOrDefaultAsync());
         }
     }
 }

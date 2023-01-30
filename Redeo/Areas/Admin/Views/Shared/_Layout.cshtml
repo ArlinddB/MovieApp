@@ -17,20 +17,23 @@
           href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
 </head>
 <body>
-    <header>
-        @Html.Partial("_Navbar")
-    </header>
+    <div class="md:flex">
 
-    <div class="container-fluid">
+        <header>
+            @*<partial name="_Navbar.cshtml" />*@
+            <partial name="_Sidebar.cshtml" />
+        </header>
 
-        <main role="main" class="pb-4 pt-4">
-            <partial name="_Notification" />
-            @RenderBody()
-        </main>
+        <div class="container-fluid w-full">
+            <main role="main" class="pb-4 pt-4">
+                <partial name="_Notification" />
+                @RenderBody()
+            </main>
+        </div>
     </div>
 
     <footer class="text-center lg:text-left bg-[#1c1f26] text-gray-600 mt-auto">
-        @Html.Partial("_Footer")
+        <partial name="_Footer" />
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/clueTip/jquery.cluetip.js"></script>

@@ -34,7 +34,11 @@ builder.Services.AddAuthentication(options =>
 {
     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 });
-
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.AccessDeniedPath = new PathString("/AccessDenied");
+    options.LoginPath = new PathString("/Login");
+});
 builder.Services.AddControllersWithViews();
 
 
@@ -47,10 +51,20 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-else
+//else
+//{
+//    app.UseStatusCodePagesWithRedirects("/Error/NotFound");
+//}
+
+app.Use(async (context, next) =>
 {
-    app.UseStatusCodePagesWithRedirects("/Error/NotFound");
-}
+    await next();
+    if(context.Response.StatusCode == 404)
+    {
+        context.Request.Path = "/Error/NotFound";
+        await next();
+    }
+});
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

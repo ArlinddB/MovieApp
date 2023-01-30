@@ -12,6 +12,25 @@
                 allowfullscreen></iframe>
     </div>
 
+    <div class="flex justify-between w-[85vw] mx-auto text-zinc-300 my-3">
+        <div>
+
+            <h1 class="text-3xl">@Model.Episode</h1>
+        </div>
+        <div class="flex gap-x-5">
+            <div class="text-2xl hover:text-blue-500 cursor-pointer transition duration-75 ease-in-out">
+                <i id="heart-icon-@Model.TvShow.Id" class="fa-regular fa-heart "
+                   onclick="toggleFavorite(@Model.TvShow.Id)" data-is-favorite=""></i>
+            </div>
+            <div class="text-lg">
+                <a href="#">
+                    <i class="fa-brands fa-youtube"></i>
+                    TRAILER
+                </a>
+            </div>
+        </div>
+    </div>
+
     <div class="grid grid-rows-auto grid-cols-1 justify-items-center p-6">
         <div class="tabs">
 
@@ -30,10 +49,10 @@
                     <div id="div_@item.Id" class="myDiv" style="display:none">
                         @foreach (var i in item.Episodes)
                         {
-                                <a asp-controller="Episode" asp-action="Details" asp-route-id="@i.Id" id="a_@item.Id" class="myA">
-                                    <i class="fa-solid fa-play mr-1"></i>
-                                    @i.Episode
-                                </a>
+                            <a asp-controller="Episode" asp-action="Details" asp-route-id="@i.Id" id="a_@item.Id" class="myA">
+                                <i class="fa-solid fa-play mr-1"></i>
+                                @i.Episode
+                            </a>
                         }
                     </div>
                 }
@@ -69,3 +88,61 @@
         </div>
     </div>
 </div>
+
+<script>
+        var tvShow = @Model.TvShow.Id;
+
+    window.onload = function() {
+        checkIfFavorite(tvShow);
+    };
+
+    function checkIfFavorite(tvShow) {
+        $.ajax({
+            type: 'GET',
+            url: "@Url.Action("CheckFavoriteTvShow", "Favorites")",
+            data: { tvShowId: tvShow },
+            success: function(data) {
+                if (data.isFavorite) {
+                    $("#heart-icon-" + tvShow).addClass("fa-solid text-blue-500");
+                    $('#heart-icon-' + tvShow).data('is-favorite', true);
+                } else {
+                    $("#heart-icon-" + tvShow).removeClass("fa-solid text-blue-500");
+                    $('#heart-icon-' + tvShow).data('is-favorite', false);
+                }
+            }
+        });
+    }
+
+
+    function toggleFavorite(tvShowId) {
+        var isFavorite = $('#heart-icon-' + tvShowId).data('is-favorite');
+        console.log(isFavorite)
+        var url = isFavorite ? "@Url.Action("RemoveFavoriteTvShow","Favorites")" : "@Url.Action("AddFavoriteTvShow","Favorites")";
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: { tvShowId: tvShowId },
+            statusCode:{
+                401: function(){
+                    window.location.href = '/Login';
+                }
+            },
+            success: function (response) {
+                if (response.isAdded) {
+                    // update the UI to show the filled heart
+                    $('#heart-icon-' + tvShowId).removeClass('fa-regular').addClass('fa-solid text-blue-500');
+                    $('#heart-icon-' + tvShowId).data('is-favorite', true);
+                }
+                if (response.isRemoved) {
+                    // update the UI to show the filled heart
+                    $('#heart-icon-' + tvShowId).removeClass('fa-solid text-blue-500').addClass('fa-regular');
+                    $('#heart-icon-' + tvShowId).data('is-favorite', false);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.log(xhr.responseText);
+            }
+        });
+    }
+</script>

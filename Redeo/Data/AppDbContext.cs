@@ -21,6 +21,7 @@ namespace Redeo.Data
         public DbSet<TvShow_Actor> tvShows_actors { get; set; }
         public DbSet<SliderContent> SliderContents { get; set; }
         public DbSet<FavoriteMovie> FavoriteMovies { get; set; }
+        public DbSet<FavoriteTvShow> FavoriteTvShows { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -69,7 +70,7 @@ namespace Redeo.Data
             .WithMany()
             .OnDelete(DeleteBehavior.Restrict);
 
-
+            //Favorite movies
             modelBuilder.Entity<FavoriteMovie>().HasKey(mc => new
             {
                 mc.MovieId,
@@ -79,6 +80,15 @@ namespace Redeo.Data
             modelBuilder.Entity<FavoriteMovie>().HasOne(a => a.Movie).WithMany(mc => mc.FavoriteMovies).HasForeignKey(m => m.MovieId);
             modelBuilder.Entity<FavoriteMovie>().HasOne(b => b.User).WithMany(mc => mc.FavoriteMovies).HasForeignKey(m => m.UserId);
 
+            //Favorite tv shows
+            modelBuilder.Entity<FavoriteTvShow>().HasKey(mc => new
+            {
+                mc.TvShowId,
+                mc.UserId
+            });
+
+            modelBuilder.Entity<FavoriteTvShow>().HasOne(a => a.TvShow).WithMany(mc => mc.FavoriteTvShows).HasForeignKey(m => m.TvShowId);
+            modelBuilder.Entity<FavoriteTvShow>().HasOne(b => b.User).WithMany(mc => mc.FavoriteTvShows).HasForeignKey(m => m.UserId);
 
             base.OnModelCreating(modelBuilder);
         }
