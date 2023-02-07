@@ -20,6 +20,7 @@ namespace Redeo.Data
         public DbSet<TvShow_Category> tvShows_categories { get; set; }
         public DbSet<TvShow_Actor> tvShows_actors { get; set; }
         public DbSet<SliderContent> SliderContents { get; set; }
+        public DbSet<User> User { get; set; }
         public DbSet<FavoriteMovie> FavoriteMovies { get; set; }
         public DbSet<FavoriteTvShow> FavoriteTvShows { get; set; }
 

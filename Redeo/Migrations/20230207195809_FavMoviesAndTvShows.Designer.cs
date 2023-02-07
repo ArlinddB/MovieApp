@@ -12,8 +12,8 @@ using Redeo.Data;
 namespace Redeo.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230127131131_isFavorite")]
-    partial class isFavorite
+    [Migration("20230207195809_FavMoviesAndTvShows")]
+    partial class FavMoviesAndTvShows
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -290,6 +290,24 @@ namespace Redeo.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("FavoriteMovies");
+                });
+
+            modelBuilder.Entity("Redeo.Models.FavoriteTvShow", b =>
+                {
+                    b.Property<int>("TvShowId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("isFavorite")
+                        .HasColumnType("bit");
+
+                    b.HasKey("TvShowId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("FavoriteTvShows");
                 });
 
             modelBuilder.Entity("Redeo.Models.Movie", b =>
@@ -660,6 +678,25 @@ namespace Redeo.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Redeo.Models.FavoriteTvShow", b =>
+                {
+                    b.HasOne("Redeo.Models.TvShow", "TvShow")
+                        .WithMany("FavoriteTvShows")
+                        .HasForeignKey("TvShowId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Redeo.Models.User", "User")
+                        .WithMany("FavoriteTvShows")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TvShow");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Redeo.Models.Movie", b =>
                 {
                     b.HasOne("Redeo.Models.Producers", "Producers")
@@ -818,6 +855,8 @@ namespace Redeo.Migrations
 
             modelBuilder.Entity("Redeo.Models.TvShow", b =>
                 {
+                    b.Navigation("FavoriteTvShows");
+
                     b.Navigation("Seasons");
 
                     b.Navigation("TvShows_Actors");
@@ -828,6 +867,8 @@ namespace Redeo.Migrations
             modelBuilder.Entity("Redeo.Models.User", b =>
                 {
                     b.Navigation("FavoriteMovies");
+
+                    b.Navigation("FavoriteTvShows");
                 });
 #pragma warning restore 612, 618
         }
