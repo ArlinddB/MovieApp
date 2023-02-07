@@ -113,15 +113,28 @@ namespace Redeo.Controllers
                 Email = register.Email,
             };
 
-            var newUserResponse = await _userManager.CreateAsync(newUser, register.Password);
 
+            var newUserResponse = await _userManager.CreateAsync(newUser, register.Password);           
 
             if (!await _roleManager.RoleExistsAsync(UserRoles.User))
                 await _roleManager.CreateAsync(new IdentityRole(UserRoles.User));
 
             if (newUserResponse.Succeeded && await _roleManager.RoleExistsAsync(UserRoles.User))
+            {
                 await _userManager.AddToRoleAsync(newUser, UserRoles.User);
-            
+
+                var addUser = new User()
+                {
+                    U_Id = newUser.Id,
+                    FullName = newUser.FullName,
+                    UserName = newUser.UserName,
+                    Email = newUser.Email,
+                };
+                await _context.User.AddAsync(addUser);
+                await _context.SaveChangesAsync();
+            }
+
+
             if (newUserResponse.Succeeded)
             {
                 var token = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
