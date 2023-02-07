@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Redeo.Data;
+using Redeo.Data.Roles;
 using Redeo.Data.Services;
 using Redeo.Models;
 using Redeo.ViewModels;
@@ -9,6 +11,7 @@ using X.PagedList;
 
 namespace Redeo.Controllers
 {
+    [Authorize(Roles = UserRoles.Admin + "," + UserRoles.Editor)]
     public class TvShowController : Controller
     {
         private readonly ITvShowService _service;
@@ -24,16 +27,45 @@ namespace Redeo.Controllers
         {
             return _context.categories.ToList();
         }
+        public List<TvShow> MostWatchedTvShows()
+        {
+            var avgViews = _context.tvShows.Average(n => n.Clicks);
 
+            var topTvShows = _context.tvShows.Where(m => m.Clicks > avgViews).OrderByDescending(v => v.Clicks).Take(6).ToList();
+
+            return topTvShows;
+        }
+        [AllowAnonymous]
         public async Task<IActionResult> Index(int? page)
         {
-
             ViewBag.Category = GetCategory();
+
+            ViewBag.MostWatchedTvShows = MostWatchedTvShows();
 
             var pageNumber = page ?? 1;
             var pageSize = 10;
 
             return View(await _context.tvShows.ToPagedListAsync(pageNumber, pageSize));
+        }
+
+        public async Task<IActionResult> List(string searchString, int? page)
+        {
+            ViewBag.Category = GetCategory();
+
+            var pageNumber = page ?? 1;
+            var pageSize = 10;
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var tvShows = from a in _context.tvShows
+                          select a;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                tvShows = tvShows.Where(a => a.Name.Contains(searchString));
+            }
+
+            return View(await tvShows.AsNoTracking().Include(n => n.Seasons).ToPagedListAsync(pageNumber, pageSize));
         }
 
         //Get:TvShow/Create
@@ -70,6 +102,7 @@ namespace Redeo.Controllers
         }
 
         //GET:TvShow/Details/id
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int id)
         {
             ViewBag.Category = GetCategory();
@@ -77,6 +110,15 @@ namespace Redeo.Controllers
             var tvShowDetails = await _service.GetTvShowByIdAsync(id);
 
             tvShowDetails.Clicks += 1;
+
+            //Similar Tv Shows
+
+            var genreId = tvShowDetails.TvShows_Categories.Select(tsh => tsh.CategoryId).ToList();
+            var similarTvShows = _context.tvShows
+                .Where(t => t.TvShows_Categories.Any(tsh => genreId.Contains(tsh.CategoryId)) && t.Id != id)
+                .ToList().Take(6);
+
+            ViewBag.SimilarTvShows = similarTvShows;
 
             await _service.UpdateAsync(id, tvShowDetails);
 
@@ -104,7 +146,6 @@ namespace Redeo.Controllers
                 DateOfRelease = tvShowDetails.DateOfRelease,
                 Duration = tvShowDetails.Duration,
                 Quality = tvShowDetails.Quality,
-                TvShowUrl = tvShowDetails.TvShowUrl,
                 CategoryIds = tvShowDetails.TvShows_Categories.Select(x => x.CategoryId).ToList(),
                 ProducerId = tvShowDetails.ProducerId,
                 ActorIds = tvShowDetails.TvShows_Actors.Select(c => c.ActorId).ToList()
@@ -164,6 +205,12 @@ namespace Redeo.Controllers
             TempData["success"] = "Tv show deleted successfully";
 
             return RedirectToAction("Index", "Movie");
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> ClueTip(int id)
+        {
+            return View(await _context.tvShows.Where(x => x.Id == id).SingleOrDefaultAsync());
         }
     }
 }

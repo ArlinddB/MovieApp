@@ -13,15 +13,17 @@
         </div>
         <div class="res_dropdowns">
             <div class="dropdown">
-                <a asp-controller="Movie" asp-action="Index">
-                    <button class="button">
+                <button class="button">
+                    <a class="nav-link" asp-controller="Movie" asp-action="Index">
                         Movies
-                    </button>
-                </a>
+                    </a>
+                </button>
             </div>
             <div class="dropdown">
                 <button class="button">
-                    TV Shows
+                    <a class="nav-link" asp-controller="TvShow" asp-action="Index">
+                        TV Shows
+                    </a>
                 </button>
 
             </div>
@@ -42,6 +44,18 @@
                     </div>
                 </div>
             </div>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="dropdown">
+                    <button class="button">
+                        <a class="nav-link" asp-controller="Favorites" asp-action="Index">
+                            Favorites
+                        </a>
+                    </button>
+
+                </div>
+            }
+
             @if (User.Identity.IsAuthenticated && (User.IsInRole("Editor") || User.IsInRole("Admin")))
             {
                 <div class="dropdown">
@@ -51,15 +65,46 @@
 
                     </button>
                     <div class="dropdown-menu">
-                        <a asp-controller="Category" asp-action="Index" class="mt-2">
-                            <button>Categories</button>
-                        </a>
-                        <a asp-controller="Actor" asp-action="Index" class="mt-2">
-                            <button>Actors</button>
-                        </a>
-                        <a asp-controller="Producers" asp-action="Index" class="mt-2">
-                            <button>Producers</button>
-                        </a>
+                        <button>
+                            <a asp-controller="Category" asp-action="Index" class="mt-2">
+                                Categories
+                            </a>
+                        </button>
+                        <button>
+                            <a asp-controller="Actor" asp-action="Index" class="mt-2">
+                                Actors
+                            </a>
+                        </button>
+                        <button>
+                            <a asp-controller="Producers" asp-action="Index" class="mt-2">
+                                Producers
+                            </a>
+                        </button>
+                        <button>
+                            <a asp-controller="SliderContent" asp-action="Index" class="mt-2">
+                                Slider Content
+                            </a>
+                        </button>
+                        <button>
+                            <a asp-controller="Movie" asp-action="List" class="mt-2">
+                                Movies
+                            </a>
+                        </button>
+                        <button>
+                            <a asp-controller="TvShow" asp-action="Index" class="mt-2">
+                                Tv Shows
+                            </a>
+                        </button>
+                        <button>
+                            <a asp-controller="Season" asp-action="Index" class="mt-2">
+                                Season
+                            </a>
+                        </button>
+                        <button>
+                            <a asp-controller="Episode" asp-action="Index" class="mt-2">
+                                Episode
+                            </a>
+                        </button>
                     </div>
                 </div>
             }
@@ -87,20 +132,20 @@
             }
             else
             {
-                <div class="dropdown mt-2.5">
-                    <button class="button">
-                        Hello, @UserManager.GetUserName(User)
+                <div class="dropdown ml-2.5 mr-1.5 mt-2">
+                    <button class="button px-3 py-2 rounded-full">
+                        @UserManager.GetUserName(User)
                         <img src="~/icons/chevron.svg" />
                     </button>
                     <div class="dropdown-menu">
-                        <a href="" class="mt-1 mb-1">Profile</a>
+                        <a asp-controller="Account" asp-action="Profile" asp-route-name="@User.Identity.Name" class="mt-2">Profile</a>
                         @if (User.IsInRole("Admin"))
                         {
-                            <a href="">
+                            <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" class="mt-2">
                                 Admin Area
                             </a>
                         }
-                        <form asp-controller="Account" asp-action="Logout" class="mt-1 mb-1">
+                        <form asp-controller="Account" asp-action="Logout" class="mt-2">
                             <button type="submit"><i class="fa-solid fa-power-off"></i> Log out</button>
                         </form>
                     </div>

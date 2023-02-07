@@ -1,0 +1,189 @@
+﻿@using Redeo.Areas.Admin.Models
+@model Dashboard;
+
+@{
+    ViewData["Title"] = "Dashboard";
+
+}
+
+<div class="antialiased w-full min-h-screen text-slate-300 relative py-4">
+    <div class="grid grid-cols-9 mx-auto gap-2 sm:gap-4 md:gap-6 lg:gap-10 xl:gap-14 max-w-4xl my-2 px-2">
+        <div id="content" class="bg-[#17191f] col-span-9 rounded-lg p-6">
+            <div id="24h">
+                <h1 class="font-bold py-4 uppercase">Statistics</h1>
+                <div id="stats" class="grid gird-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-black/60 to-white/5 p-6 rounded-lg">
+                        <div class="flex flex-row space-x-4 items-center">
+                            <div id="stats-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 text-white">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-indigo-300 text-sm font-medium uppercase leading-4">Total Users</p>
+                                <p class="text-white font-bold text-2xl inline-flex items-center space-x-2">
+                                    <span>@Model.CountUsers</span>
+                                    <span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" />
+                                        </svg>
+
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-black/60 p-6 rounded-lg">
+                        <div class="flex flex-row space-x-4 items-center">
+                            <div id="stats-1">
+                                <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" stroke-width="1.5" stroke="currentColor" fill="none" class="w-10 h-10 text-white">
+                                    <rect x="8.5" y="12.5" width="47" height="39" rx="2" />
+                                    <line x1="8.5" y1="20.88" x2="55.5" y2="20.88" />
+                                    <path d="M28.06,30.42V41.7a.5.5,0,0,0,.8.4l9.29-5.7a.49.49,0,0,0-.07-.85L28.79,30A.51.51,0,0,0,28.06,30.42Z" />
+                                    <line x1="10.5" y1="12.5" x2="17.33" y2="20.88" />
+                                    <line x1="17.41" y1="12.5" x2="24.24" y2="20.88" />
+                                    <line x1="24.38" y1="12.5" x2="31.21" y2="20.88" />
+                                    <line x1="31.77" y1="12.5" x2="38.6" y2="20.88" />
+                                    <line x1="39.15" y1="12.5" x2="45.98" y2="20.88" />
+                                    <line x1="46.67" y1="12.5" x2="53.5" y2="20.88" />
+                                </svg>
+
+                            </div>
+                            <div>
+                                <p class="text-teal-300 text-sm font-medium uppercase leading-4">Movies</p>
+                                <p class="text-white font-bold text-2xl inline-flex items-center space-x-2">
+                                    <span>@Model.CountMovies</span>
+                                    <span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" />
+                                        </svg>
+
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-black/60 p-6 rounded-lg">
+                        <div class="flex flex-row space-x-4 items-center">
+                            <div id="stats-1">
+                                <svg viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" stroke-width="1.5" stroke="currentColor" fill="none" class="w-10 h-10 text-white">
+                                    <path d="M0 7L0 39L50 39L50 7 Z M 14 17L18.5 17C20.980469 17 23 19.019531 23 21.5C23 23.980469 20.980469 26 18.5 26L16 26L16 30L14 30 Z M 31 17C33.492188 17 35.632813 18.652344 36.535156 21L34.324219 21C33.601563 19.796875 32.382813 19 31 19C28.792969 19 27 21.019531 27 23.5C27 25.980469 28.792969 28 31 28C32.378906 28 33.574219 27.199219 34.289063 26L32 26L32 24L37 24L37 30L35 30L35 28.332031C33.9375 29.367188 32.539063 30 31 30C27.691406 30 25 27.085938 25 23.5C25 19.914063 27.691406 17 31 17 Z M 16 19L16 24L18.5 24C19.878906 24 21 22.878906 21 21.5C21 20.121094 19.878906 19 18.5 19 Z M 11 41C10.640625 40.996094 10.304688 41.183594 10.121094 41.496094C9.941406 41.808594 9.941406 42.191406 10.121094 42.503906C10.304688 42.816406 10.640625 43.003906 11 43L39 43C39.359375 43.003906 39.695313 42.816406 39.878906 42.503906C40.058594 42.191406 40.058594 41.808594 39.878906 41.496094C39.695313 41.183594 39.359375 40.996094 39 41Z" />
+                                </svg>
+
+                            </div>
+                            <div>
+                                <p class="text-blue-300 text-sm font-medium uppercase leading-4">Tv Shows</p>
+                                <p class="text-white font-bold text-2xl inline-flex items-center space-x-2">
+                                    <span>@Model.CountTvShows</span>
+                                    <span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" />
+                                        </svg>
+
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="last-incomes">
+                <h1 class="font-bold py-4 uppercase">Most Watched Movies</h1>
+                <div id="stats" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                    @foreach (var item in ViewBag.MostWatchedMovies)
+                    {
+                        <div class="bg-black/60 to-white/5 rounded-lg">
+                            @*<div class="flex flex-row items-center">
+                                <div class="text-3xl p-4">💰</div>*@
+                            <div class="p-2 text-center">
+                                <p class="text-xl font-bold">@item.Name</p>
+                                <p class="text-gray-500 font-medium">@item.Duration min @item.Quality.ToUpper()</p>
+                                <p class="text-gray-500 text-sm">@item.DateOfRelease.ToString("dd MMM yyy")</p>
+                            </div>
+                            @*</div>*@
+                            <div class="border-t border-white/5 p-4 text-center">
+                                <a asp-controller="Movie" asp-action="Details" asp-route-id="@item.Id" class="inline-flex space-x-2 items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                                    </svg>
+                                    <span>Info</span>
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div id="last-incomes">
+                <h1 class="font-bold py-4 uppercase">Most Watched Tv Shows</h1>
+                <div id="stats" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                    @foreach (var item in ViewBag.MostWachedTvShows)
+                    {
+                        <div class="bg-black/60 to-white/5 rounded-lg">
+                            <div class="p-2 text-center">
+                                <p class="text-xl font-bold">@item.Name</p>
+                                <p class="text-gray-500 font-medium">@item.Duration min @item.Quality.ToUpper()</p>
+                                <p class="text-gray-500 text-sm">@item.DateOfRelease.ToString("dd MMM yyy")</p>
+                            </div>
+                            <div class="border-t border-white/5 p-4 text-center">
+                                <a asp-controller="TvShow" asp-action="Details" asp-route-id="@item.Id" class="inline-flex space-x-2 items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                                    </svg>
+                                    <span>Info</span>
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div id="last-users">
+                <h1 class="font-bold py-4 uppercase">Last 24h users</h1>
+                <div class="overflow-x-scroll">
+                    <table class="w-full whitespace-nowrap">
+                        <thead class="bg-black/60">
+                        <th class="text-left py-3 px-2 rounded-l-lg">Name</th>
+                        <th class="text-left py-3 px-2">Username</th>
+                        <th class="text-left py-3 px-2">Birthdate</th>
+                        <th class="text-left py-3 px-2">Email</th>
+                        <th class="text-left py-3 px-2 rounded-r-lg">Actions</th>
+                        </thead>
+                        @foreach (var item in ViewBag.Users)
+                        {
+                            <tr class="border-b border-gray-700">
+                                <td class="py-3 px-2 font-bold">
+                                    @item.FullName
+                                </td>
+                                <td class="py-3 px-2">@item.UserName</td>
+                                <td class="py-3 px-2">@item.Birthdate.ToString("dd MMMM yyyy")</td>
+                                <td class="py-3 px-2">@item.Email</td>
+                                <td class="py-3 px-2">
+                                    <div class="inline-flex items-center space-x-3">
+                                        <a asp-area="Admin" asp-controller="User" asp-action="Edit" asp-route-id="@item.Id" title="Edit" class="hover:text-white">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                                            </svg>
+                                        </a>
+                                        <a asp-area="Admin" asp-controller="User" asp-action="Details" title="Details" class="hover:text-white">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M22 12.0002C20.2531 15.5764 15.8775 19 11.9998 19C8.12201 19 3.74646 15.5764 2 11.9998" stroke-linecap="round" stroke-linejoin="round" />
+                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M22 12.0002C20.2531 8.42398 15.8782 5 12.0005 5C8.1227 5 3.74646 8.42314 2 11.9998" stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M15 12C15 13.6569 13.6569 15 12 15C10.3431 15 9 13.6569 9 12C9 10.3431 10.3431 9 12 9C13.6569 9 15 10.3431 15 12Z" stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </a>
+                                        <a asp-area="Admin" asp-controller="User" asp-action="Delete" title="Delete" class="hover:text-white">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke="currentColor" class="w-5 h-5" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M6 7V18C6 19.1046 6.89543 20 8 20H16C17.1046 20 18 19.1046 18 18V7M6 7H5M6 7H8M18 7H19M18 7H16M10 11V16M14 11V16M8 7V5C8 3.89543 8.89543 3 10 3H14C15.1046 3 16 3.89543 16 5V7M8 7H16" stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+                <a asp-area="Admin" asp-controller="User" asp-action="Index" class="inline-block px-4 py-2 my-3 bg-teal-600 hover:bg-teal-700 rounded shadow transition">View More</a>
+            </div>
+
+        </div>
+    </div>
+</div>

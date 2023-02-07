@@ -1,0 +1,127 @@
+﻿@model IEnumerable<FavoriteMovie>
+
+@{
+    ViewData["Title"] = "Favorites";
+}
+
+<div class=" sm:px-8 px-2 py-3">
+    <div class="py-6">
+        <select id="myS" class="bg-transparent border-0 border-b-2 cursor-pointer text-zinc-300 text-base focus:ring-0">
+            <option class="bg-[#17191f] border-0 border-b-2 mb-1" value="1">Favorite Movies</option>
+            <option class="bg-[#17191f] border-0 border-b-2 mb-1" value="2">Favorite Tv Shows</option>
+        </select>
+    </div>
+    <div id="d_1" class="myD" style="display:none">
+        @*<h1 class="text-3xl text-zinc-300">Favorite Movie</h1>*@
+        <div class="grid grid-cols-3 gap-x-3 gap-y-5 sm:grid-cols-5 md:grid-cols-6 py-4">
+
+            @foreach (var item in Model)
+            {
+                <div>
+                    <div class="relative">
+                        <form asp-controller="Favorites" asp-action="RemoveFavoriteMovie" asp-route-movieId="@item.MovieId">
+                            <button type="submit" style="z-index: 1;"
+                                class="absolute top-[18px] left-1.5 text-red-600 text-2xl hover:text-red-700">
+                                <i class="fa-solid fa-square-minus"></i>
+                            </button>
+                        </form>
+                    </div>
+                    <div class="mb-1">
+
+                        <a class="cursor-pointer hover:scale-100 jt" asp-controller="Movie" asp-action="Details" asp-route-id="@item.MovieId" rel="/Movie/ClueTip?id=@item.MovieId">
+                            <div class="relative w-full rounded-none transition-all">
+
+                                <div class="absolute uppercase top-2 right-1.5 px-0 py-4 text-white font-semibold z-4 text-sm" id="quality">
+                                    @item.Movie.Quality
+                                </div>
+
+                                <img class="bg-cover w-full inline-block" src="@item.Movie.MoviePicture" />
+                            </div>
+                        </a>
+                        <div class="bg-[#1c1f26] p-2">
+                            <a asp-controller="Movie" asp-action="Details" asp-route-id="@item.MovieId" class="text-slate-300" title="@item.Movie.Name">
+                                <h4 class="truncate text-sm mt-3">@item.Movie.Name</h4>
+                            </a>
+                            <p class="text-blue-200 text-xs">@item.Movie.DateOfRelease.ToString("dd MMMM yyyy")</p>
+                            <div class="px-4 py-1 bg-[#21242b] text-center mt-3 rounded">
+                                <a class="text-slate-300" asp-controller="Movie" asp-action="Details" asp-route-id="@item.MovieId"><i class="fa-solid fa-play mr-3"></i>Play</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <div id="d_2" class="myD" style="display:none">
+        @*<h1 class="text-3xl text-zinc-300">Favorite Tv Show</h1>*@
+        <div class="grid grid-cols-3 gap-x-3 gap-y-5 sm:grid-cols-5 md:grid-cols-6 py-4">
+
+            @foreach (var item in ViewBag.FavoriteTvShows)
+            {
+                <div>
+                    <div class="relative">
+                        <form asp-controller="Favorites" asp-action="RemoveFavoriteTvShow" asp-route-tvShowId="@item.TvShowId">
+                            <button type="submit" style="z-index: 1;"
+                                class="absolute top-[18px] left-1.5 text-red-600 text-2xl hover:text-red-700">
+                                <i class="fa-solid fa-square-minus"></i>
+                            </button>
+                        </form>
+                    </div>
+                    <div class="mb-1">
+
+                        <a class="cursor-pointer hover:scale-100 jt" asp-controller="TvShow" asp-action="Details" asp-route-id="@item.TvShowId" rel="/TvShow/ClueTip?id=@item.TvShowId">
+                            <div class="relative w-full rounded-none transition-all">
+
+                                <div class="absolute uppercase top-2 right-1.5 px-0 py-4 text-white font-semibold z-4 text-sm" id="quality">
+                                    @item.TvShow.Quality
+                                </div>
+
+                                <img class="bg-cover w-full inline-block" src="@item.TvShow.TvShowPicture" />
+                            </div>
+                        </a>
+                        <div class="bg-[#1c1f26] p-2">
+                            <a asp-controller="TvShow" asp-action="Details" asp-route-id="@item.TvShowId" class="text-slate-300" title="@item.TvShow.Name">
+                                <h4 class="truncate text-sm mt-3">@item.TvShow.Name</h4>
+                            </a>
+                            <p class="text-blue-200 text-xs">@item.TvShow.DateOfRelease.ToString("dd MMMM yyyy")</p>
+                            <div class="px-4 py-1 bg-[#21242b] text-center mt-3 rounded">
+                                <a class="text-slate-300" asp-controller="TvShow" asp-action="Details" asp-route-id="@item.TvShowId"><i class="fa-solid fa-play mr-3"></i>Play</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <partial name="_Pagination" />
+</div>
+
+<script>
+    window.onload = function(){
+        abc();
+    }
+
+    function abc(){
+        // Check if a value is stored in local storage
+        if (sessionStorage.getItem("selectedO")) {
+            // Set the selected option
+            $("#myS").val(sessionStorage.getItem("selectedO"));
+            // Show the corresponding div
+            $(".myD").hide();
+            $("#d_" + sessionStorage.getItem("selectedO")).show();
+        } else {
+            // Show the first div by default
+            $(".myD").hide();
+            $(".myD").first().show();
+        }
+
+        $("#myS").change(function () {
+            // Store the selected option in local storage
+            sessionStorage.setItem("selectedO", $(this).val());
+            // Show the corresponding div
+            $(".myD").hide();
+            $("#d_" + $(this).val()).show();
+        });
+    }
+
+</script>

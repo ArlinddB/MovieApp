@@ -1,0 +1,59 @@
+﻿@model IEnumerable<ApplicationUser>
+
+@{
+    ViewData["Title"] = "Users";
+}
+
+<div class="antialiased w-full min-h-screen text-slate-300 relative py-4">
+    <div class="grid grid-cols-9 mx-auto gap-2 sm:gap-4 md:gap-6 lg:gap-10 xl:gap-14 max-w-4xl my-2 px-2">
+        <div id="content" class="bg-[#17191f] col-span-9 rounded-lg p-6">
+            <div id="last-users">
+                <h1 class="font-bold py-4 uppercase">All Users</h1>
+                <div class="overflow-x-scroll">
+                    <table class="w-full whitespace-nowrap">
+                        <thead class="bg-black/60">
+                        <th class="text-left py-3 px-2 rounded-l-lg">Name</th>
+                        <th class="text-left py-3 px-2">Username</th>
+                        <th class="text-left py-3 px-2">Birthdate</th>
+                        <th class="text-left py-3 px-2">Email</th>
+                        <th class="text-left py-3 px-2 rounded-r-lg">Actions</th>
+                        </thead>
+                        @foreach (var item in Model)
+                        {
+                            <tr class="border-b border-gray-700">
+                                <td class="py-3 px-2 font-bold">
+                                    @item.FullName
+                                </td>
+                                <td class="py-3 px-2">@item.UserName</td>
+                                <td class="py-3 px-2">@item.Birthdate.ToString("dd MMMM yyyy")</td>
+                                <td class="py-3 px-2">@item.Email</td>
+                                <td class="py-3 px-2">
+                                    <div class="inline-flex items-center space-x-3">
+                                        <a asp-area="Admin" asp-controller="User" asp-action="Edit" asp-route-id="@item.Id" title="Edit" class="hover:text-white">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                                            </svg>
+                                        </a>
+                                        <a asp-area="Admin" asp-controller="User" asp-action="Details" title="Details" class="hover:text-white">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M22 12.0002C20.2531 15.5764 15.8775 19 11.9998 19C8.12201 19 3.74646 15.5764 2 11.9998" stroke-linecap="round" stroke-linejoin="round" />
+                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M22 12.0002C20.2531 8.42398 15.8782 5 12.0005 5C8.1227 5 3.74646 8.42314 2 11.9998" stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M15 12C15 13.6569 13.6569 15 12 15C10.3431 15 9 13.6569 9 12C9 10.3431 10.3431 9 12 9C13.6569 9 15 10.3431 15 12Z" stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </a>
+                                        <a asp-area="Admin" asp-controller="User" asp-action="Delete" title="Delete" class="hover:text-white">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke="currentColor" class="w-5 h-5" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M6 7V18C6 19.1046 6.89543 20 8 20H16C17.1046 20 18 19.1046 18 18V7M6 7H5M6 7H8M18 7H19M18 7H16M10 11V16M14 11V16M8 7V5C8 3.89543 8.89543 3 10 3H14C15.1046 3 16 3.89543 16 5V7M8 7H16" stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <partial name="_Pagination" />
+</div>

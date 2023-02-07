@@ -6,11 +6,16 @@ namespace Redeo.ViewModels
     {
         [Key]
         public int Id { get; set; }
-        [Display(Name = "Episode Name")]
-        [Required(ErrorMessage = "Episode Name is required")]
+        [Required(ErrorMessage = ("Episode Name is required"))]
         public string Episode { get; set; }
+        [Required(ErrorMessage = "Episode url is required")]
+        public string EpisodeUrl { get; set; }
+        [Display(Name = "Episode Description")]
+        [Required(ErrorMessage = "Episode descriptionn is required")]
+        public string EpisodeDescription { get; set; }
         [Required(ErrorMessage = "Season is required")]
         public int SeasonId { get; set; }
-        
+        [Required(ErrorMessage = "Tv show is required")]
+        public int TvShowId { get; set; }
     }
 }

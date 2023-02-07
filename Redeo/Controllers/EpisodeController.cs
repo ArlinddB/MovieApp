@@ -44,7 +44,7 @@ namespace Redeo.Controllers
 
             return View(await episodes.AsNoTracking()
                 .Include(n => n.Season)
-                .ThenInclude(m => m.TvShow)
+                .Include(m => m.TvShow)
                 .ToPagedListAsync(pageNumber, pageSize));
         }
 
@@ -56,6 +56,7 @@ namespace Redeo.Controllers
             ViewBag.Category = GetCategory();
 
             ViewBag.Seasons = new SelectList(episodeDropdowns.Seasons, "Id", "Season");
+            ViewBag.TvShows = new SelectList(episodeDropdowns.TvShows, "Id", "Name");
 
             return View();
         }
@@ -68,6 +69,7 @@ namespace Redeo.Controllers
                 var episodeDropdowns = await _service.GetNewEpisodeDropdownsValues();
 
                 ViewBag.Seasons = new SelectList(episodeDropdowns.Seasons, "Id", "Season");
+                ViewBag.TvShows = new SelectList(episodeDropdowns.TvShows, "Id", "Name");
 
                 return View(episodee);
             }
@@ -77,10 +79,23 @@ namespace Redeo.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public List<TSeason> GetSeasons()
+        {
+            return _context.seasons.ToList();
+        }
+        public List<TEpisodes> GetEpisodes()
+        {
+            return _context.episodes.ToList();
+        }
+
         //GET:Episode/Details/id
         public async Task<IActionResult> Details(int id)
         {
             ViewBag.Category = GetCategory();
+
+            ViewBag.Seasons = GetSeasons();
+
+            ViewBag.Episodes = GetEpisodes();
 
             var episodeDetails = await _service.GetEpisodeByIdAsync(id);
 
@@ -111,6 +126,8 @@ namespace Redeo.Controllers
             var episodeDropdowns = await _service.GetNewEpisodeDropdownsValues();
 
             ViewBag.Seasons = new SelectList(episodeDropdowns.Seasons, "Id", "Season");
+            ViewBag.TvShows = new SelectList(episodeDropdowns.TvShows, "Id", "Name");
+
 
             return View(response);
         }
@@ -126,6 +143,7 @@ namespace Redeo.Controllers
                 var episodeDropdowns = await _service.GetNewEpisodeDropdownsValues();
 
                 ViewBag.Seasons = new SelectList(episodeDropdowns.Seasons, "Id", "Season");
+                ViewBag.TvShows = new SelectList(episodeDropdowns.TvShows, "Id", "Name");
 
                 return View(episodee);
             }

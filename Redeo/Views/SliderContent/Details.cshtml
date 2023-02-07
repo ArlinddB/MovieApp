@@ -1,0 +1,64 @@
+﻿@model Redeo.Models.SliderContent
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="p-0 sm:p-12">
+    <div class="mx-auto max-w-md px-6 py-12 bg-[#1b1b1f] border-0 shadow-lg sm:rounded-3xl">
+        <h1 class="text-2xl font-bold mb-8 text-slate-300">Details for @Model.Name</h1>
+        <form>
+
+            <div class="relative z-0 w-full mb-5">
+                <input asp-for="Name"
+                       disabled
+                       type="text"
+                       class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200 text-slate-300" />
+                <label asp-for="Name" class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500">Name</label>
+            </div>
+            <div class="relative z-0 w-full mb-5">
+                <input asp-for="Duration"
+                       disabled
+                       type="text"
+                       class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200 text-slate-300" />
+                <label asp-for="Duration" class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500">Duration</label>
+            </div>
+            <div class="relative z-0 w-full mb-5">
+                <input asp-for="Description"
+                       disabled
+                       type="text"
+                       class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200 text-slate-300" />
+                <label asp-for="Description" class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500">Description</label>
+            </div>
+            <div class="relative z-0 w-full mb-5">
+                <input asp-for="Quality"
+                       disabled
+                       type="text"
+                       class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200 text-slate-300" />
+                <label asp-for="Quality" class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500">Quality</label>
+            </div>
+            <div class="relative z-0 w-full mb-5">
+                <input asp-for="Picture"
+                       disabled
+                       type="text"
+                       class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200 text-slate-300" />
+                <label asp-for="Picture" class="absolute duration-300 top-3 -z-1 origin-0 text-gray-500">Picture</label>
+            </div>
+            @if(User.Identity.IsAuthenticated && (User.IsInRole("Editor") || User.IsInRole("Admin"))){
+            <div class="flex justify-between">
+                <a asp-action="Index"
+                   class="hvr-icon-back px-4 py-2.5 mt-3 text-md text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-gray-500 hover:bg-gray-700 hover:shadow-lg focus:outline-none">
+                    <i class="fa-solid fa-angle-left hvr-icon mr-2"></i>
+                    Back to list
+                </a>
+
+                <a asp-action="Edit"
+                   asp-route-id="@Model.Id"
+                   class=" px-4 py-2.5 mt-3 text-md text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-blue-500 hover:bg-blue-700 hover:shadow-lg focus:outline-none">
+                    Edit
+                </a>
+            </div>
+            }
+        </form>
+    </div>
+</div>

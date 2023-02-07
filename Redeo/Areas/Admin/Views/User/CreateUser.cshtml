@@ -1,0 +1,80 @@
+﻿@using Redeo.Areas.Admin.ViewModels
+@model RegisterVM;
+
+@{
+    ViewData["Title"] = "Create Users";
+}
+
+<div class="p-0 min-h-screen sm:p-12">
+    <div class="mx-auto max-w-md px-6 py-12 bg-[#1b1b1f] border-0 shadow-lg sm:rounded-3xl">
+        <h1 class="text-2xl font-bold mb-8 text-slate-300">Create User</h1>
+        <form asp-action="CreateUser" method="post">
+
+            <div class="relative z-0 w-full mb-5">
+                <input asp-for="FullName"
+                       type="text"
+                       placeholder=" "
+                       class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200 text-slate-300" />
+                <label asp-for="FullName" class="absolute duration-300 top-3 -z-1 origin-0 text-slate-300">Full Name</label>
+                <span asp-validation-for="FullName" class="text-sm text-red-600"></span>
+            </div>
+
+            <div class="relative z-0 w-full mb-5">
+                <input asp-for="UserName"
+                       type="text"
+                       placeholder=" "
+                       class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200 text-slate-300" />
+                <label asp-for="UserName" class="absolute duration-300 top-3 -z-1 origin-0 text-slate-300">Username</label>
+                <span asp-validation-for="UserName" class="text-sm text-red-600"></span>
+            </div>
+
+            <div class="relative z-0 w-full mb-5">
+                <input asp-for="Email"
+                       type="text"
+                       placeholder=" "
+                       class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200 text-slate-300" />
+                <label asp-for="Email" class="absolute duration-300 top-3 -z-1 origin-0 text-slate-300">Email</label>
+                <span asp-validation-for="Email" class="text-sm text-red-600"></span>
+            </div>
+
+            <div class="relative z-0 w-full mb-5">
+                <input asp-for="Birthdate"
+                       placeholder=" "
+                       type="date"
+                       class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200 text-slate-300" />
+                <label asp-for="Birthdate" class="absolute duration-300 top-3 -z-1 origin-0 text-slate-300">Birthdate</label>
+                <span asp-validation-for="Birthdate" class="text-sm text-red-600"></span>
+            </div>
+
+            <div class="relative z-0 w-full mb-5">
+                <input asp-for="Password"
+                       class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200 text-slate-300"
+                       type="password"
+                       id="password"
+                       placeholder=" " />
+                <label asp-for="Password" class="absolute duration-300 top-3 -z-1 origin-0 text-slate-300">Password</label>
+                <span asp-validation-for="Password" class="text-sm text-red-600"></span>
+                <i class="fa-sharp fa-solid fa-eye-slash text-zinc-300 cursor-pointer absolute right-0 top-3" id="togglePassword"></i>
+            </div>
+
+            <div class="flex justify-between">
+                <a asp-action="NormalUser"
+                   class="hvr-icon-back px-4 py-2.5 mt-3 text-md text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-gray-500 hover:bg-gray-700 hover:shadow-lg focus:outline-none">
+                    <i class="fa-solid fa-angle-left hvr-icon mr-2"></i>
+                    Back to list
+                </a>
+
+                <button type="submit"
+                        class=" px-4 py-2.5 mt-3 text-md text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-blue-600 hover:bg-blue-700 hover:shadow-lg focus:outline-none">
+                    Update
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+    @{
+    <partial name="_ValidationScriptsPartial" />
+    }
+}

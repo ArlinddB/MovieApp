@@ -26,10 +26,10 @@ namespace Redeo.Controllers
             var tvShows = await _context.tvShows.ToListAsync();
 
 
-
             if (!string.IsNullOrEmpty(s))
             {
                 var filteredMovie = movies.Where(n => n.Name.ToLower().Contains(s.ToLower()) || n.Description.ToLower().Contains(s.ToLower())).ToList();
+                
                 var filteredTvShows = tvShows.Where(n => n.Name.ToLower().Contains(s.ToLower()) || n.Description.ToLower().Contains(s.ToLower())).ToList();
 
 
@@ -43,8 +43,8 @@ namespace Redeo.Controllers
                 var result = new MovieTvShowViewModel()
                 {
                     Movie = filteredMovie,
-                    TvShow = filteredTvShows,
-
+                    TvShows = filteredTvShows
+                    
                 };
                 return View(result);
             }
@@ -53,7 +53,7 @@ namespace Redeo.Controllers
 
         public IActionResult NotFound404()
         {
-
+            ViewBag.Category = GetCategory();
 
             return View();
         }

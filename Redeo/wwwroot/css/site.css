@@ -1,11 +1,11 @@
 
 @import url('https://fonts.googleapis.com/css?family=Inconsolata:700');
+
 * {
     scrollbar-width: thin;
     scrollbar-color: #fff #c4c4c4;
     margin: 0;
 }
-
 
     /* Chrome, Edge, and Safari */
     *::-webkit-scrollbar {
@@ -36,6 +36,18 @@ body {
 
 
 /*Navbar*/
+.nav-link.active {
+    text-decoration: underline #006db0;
+    text-underline-offset: 0.5rem;
+    transition: .2s ease-in-out;
+}
+
+.nav-link:hover {
+    text-decoration: underline #006db0;
+    text-underline-offset: 0.5rem;
+    transition: .2s ease-in-out;
+}
+
 button {
     border: 0;
     padding: 0;
@@ -142,17 +154,19 @@ body.open .burger {
         visibility: visible;
         left: 0;
     }
-    .dropdowns{
+
+    .dropdowns {
         flex-direction: column;
-        justify-content:unset;
+        justify-content: unset;
     }
-    .res_dropdowns{
-        flex-direction:column;
+
+    .res_dropdowns {
+        flex-direction: column;
     }
 }
 
-.res_dropdowns{
-    display:flex;
+.res_dropdowns {
+    display: flex;
 }
 
 @media (width >= 830px) {
@@ -345,6 +359,10 @@ select:focus ~ label {
     opacity: 100%;
     box-shadow: none;
 }
+#toast-container > .toast-error {
+    opacity: 100%;
+    box-shadow: none;
+}
 
 /*Login and sign up*/
 .test {
@@ -385,7 +403,7 @@ select:focus ~ label {
     margin-bottom: 16px;
 }
 
-    .textbox span {
+    .textbox .icon {
         position: absolute;
         top: 50%;
         transform: translate(0, -50%);
@@ -462,3 +480,43 @@ input:focus ~ label {
         color: #216ce7;
         text-decoration: none;
     }
+
+/*Episodes*/
+
+.tabs {
+    /*height: 1475px;*/
+    width: 75%;
+    text-align: left;
+}
+
+
+.tab-content-wrapper {
+    position: relative !important;
+    z-index: 1 !important;
+    padding: 25px 20px 20px 0px;
+    min-height: 40px;
+}
+
+#mySelect {
+    width: 180px;
+    padding: 10px;
+}
+
+.myA {
+    display: inline-block;
+    padding: 0.625rem 1.25rem;
+    background-color: #17191f;
+    color: rgb(212 212 216);
+    cursor: pointer;
+    border-radius: 8px;
+    margin: 0.5rem 0.5rem 0.5rem 0;
+    transition: .2s ease-in-out;
+}
+
+    .myA:hover {
+        background-color: #006db0;
+    }
+
+.activeEpisode {
+    background-color: #006db0;
+}

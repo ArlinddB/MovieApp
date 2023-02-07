@@ -17,7 +17,10 @@ namespace Redeo.Data.Services.Episode
             var newEpisode = new TEpisodes()
             {
                 Episode = data.Episode,
+                EpisodeUrl = data.EpisodeUrl,
+                EpisodeDescription = data.EpisodeDescription,
                 SeasonId = data.SeasonId,
+                TvShowId = data.TvShowId
             };
 
             await _context.episodes.AddAsync(newEpisode);
@@ -28,7 +31,8 @@ namespace Redeo.Data.Services.Episode
         {
             var response = new EpisodeDropdownsVM()
             {
-                Seasons = await _context.seasons.OrderBy(n => n.Season).ToListAsync()
+                Seasons = await _context.seasons.OrderBy(n => n.Season).ToListAsync(),
+                TvShows = await _context.tvShows.OrderBy(m => m.Name).ToListAsync()
             };
             return response;
         }
@@ -38,6 +42,9 @@ namespace Redeo.Data.Services.Episode
             var episodeDetails = await _context.episodes
                 .Include(n => n.Season)
                 .ThenInclude(m => m.TvShow)
+                .Include(v => v.TvShow.Producers)
+                .Include(b => b.TvShow.TvShows_Actors)
+                .Include(c => c.TvShow.TvShows_Categories)
                 .FirstOrDefaultAsync(v => v.Id == id);
             return episodeDetails;
         }
@@ -49,7 +56,10 @@ namespace Redeo.Data.Services.Episode
             if(episode != null)
             {
                 episode.Episode = data.Episode;
+                episode.EpisodeUrl = data.EpisodeUrl;
+                episode.EpisodeDescription = data.EpisodeDescription;
                 episode.SeasonId = data.SeasonId;
+                episode.TvShowId = data.TvShowId;
 
                 await _context.SaveChangesAsync();
             }

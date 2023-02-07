@@ -19,6 +19,15 @@
             </div>       
 
             <div class="relative z-0 w-full mb-5">
+                <input asp-for="SeasonPoster"
+                       type="text"
+                       placeholder=" "
+                       class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200 text-slate-300" />
+                <label asp-for="SeasonPoster" class="absolute duration-300 top-3 -z-1 origin-0 text-slate-300">Season Poster</label>
+                <span asp-validation-for="SeasonPoster" class="text-sm text-red-600"></span>
+            </div>
+
+            <div class="relative z-0 w-full mb-5">
                 <select asp-for="TvShowId" class="pt-3 pb-2 block w-full px-0 mt-0 one-select bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:bg-transparent active:bg-transparent border-gray-200 text-slate-300" asp-items="ViewBag.TvShows">
                     <option value="" disabled selected>Select a Tv Show</option>
                 </select>

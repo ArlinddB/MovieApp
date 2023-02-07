@@ -17,10 +17,10 @@ namespace Redeo.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.0")
+                .HasAnnotation("ProductVersion", "6.0.13")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -55,7 +55,7 @@ namespace Redeo.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -80,7 +80,7 @@ namespace Redeo.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -161,7 +161,7 @@ namespace Redeo.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Bio")
                         .IsRequired()
@@ -261,7 +261,7 @@ namespace Redeo.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("CategoryName")
                         .IsRequired()
@@ -272,13 +272,49 @@ namespace Redeo.Migrations
                     b.ToTable("categories");
                 });
 
+            modelBuilder.Entity("Redeo.Models.FavoriteMovie", b =>
+                {
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("isFavorite")
+                        .HasColumnType("bit");
+
+                    b.HasKey("MovieId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("FavoriteMovies");
+                });
+
+            modelBuilder.Entity("Redeo.Models.FavoriteTvShow", b =>
+                {
+                    b.Property<int>("TvShowId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("isFavorite")
+                        .HasColumnType("bit");
+
+                    b.HasKey("TvShowId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("FavoriteTvShows");
+                });
+
             modelBuilder.Entity("Redeo.Models.Movie", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("Clicks")
                         .HasColumnType("int");
@@ -356,7 +392,7 @@ namespace Redeo.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Biography")
                         .IsRequired()
@@ -378,24 +414,69 @@ namespace Redeo.Migrations
                     b.ToTable("producers");
                 });
 
+            modelBuilder.Entity("Redeo.Models.SliderContent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Duration")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Picture")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Quality")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SliderContents");
+                });
+
             modelBuilder.Entity("Redeo.Models.TEpisodes", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Episode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EpisodeDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EpisodeUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SeasonId")
                         .HasColumnType("int");
 
+                    b.Property<int>("TvShowId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("SeasonId");
+
+                    b.HasIndex("TvShowId");
 
                     b.ToTable("episodes");
                 });
@@ -406,9 +487,13 @@ namespace Redeo.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Season")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SeasonPoster")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -428,7 +513,7 @@ namespace Redeo.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("Clicks")
                         .HasColumnType("int");
@@ -456,10 +541,6 @@ namespace Redeo.Migrations
                         .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("TvShowPicture")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TvShowUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -498,6 +579,31 @@ namespace Redeo.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("tvShows_categories");
+                });
+
+            modelBuilder.Entity("Redeo.Models.User", b =>
+                {
+                    b.Property<string>("U_Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("Birthdate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("U_Id");
+
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -549,6 +655,44 @@ namespace Redeo.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Redeo.Models.FavoriteMovie", b =>
+                {
+                    b.HasOne("Redeo.Models.Movie", "Movie")
+                        .WithMany("FavoriteMovies")
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Redeo.Models.User", "User")
+                        .WithMany("FavoriteMovies")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Movie");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Redeo.Models.FavoriteTvShow", b =>
+                {
+                    b.HasOne("Redeo.Models.TvShow", "TvShow")
+                        .WithMany("FavoriteTvShows")
+                        .HasForeignKey("TvShowId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Redeo.Models.User", "User")
+                        .WithMany("FavoriteTvShows")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TvShow");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Redeo.Models.Movie", b =>
@@ -608,7 +752,15 @@ namespace Redeo.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Redeo.Models.TvShow", "TvShow")
+                        .WithMany()
+                        .HasForeignKey("TvShowId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Season");
+
+                    b.Navigation("TvShow");
                 });
 
             modelBuilder.Entity("Redeo.Models.TSeason", b =>
@@ -687,6 +839,8 @@ namespace Redeo.Migrations
 
             modelBuilder.Entity("Redeo.Models.Movie", b =>
                 {
+                    b.Navigation("FavoriteMovies");
+
                     b.Navigation("Movies_Actors");
 
                     b.Navigation("Movies_Categories");
@@ -699,11 +853,20 @@ namespace Redeo.Migrations
 
             modelBuilder.Entity("Redeo.Models.TvShow", b =>
                 {
+                    b.Navigation("FavoriteTvShows");
+
                     b.Navigation("Seasons");
 
                     b.Navigation("TvShows_Actors");
 
                     b.Navigation("TvShows_Categories");
+                });
+
+            modelBuilder.Entity("Redeo.Models.User", b =>
+                {
+                    b.Navigation("FavoriteMovies");
+
+                    b.Navigation("FavoriteTvShows");
                 });
 #pragma warning restore 612, 618
         }

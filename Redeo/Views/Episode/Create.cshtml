@@ -1,0 +1,77 @@
+﻿@model EpisodeVM
+@using Redeo.ViewModels;
+
+@{
+    ViewData["Title"] = "Add Episode";
+}
+<div class="p-0 sm:p-12">
+    <div class="mx-auto max-w-md px-6 py-12 bg-[#1b1b1f] border-0 shadow-lg sm:rounded-3xl">
+        <h1 class="text-2xl font-bold mb-8 text-slate-300">Add new Episode</h1>
+        <form asp-action="Create" method="post">
+
+            <div class="relative z-0 w-full mb-5">
+                <input asp-for="Episode"
+                       type="text"
+                       placeholder=" "
+                       class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200 text-slate-300" />
+                <label asp-for="Episode" class="absolute duration-300 top-3 -z-1 origin-0 text-slate-300">Episode Name</label>
+                <span asp-validation-for="Episode" class="text-sm text-red-600"></span>
+            </div>       
+
+            <div class="relative z-0 w-full mb-5">
+                <input asp-for="EpisodeUrl"
+                       type="text"
+                       placeholder=" "
+                       class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200 text-slate-300" />
+                <label asp-for="EpisodeUrl" class="absolute duration-300 top-3 -z-1 origin-0 text-slate-300">Episode URL</label>
+                <span asp-validation-for="EpisodeUrl" class="text-sm text-red-600"></span>
+            </div>
+
+            <div class="relative z-0 w-full mb-5">
+                <input asp-for="EpisodeDescription"
+                       type="text"
+                       placeholder=" "
+                       class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200 text-slate-300" />
+                <label asp-for="EpisodeDescription" class="absolute duration-300 top-3 -z-1 origin-0 text-slate-300">Episode Description</label>
+                <span asp-validation-for="EpisodeDescription" class="text-sm text-red-600"></span>
+            </div>
+
+            <div class="relative z-0 w-full mb-5">
+                <select asp-for="SeasonId" class="pt-3 pb-2 block w-full px-0 mt-0 one-select bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:bg-transparent active:bg-transparent border-gray-200 text-slate-300" asp-items="ViewBag.Seasons">
+                    <option value="" disabled selected>Select a Season</option>
+                </select>
+
+                <span asp-validation-for="SeasonId" class="text-sm text-red-600"></span>
+
+            </div>
+
+            <div class="relative z-0 w-full mb-5">
+                <select asp-for="TvShowId" class="pt-3 pb-2 block w-full px-0 mt-0 one-select bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:bg-transparent active:bg-transparent border-gray-200 text-slate-300" asp-items="ViewBag.TvShows">
+                    <option value="" disabled selected>Select a Tv Show</option>
+                </select>
+
+                <span asp-validation-for="TvShowId" class="text-sm text-red-600"></span>
+
+            </div>
+
+            <div class="flex justify-between">
+                <a asp-action="Index"
+                   class="hvr-icon-back px-4 py-2.5 mt-3 text-md text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-gray-500 hover:bg-gray-700 hover:shadow-lg focus:outline-none">
+                    <i class="fa-solid fa-angle-left hvr-icon mr-2"></i>
+                    Back to list
+                </a>
+
+                <button type="submit"
+                        class=" px-4 py-2.5 mt-3 text-md text-white transition-all duration-150 ease-linear rounded-lg shadow outline-none bg-blue-500 hover:bg-blue-700 hover:shadow-lg focus:outline-none">
+                    Add
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

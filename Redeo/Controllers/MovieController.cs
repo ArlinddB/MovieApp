@@ -8,6 +8,7 @@ using Redeo.Data.Services;
 using Redeo.Models;
 using Redeo.ViewModels;
 using System.Collections.Generic;
+using System.Linq.Dynamic.Core;
 using X.PagedList;
 
 namespace Redeo.Controllers
@@ -28,25 +29,63 @@ namespace Redeo.Controllers
             return _context.categories.ToList();
         }
 
+        public List<SliderContent> GetContent()
+        {
+            return _context.SliderContents.ToList();
+        }
+
+        public List<Movie> MostWatchedMovies()
+        {
+            var avgViews = _context.movies.Average(n => n.Clicks);
+
+            var topMovies = _context.movies.Where(m => m.Clicks > avgViews).OrderByDescending(v => v.Clicks).Take(6).ToList();
+
+            return topMovies;
+        }
+
         [AllowAnonymous]
         public async Task<IActionResult> Index(string? genre, int? page)
         {
-           
-
             ViewBag.Category = GetCategory();
+
+            ViewBag.SliderContent = GetContent();
+
+            ViewBag.MostWatchedMovies = MostWatchedMovies();
 
             var pageNumber = page ?? 1;
             var pageSize = 10;
 
+            
+         
             if (!String.IsNullOrEmpty(genre))
             {
                 var a = _context.movies.Where(n => n.Movies_Categories.Any(c => c.Category.CategoryName == genre));
 
                 return View("Index", a.ToPagedList(pageNumber, pageSize));
             }
-           
-            return View(await _context.movies.ToPagedListAsync(pageNumber, pageSize));
-            
+
+            return View(await _context.movies.OrderByDescending(n => n.Id).ToPagedListAsync(pageNumber, pageSize));
+
+        }
+
+        public async Task<IActionResult> List(string searchString, int? page)
+        {
+            ViewBag.Category = GetCategory();
+
+            var pageNumber = page ?? 1;
+            var pageSize = 10;
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var movies = from a in _context.movies
+                         select a;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                movies = movies.Where(a => a.Name.Contains(searchString));
+            }
+
+            return View(await movies.AsNoTracking().ToPagedListAsync(pageNumber, pageSize));
         }
 
         //Get:Movie/Create
@@ -60,7 +99,7 @@ namespace Redeo.Controllers
             ViewBag.Producers = new SelectList(movieDropDowns.Producers, "Id", "ProducersName");
             ViewBag.Actors = new SelectList(movieDropDowns.Actors, "Id", "FullName");
 
-            return View(); 
+            return View();
         }
 
         [HttpPost]
@@ -91,6 +130,13 @@ namespace Redeo.Controllers
             var movieDatails = await _service.GetMovieByIdAsync(id);
 
             movieDatails.Clicks += 1;
+
+            var genreIds = movieDatails.Movies_Categories.Select(mg => mg.CategoryId).ToList();
+            var similarMovies = _context.movies
+                .Where(m => m.Movies_Categories.Any(mg => genreIds.Contains(mg.CategoryId)) && m.Id != id)
+                .Take(6).ToList();
+
+            ViewBag.SimilarMovies = similarMovies;
 
             await _service.UpdateAsync(id, movieDatails);
 
@@ -162,7 +208,7 @@ namespace Redeo.Controllers
             ViewBag.Category = GetCategory();
 
             var movieDetails = await _service.GetByIdAsync(id);
-            if (movieDetails == null) 
+            if (movieDetails == null)
                 return RedirectToAction("NotFound", "Error");
 
             return View(movieDetails);

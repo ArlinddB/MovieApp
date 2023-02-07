@@ -7,7 +7,9 @@ namespace Redeo.ViewModels
         public EpisodeDropdownsVM()
         {
             Seasons = new List<TSeason>();
+            TvShows = new List<TvShow>();
         }
         public List<TSeason> Seasons { get; set; }
+        public List<TvShow> TvShows { get; set; }
     }
 }

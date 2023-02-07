@@ -23,8 +23,6 @@
                 <input asp-for="UserName"
                        type="text"
                        placeholder=" "
-                       id="name"
-                       oninput="actorCheck()"
                        class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200 text-slate-300" />
                 <label asp-for="UserName" class="absolute duration-300 top-3 -z-1 origin-0 text-slate-300">Username</label>
                 <span asp-validation-for="UserName" id="errStatus" class="text-sm text-red-600"></span>
@@ -34,8 +32,6 @@
                 <input asp-for="Email"
                        type="text"
                        placeholder=" "
-                       id="dob"
-                       oninput="actorCheck()"
                        class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 border-gray-200 text-slate-300" />
                 <label asp-for="Email" class="absolute duration-300 top-3 -z-1 origin-0 text-slate-300">Email</label>
                 <span asp-validation-for="Email" id="errStatus" class="text-sm text-red-600"></span>
@@ -69,3 +65,9 @@
         </form>
     </div>
 </div>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
