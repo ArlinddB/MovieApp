@@ -36,7 +36,9 @@ namespace Redeo.Controllers
                 if (filteredMovie.Count == 0 && filteredTvShows.Count == 0)
                 {
                     return View(nameof(NotFound404));
+
                 }
+
 
                 var result = new MovieTvShowViewModel()
                 {

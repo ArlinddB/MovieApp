@@ -37,7 +37,7 @@ namespace Redeo.Data
         public bool SendEmailPasswordReset(string userEmail, string link)
         {
             MailMessage mailMessage = new MailMessage();
-            mailMessage.From = new MailAddress("ab52106@ubt-uni.net");
+            mailMessage.From = new MailAddress("ek51840@ubt-uni.net");
             mailMessage.To.Add(new MailAddress(userEmail));
 
             mailMessage.Subject = "Password Reset";
