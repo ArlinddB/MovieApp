@@ -15,19 +15,19 @@
             <div class="textbox">
                 <input asp-for="FullName" type="text" placeholder="Full Name" class="focus:ring-0 input-field" required />
                 <span class="material-symbols-outlined icon"> account_circle </span>
-                <span asp-validation-for="FullName" id="errStatus" class="text-sm text-red-600"></span>
+                <span asp-validation-for="FullName" class="text-sm text-red-600"></span>
 
             </div>
             
             <div class="textbox">
                 <input asp-for="Birthdate" type="date" placeholder="Birthdate" class="focus:ring-0 input-field" required />
                 <span class="material-symbols-outlined icon"> calendar_month </span>
-                <span asp-validation-for="Birthdate" id="errStatus" class="text-sm text-red-600"></span>
+                <span asp-validation-for="Birthdate" class="text-sm text-red-600"></span>
 
             </div>
 
             <div class="textbox">
-                <input asp-for="UserName" type="text" placeholder="Username" class="focus:ring-0 input-field" required />
+                <input asp-for="UserName" type="text" oninput="usernameCheck()" id="username" placeholder="Username" class="focus:ring-0 input-field" required />
                 <span class="material-symbols-outlined icon"> account_circle </span>
 
                 <span asp-validation-for="UserName" id="errStatus" class="text-sm text-red-600"></span>
@@ -35,9 +35,9 @@
             </div>
 
             <div class="textbox">
-                <input asp-for="Email" type="email" placeholder="Email" class="focus:ring-0 input-field" required />
+                <input asp-for="Email" type="email" oninput="emailCheck()" id="email" placeholder="Email" class="focus:ring-0 input-field" required />
                 <span class="material-symbols-outlined icon"> mail </span>
-                <span asp-validation-for="Email" id="errStatus" class="text-sm text-red-600"></span>
+                <span asp-validation-for="Email" id="errStatus1" class="text-sm text-red-600"></span>
 
             </div>
 
@@ -46,7 +46,7 @@
                 <span class="material-symbols-outlined icon"> key </span>
                 <i class="fa-sharp fa-solid fa-eye-slash text-zinc-300 cursor-pointer absolute right-0 bottom-4" id="togglePassword"></i>
                 
-                <span asp-validation-for="Password" id="errStatus" class="text-sm text-red-600"></span>
+                <span asp-validation-for="Password" class="text-sm text-red-600"></span>
 
             </div>
 
@@ -54,7 +54,7 @@
                 <input asp-for="ConfirmPassword" type="password" id="confPassword" placeholder="Confirm Password" class="focus:ring-0 input-field" required />
                 
                 <span class="material-symbols-outlined icon"> key </span>
-                <span asp-validation-for="ConfirmPassword" id="errStatus" class="text-sm text-red-600"></span>
+                <span asp-validation-for="ConfirmPassword" class="text-sm text-red-600"></span>
 
             </div>
             <p>
@@ -62,7 +62,7 @@
                 <a asp-controller="Account" asp-action="Login">Login here</a>
             </p>
 
-            <button type="submit" class="loginbtn">
+            <button type="submit" id="submitBtn" class="loginbtn">
                 Register
                 <span class="material-symbols-outlined"> arrow_forward </span>
             </button>
@@ -81,6 +81,67 @@
         </svg>
     </div>
 </div>
+
+<script>
+    //Checking if username exists
+    function usernameCheck() {
+    var username = $("#username").val()
+    var error = $("#errStatus")
+
+    error.html('<font color="Gray">Checking...</font>');
+
+    $.post("@Url.Action("CheckUsername","Account")",
+
+        {
+            name: username,
+        },
+
+        function (data) {
+            if (data == 0) {
+                error.html('<font color="Green">Available.</font>');
+                $("#submitBtn").prop('disabled', false).addClass("hover:bg-blue-600").removeClass("cursor-not-allowed bg-blue-400");
+
+            }
+            else if (data == 1) {
+                error.html('<font color="Red">User already exists!</font>');
+                $("#submitBtn").prop('disabled', true).addClass("cursor-not-allowed	bg-blue-400").removeClass("hover:bg-blue-600");
+            }
+            if (!username) {
+                error.html("");
+            }
+        });
+    }
+
+    //Checking if email exists
+    function emailCheck() {
+    var email = $("#email").val()
+    var error = $("#errStatus1")
+
+    error.html('<font color="Gray">Checking...</font>');
+
+    $.post("@Url.Action("CheckEmail","Account")",
+
+        {
+            email: email,
+        },
+
+        function (data) {
+            if (data == 0) {
+                error.html('<font color="Green">Available.</font>');
+                $("#submitBtn").prop('disabled', false).addClass("hover:bg-blue-600").removeClass("cursor-not-allowed bg-blue-400");
+
+            }
+            else if (data == 1) {
+                error.html('<font color="Red">Email already exists!</font>');
+                $("#submitBtn").prop('disabled', true).addClass("cursor-not-allowed	bg-blue-400").removeClass("hover:bg-blue-600");
+            }
+            if (!username) {
+                error.html("");
+            }
+        });
+    }
+
+</script>
 
 @section Scripts{
     @{

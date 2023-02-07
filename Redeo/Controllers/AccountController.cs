@@ -66,6 +66,7 @@ namespace Redeo.Controllers
                 }
 
                 var passwordCheck = await _userManager.CheckPasswordAsync(user, login.Password);
+
                 if (passwordCheck)
                 {
                     var result = await _signInManager.PasswordSignInAsync(user, login.Password, false, false);
@@ -74,6 +75,14 @@ namespace Redeo.Controllers
                         return RedirectToAction("Index", "Movie");
                     }
                 }
+                else
+                {
+                    ModelState.AddModelError("UserName", "Wrong credentials");
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("UserName", "Wrong credentials");
             }
             return View(login);
         }
@@ -99,10 +108,16 @@ namespace Redeo.Controllers
 
             if (!ModelState.IsValid) return View(register);
 
-            var user = await _userManager.FindByNameAsync(register.UserName);
-            if (user != null)
+            var username = await _userManager.FindByNameAsync(register.UserName);
+            var userEmail = await _userManager.FindByEmailAsync(register.Email);
+            if (username != null)
             {
-                return View(register);
+                ModelState.AddModelError("UserName", "Username is already in use");
+                //return View(register);
+            }
+            if(userEmail != null)
+            {
+                ModelState.AddModelError("Email", "Email is already in use");
             }
 
             var newUser = new ApplicationUser()
@@ -114,7 +129,7 @@ namespace Redeo.Controllers
             };
 
 
-            var newUserResponse = await _userManager.CreateAsync(newUser, register.Password);           
+            var newUserResponse = await _userManager.CreateAsync(newUser, register.Password);
 
             if (!await _roleManager.RoleExistsAsync(UserRoles.User))
                 await _roleManager.CreateAsync(new IdentityRole(UserRoles.User));
@@ -302,6 +317,39 @@ namespace Redeo.Controllers
             ViewBag.Category = GetCategory();
 
             return View();
+        }
+
+        [AllowAnonymous]
+        //Checking if username exists
+        public IActionResult CheckUsername(string name)
+        {
+            System.Threading.Thread.Sleep(450);
+            var data = _userManager.FindByNameAsync(name);
+
+            if (data.Result != null)
+            {
+                return Json(1);
+            }
+            else
+            {
+                return Json(0);
+            }
+        }
+        [AllowAnonymous]
+        //Checking if email exists
+        public IActionResult CheckEmail(string email)
+        {
+            System.Threading.Thread.Sleep(450);
+            var data = _userManager.FindByEmailAsync(email);
+
+            if (data.Result != null)
+            {
+                return Json(1);
+            }
+            else
+            {
+                return Json(0);
+            }
         }
     }
 }
