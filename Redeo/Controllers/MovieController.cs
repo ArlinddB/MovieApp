@@ -36,7 +36,12 @@ namespace Redeo.Controllers
 
         public List<Movie> MostWatchedMovies()
         {
-            var avgViews = _context.movies.Average(n => n.Clicks);
+            var avgViews = 0.0;
+
+            if (_context.movies.Any())
+            {
+                avgViews = _context.movies.Average(n => n.Clicks);
+            }
 
             var topMovies = _context.movies.Where(m => m.Clicks > avgViews).OrderByDescending(v => v.Clicks).Take(6).ToList();
 

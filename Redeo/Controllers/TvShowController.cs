@@ -29,7 +29,12 @@ namespace Redeo.Controllers
         }
         public List<TvShow> MostWatchedTvShows()
         {
-            var avgViews = _context.tvShows.Average(n => n.Clicks);
+            var avgViews = 0.0;
+
+            if (_context.tvShows.Any())
+            {
+                avgViews = _context.tvShows.Average(n => n.Clicks);
+            }
 
             var topTvShows = _context.tvShows.Where(m => m.Clicks > avgViews).OrderByDescending(v => v.Clicks).Take(6).ToList();
 
